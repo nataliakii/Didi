@@ -1,0 +1,83 @@
+@import "tailwindcss";
+
+:root {
+  --background: #faf7f0;
+  --foreground: #1e1e1e;
+  --muted: #6b7280;
+  --border: #e8d8a8;
+  --accent: #081b33;
+
+  --color-navy: #081b33;
+  --color-navy-light: #102a47;
+  --color-gold: #c9a24a;
+  --color-gold-soft: #e8d8a8;
+  --color-ivory: #faf7f0;
+  --color-cream: #f6f0e6;
+  --color-charcoal: #1e1e1e;
+
+  --brand-navy: var(--color-navy);
+  --brand-navy-light: var(--color-navy-light);
+  --brand-gold: var(--color-gold);
+  --brand-gold-soft: var(--color-gold-soft);
+  --brand-ivory: var(--color-ivory);
+  --brand-cream: var(--color-cream);
+  --brand-charcoal: var(--color-charcoal);
+}
+
+@theme inline {
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-muted: var(--muted);
+  --color-border: var(--border);
+  --color-accent: var(--accent);
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-light: var(--brand-navy-light);
+  --color-brand-gold: var(--brand-gold);
+  --color-brand-gold-soft: var(--brand-gold-soft);
+  --color-brand-ivory: var(--brand-ivory);
+  --color-brand-cream: var(--brand-cream);
+  --color-brand-charcoal: var(--brand-charcoal);
+  --font-sans: var(--font-geist-sans);
+  --font-mono: var(--font-geist-mono);
+  --font-serif: var(--font-cormorant);
+}
+
+body {
+  background: var(--brand-ivory);
+  color: var(--brand-charcoal);
+  font-family: var(--font-sans), system-ui, sans-serif;
+}
+
+.font-serif {
+  font-family: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
+}
+
+::selection {
+  background-color: var(--brand-gold-soft);
+  color: var(--brand-navy);
+}
+
+/* Brand utility classes */
+.section-eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--brand-gold);
+}
+
+.card-luxury {
+  border-radius: 0.125rem;
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 25%, transparent);
+  background-color: #ffffff;
+}
+
+.panel-luxury {
+  border-radius: 0.125rem;
+  border: 1px solid color-mix(in srgb, var(--brand-gold) 20%, transparent);
+  background-color: var(--brand-cream);
+}
+
+details summary::-webkit-details-marker {
+  display: none;
+}
