@@ -1,7 +1,9 @@
 import { CartProvider } from "@/components/cart/CartProvider";
+import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 import { SUPPORTED_LOCALES, type Locale } from "@/constants/i18n";
+import { COMING_SOON } from "@/constants/site";
 import { routing } from "@/i18n/routing";
 import { buildSiteMetadata } from "@/lib/seo";
 import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
@@ -40,6 +42,15 @@ export async function generateMetadata({
     return {};
   }
   const t = await getTranslations({ locale, namespace: "seo" });
+  if (COMING_SOON) {
+    const tComingSoon = await getTranslations({ locale, namespace: "comingSoon" });
+    return buildSiteMetadata(
+      locale as Locale,
+      tComingSoon("metaTitle"),
+      tComingSoon("metaDescription"),
+      { noIndex: true },
+    );
+  }
   return buildSiteMetadata(locale as Locale, t("homeTitle"), t("homeDescription"));
 }
 
@@ -66,13 +77,17 @@ export default async function LocaleLayout({
     >
       <body className="min-h-full bg-brand-ivory text-brand-charcoal">
         <NextIntlClientProvider locale={locale} messages={messages}>
-          <CartProvider>
-            <div className="flex min-h-full flex-col">
-              <Header />
-              <main className="flex-1">{children}</main>
-              <Footer />
-            </div>
-          </CartProvider>
+          {COMING_SOON ? (
+            <ComingSoonPage />
+          ) : (
+            <CartProvider>
+              <div className="flex min-h-full flex-col">
+                <Header />
+                <main className="flex-1">{children}</main>
+                <Footer />
+              </div>
+            </CartProvider>
+          )}
         </NextIntlClientProvider>
       </body>
     </html>

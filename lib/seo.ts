@@ -114,11 +114,13 @@ export function buildSiteMetadata(
   locale: Locale,
   title: string,
   description: string,
+  options?: { noIndex?: boolean },
 ): Metadata {
   return createLocalizedMetadata({
     locale,
     path: "/",
     title,
     description,
+    noIndex: options?.noIndex,
   });
 }

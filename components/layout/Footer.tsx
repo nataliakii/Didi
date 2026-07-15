@@ -42,6 +42,12 @@ export async function Footer() {
               {t("description")}
             </p>
             <div className="mt-6">
+              <p className="font-serif text-base text-brand-ivory">{t("founderName")}</p>
+              <p className="mt-1 text-[11px] tracking-[0.12em] text-brand-gold/90 uppercase">
+                {t("founderTitle")}
+              </p>
+            </div>
+            <div className="mt-6">
               <Button href="/appointment" variant="gold" size="sm">
                 {t("bookConsultation")}
               </Button>
