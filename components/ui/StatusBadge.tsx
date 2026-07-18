@@ -27,6 +27,8 @@ const statusVariantMap: Record<string, StatusVariant> = {
   cancelled: "danger",
   refunded: "default",
   pending: "warning",
+  created: "success",
+  skipped: "default",
   failed: "danger",
   partially_refunded: "warning",
   requested: "warning",

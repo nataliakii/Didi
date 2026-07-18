@@ -110,6 +110,7 @@ function toProductDetail(product: {
   categoryId: { toString(): string };
   seoTitle?: string;
   seoDescription?: string;
+  videoUrl?: string;
 }): ProductDetail {
   return {
     ...toProductSummary(product),
@@ -121,6 +122,7 @@ function toProductDetail(product: {
     categoryId: product.categoryId.toString(),
     seoTitle: product.seoTitle,
     seoDescription: product.seoDescription,
+    videoUrl: product.videoUrl,
   };
 }
 
@@ -129,7 +131,8 @@ export function parseProductFilters(
 ): ProductFilters {
   const search = getParam(raw, "search")?.trim();
   const category = getParam(raw, "category")?.trim();
-  const productTypeRaw = getParam(raw, "productType");
+  const productTypeRaw =
+    getParam(raw, "productType") ?? getParam(raw, "type");
   const metalRaw = getParam(raw, "metal");
   const stoneTypeRaw = getParam(raw, "stoneType");
   const diamondShapeRaw = getParam(raw, "diamondShape");

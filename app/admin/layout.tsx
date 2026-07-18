@@ -1,15 +1,13 @@
-import { AdminShell } from "@/components/admin/AdminShell";
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Admin Dashboard",
+  title: "Admin",
 };
 
-export default function AdminLayout({
+export default function AdminRootLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-  // TODO: Add NextAuth session check + proxy.ts protection in Step 2
-  return <AdminShell>{children}</AdminShell>;
+  return children;
 }

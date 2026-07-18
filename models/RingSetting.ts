@@ -23,6 +23,7 @@ const ringSettingSchema = new Schema(
     basePrice: { type: Number, required: true, min: 0 },
     description: { type: String },
     images: [ringSettingImageSchema],
+    videoUrl: { type: String, trim: true },
     availableMetals: [{ type: String, enum: METALS }],
     compatibleDiamondShapes: [{ type: String, enum: DIAMOND_SHAPES }],
     minRingSize: { type: String, default: "3" },

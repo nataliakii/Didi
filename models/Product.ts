@@ -54,6 +54,7 @@ const productSchema = new Schema(
     basePrice: { type: Number, required: true, min: 0 },
     salePrice: { type: Number, min: 0 },
     images: [productImageSchema],
+    videoUrl: { type: String, trim: true },
     attributes: productAttributesSchema,
     variants: [productVariantSchema],
     stockQuantity: { type: Number, default: 0, min: 0 },

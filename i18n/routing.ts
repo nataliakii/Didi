@@ -21,6 +21,9 @@ export type AppPathname =
   | "/create-ring/diamond"
   | "/create-ring/review"
   | "/cart"
+  | "/checkout"
+  | "/checkout/success"
+  | "/checkout/failure"
   | "/appointment"
   | "/appointment/success"
   | "/about";

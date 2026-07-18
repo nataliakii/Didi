@@ -169,10 +169,24 @@ export interface DiamondSummary {
   availabilityStatus: AvailabilityStatus;
 }
 
+export interface DiamondCollections {
+  flawless?: boolean;
+  blockchain?: boolean;
+  trulyBrilliant?: boolean;
+}
+
 export interface DiamondDetail extends DiamondSummary {
   polish?: string;
   symmetry?: string;
   fluorescence?: string;
+  lengthMm?: number;
+  widthMm?: number;
+  depthMm?: number;
+  tablePercent?: number;
+  depthPercent?: number;
+  lengthWidthRatio?: number;
+  collections?: DiamondCollections;
+  videoUrl?: string;
 }
 
 export interface UpdateDiamondCertificationInput {
@@ -256,9 +270,32 @@ export interface DiamondFilters {
   maxCarat?: number;
   minPrice?: number;
   maxPrice?: number;
+  /** @deprecated Prefer minCut/maxCut range */
   cut?: DiamondCut;
+  /** @deprecated Prefer minColor/maxColor range */
   color?: DiamondColor;
+  /** @deprecated Prefer minClarity/maxClarity range */
   clarity?: DiamondClarity;
+  minCut?: string;
+  maxCut?: string;
+  minColor?: string;
+  maxColor?: string;
+  minClarity?: string;
+  maxClarity?: string;
+  minFluorescence?: string;
+  maxFluorescence?: string;
+  polish?: string;
+  symmetry?: string;
+  minLwRatio?: number;
+  maxLwRatio?: number;
+  minTable?: number;
+  maxTable?: number;
+  minDepthPercent?: number;
+  maxDepthPercent?: number;
+  collectionFlawless?: boolean;
+  collectionBlockchain?: boolean;
+  collectionTrulyBrilliant?: boolean;
+  preset?: string;
   certificationLab?: CertificationLab;
   availabilityStatus?: AvailabilityStatus;
   sort?: DiamondSortOption;
@@ -275,6 +312,7 @@ export interface ProductDetail extends ProductSummary {
   categoryId: string;
   seoTitle?: string;
   seoDescription?: string;
+  videoUrl?: string;
 }
 
 export interface RingSettingSummary {
@@ -285,6 +323,7 @@ export interface RingSettingSummary {
   basePrice: number;
   description?: string;
   images: ProductImage[];
+  videoUrl?: string;
   availableMetals: Metal[];
   compatibleDiamondShapes: DiamondShape[];
   minRingSize: string;

@@ -1,4 +1,5 @@
 import { DemoImage } from "@/components/ui/DemoImage";
+import { MediaVideo } from "@/components/ui/MediaVideo";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import {
   DEMO_PLACEHOLDER_IMAGES,
@@ -43,6 +44,15 @@ export function SelectedSettingSummary({ setting }: SelectedSettingSummaryProps)
           </p>
         </div>
       </div>
+      {setting.videoUrl && (
+        <div className="relative mt-4 aspect-video overflow-hidden rounded-sm bg-brand-cream">
+          <MediaVideo
+            url={setting.videoUrl}
+            title={`${setting.name} video`}
+            className="absolute inset-0 h-full w-full"
+          />
+        </div>
+      )}
     </div>
   );
 }

@@ -16,6 +16,7 @@ const SHAPES: (DiamondShape | "other")[] = [
   "round",
   "princess",
   "cushion",
+  "elongated-cushion",
   "oval",
   "pear",
   "emerald",

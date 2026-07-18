@@ -2,8 +2,11 @@ import { PageBreadcrumb } from "@/components/ui/PageBreadcrumb";
 import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DiamondGradingReport } from "@/components/diamond/DiamondGradingReport";
+import { MediaVideo } from "@/components/ui/MediaVideo";
+import { DemoImage } from "@/components/ui/DemoImage";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { StatusBadge } from "@/components/ui/StatusBadge";
+import { DEMO_PLACEHOLDER_IMAGES } from "@/constants/demo-images";
 import { buildRingSettingHref } from "@/lib/ring-builder";
 import { getLocaleFromParamsAsync } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/seo";
@@ -70,6 +73,42 @@ export default async function DiamondDetailPage({
         ]}
       />
       <Container className="py-12 lg:py-16">
+      <div className="grid gap-10 lg:grid-cols-2 lg:gap-12">
+        <div className="space-y-4">
+          <div className="relative aspect-square overflow-hidden rounded-sm bg-brand-cream">
+            {diamond.images?.[0]?.url ? (
+              <DemoImage
+                src={diamond.images[0].url}
+                fallback={DEMO_PLACEHOLDER_IMAGES.diamond}
+                alt={`${diamond.carat}ct ${diamond.shape}`}
+                placeholderKind="diamond"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            ) : (
+              <DemoImage
+                src={DEMO_PLACEHOLDER_IMAGES.diamond}
+                fallback={DEMO_PLACEHOLDER_IMAGES.diamond}
+                alt={`${diamond.carat}ct ${diamond.shape}`}
+                placeholderKind="diamond"
+                fill
+                className="object-cover"
+                sizes="(max-width: 1024px) 100vw, 50vw"
+              />
+            )}
+          </div>
+          {diamond.videoUrl && (
+            <div className="relative aspect-video overflow-hidden rounded-sm bg-brand-cream">
+              <MediaVideo
+                url={diamond.videoUrl}
+                title={`${diamond.carat}ct ${diamond.shape} video`}
+                className="absolute inset-0 h-full w-full"
+              />
+            </div>
+          )}
+        </div>
+
       <div className="max-w-3xl">
         <p className="text-xs tracking-widest text-brand-charcoal/45 uppercase">
           {formatLabel(diamond.diamondType)} Diamond
@@ -138,6 +177,41 @@ export default async function DiamondDetailPage({
               </dd>
             </div>
           )}
+          {diamond.lengthWidthRatio !== undefined && (
+            <div>
+              <dt className="text-brand-charcoal/45">L:W Ratio</dt>
+              <dd className="mt-1 font-medium text-brand-navy">
+                {diamond.lengthWidthRatio.toFixed(2)}
+              </dd>
+            </div>
+          )}
+          {diamond.tablePercent !== undefined && (
+            <div>
+              <dt className="text-brand-charcoal/45">Table %</dt>
+              <dd className="mt-1 font-medium text-brand-navy">
+                {diamond.tablePercent}
+              </dd>
+            </div>
+          )}
+          {diamond.depthPercent !== undefined && (
+            <div>
+              <dt className="text-brand-charcoal/45">Depth %</dt>
+              <dd className="mt-1 font-medium text-brand-navy">
+                {diamond.depthPercent}
+              </dd>
+            </div>
+          )}
+          {diamond.lengthMm !== undefined && diamond.widthMm !== undefined && (
+            <div>
+              <dt className="text-brand-charcoal/45">Measurements</dt>
+              <dd className="mt-1 font-medium text-brand-navy">
+                {diamond.lengthMm.toFixed(2)} × {diamond.widthMm.toFixed(2)}
+                {diamond.depthMm !== undefined
+                  ? ` × ${diamond.depthMm.toFixed(2)} mm`
+                  : " mm"}
+              </dd>
+            </div>
+          )}
         </dl>
 
         <DiamondGradingReport
@@ -156,6 +230,7 @@ export default async function DiamondDetailPage({
             {t("backToDiamonds")}
           </Button>
         </div>
+      </div>
       </div>
     </Container>
     </>

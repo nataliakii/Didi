@@ -1,15 +1,25 @@
 import {
   AVAILABILITY_STATUSES,
+  CLARITY_SLIDER_GRADES,
+  COLOR_SLIDER_GRADES,
+  CUT_SLIDER_GRADES,
   DIAMOND_CLARITY,
   DIAMOND_COLORS,
   DIAMOND_CUTS,
+  DIAMOND_FILTER_PRESETS,
   DIAMOND_SHAPES,
   DIAMOND_TYPES,
+  FINISH_GRADES,
+  FLUORESCENCE_SLIDER_GRADES,
 } from "@/constants/jewellery";
 import {
   CERTIFICATION_LABS,
   type CertificationLab,
 } from "@/constants/certification";
+import {
+  expandCutGradesForQuery,
+  gradesInRange,
+} from "@/lib/diamond-grades";
 import { safeConnectDB } from "@/lib/db";
 import { getParam, type SearchParamValue } from "@/lib/searchParams";
 import { Diamond } from "@/models/Diamond";
@@ -123,15 +133,45 @@ function toDiamondDetail(diamond: {
   polish?: string;
   symmetry?: string;
   fluorescence?: string;
+  lengthMm?: number;
+  widthMm?: number;
+  depthMm?: number;
+  tablePercent?: number;
+  depthPercent?: number;
+  lengthWidthRatio?: number;
+  collections?: {
+    flawless?: boolean;
+    blockchain?: boolean;
+    trulyBrilliant?: boolean;
+  };
   availabilityStatus: string;
   images?: Array<{ url: string; alt?: string; isPrimary?: boolean }>;
+  videoUrl?: string;
 }): DiamondDetail {
   return {
     ...toDiamondSummary(diamond),
     polish: diamond.polish,
     symmetry: diamond.symmetry,
     fluorescence: diamond.fluorescence,
+    lengthMm: diamond.lengthMm,
+    widthMm: diamond.widthMm,
+    depthMm: diamond.depthMm,
+    tablePercent: diamond.tablePercent,
+    depthPercent: diamond.depthPercent,
+    lengthWidthRatio: diamond.lengthWidthRatio,
+    collections: diamond.collections,
+    videoUrl: diamond.videoUrl,
   };
+}
+
+function parseBooleanFlag(value: string | undefined): boolean | undefined {
+  if (value === "true") return true;
+  if (value === "false") return false;
+  return undefined;
+}
+
+function isInScale(value: string | undefined, scale: readonly string[]): boolean {
+  return Boolean(value && scale.includes(value));
 }
 
 export function parseDiamondFilters(
@@ -142,6 +182,9 @@ export function parseDiamondFilters(
   const cutRaw = getParam(raw, "cut");
   const colorRaw = getParam(raw, "color");
   const clarityRaw = getParam(raw, "clarity");
+  const polishRaw = getParam(raw, "polish");
+  const symmetryRaw = getParam(raw, "symmetry");
+  const presetRaw = getParam(raw, "preset");
   const certificationLabRaw =
     getParam(raw, "certificationLab") ?? getParam(raw, "certificateLab");
   const availabilityRaw = getParam(raw, "availabilityStatus");
@@ -152,6 +195,15 @@ export function parseDiamondFilters(
     MAX_LIMIT,
     Math.max(1, parseNumber(getParam(raw, "limit")) ?? DEFAULT_LIMIT),
   );
+
+  const minCut = getParam(raw, "minCut");
+  const maxCut = getParam(raw, "maxCut");
+  const minColor = getParam(raw, "minColor");
+  const maxColor = getParam(raw, "maxColor");
+  const minClarity = getParam(raw, "minClarity");
+  const maxClarity = getParam(raw, "maxClarity");
+  const minFluorescence = getParam(raw, "minFluorescence");
+  const maxFluorescence = getParam(raw, "maxFluorescence");
 
   return {
     diamondType: isEnumValue(diamondTypeRaw, DIAMOND_TYPES)
@@ -165,6 +217,38 @@ export function parseDiamondFilters(
     cut: isEnumValue(cutRaw, DIAMOND_CUTS) ? cutRaw : undefined,
     color: isEnumValue(colorRaw, DIAMOND_COLORS) ? colorRaw : undefined,
     clarity: isEnumValue(clarityRaw, DIAMOND_CLARITY) ? clarityRaw : undefined,
+    minCut: isInScale(minCut, CUT_SLIDER_GRADES) ? minCut : undefined,
+    maxCut: isInScale(maxCut, CUT_SLIDER_GRADES) ? maxCut : undefined,
+    minColor: isInScale(minColor, COLOR_SLIDER_GRADES) ? minColor : undefined,
+    maxColor: isInScale(maxColor, COLOR_SLIDER_GRADES) ? maxColor : undefined,
+    minClarity: isInScale(minClarity, CLARITY_SLIDER_GRADES)
+      ? minClarity
+      : undefined,
+    maxClarity: isInScale(maxClarity, CLARITY_SLIDER_GRADES)
+      ? maxClarity
+      : undefined,
+    minFluorescence: isInScale(minFluorescence, FLUORESCENCE_SLIDER_GRADES)
+      ? minFluorescence
+      : undefined,
+    maxFluorescence: isInScale(maxFluorescence, FLUORESCENCE_SLIDER_GRADES)
+      ? maxFluorescence
+      : undefined,
+    polish: isEnumValue(polishRaw, FINISH_GRADES) ? polishRaw : undefined,
+    symmetry: isEnumValue(symmetryRaw, FINISH_GRADES) ? symmetryRaw : undefined,
+    minLwRatio: parseNumber(getParam(raw, "minLwRatio")),
+    maxLwRatio: parseNumber(getParam(raw, "maxLwRatio")),
+    minTable: parseNumber(getParam(raw, "minTable")),
+    maxTable: parseNumber(getParam(raw, "maxTable")),
+    minDepthPercent: parseNumber(getParam(raw, "minDepthPercent")),
+    maxDepthPercent: parseNumber(getParam(raw, "maxDepthPercent")),
+    collectionFlawless: parseBooleanFlag(getParam(raw, "collectionFlawless")),
+    collectionBlockchain: parseBooleanFlag(
+      getParam(raw, "collectionBlockchain"),
+    ),
+    collectionTrulyBrilliant: parseBooleanFlag(
+      getParam(raw, "collectionTrulyBrilliant"),
+    ),
+    preset: isEnumValue(presetRaw, DIAMOND_FILTER_PRESETS) ? presetRaw : undefined,
     certificationLab: isCertificationLab(certificationLabRaw)
       ? certificationLabRaw
       : undefined,
@@ -202,9 +286,49 @@ function buildDiamondQuery(filters: DiamondFilters): FilterQuery<typeof Diamond>
   } else if (filters.compatibleShapes && filters.compatibleShapes.length > 0) {
     query.shape = { $in: filters.compatibleShapes };
   }
-  if (filters.cut) query.cut = filters.cut;
-  if (filters.color) query.color = filters.color;
-  if (filters.clarity) query.clarity = filters.clarity;
+
+  if (filters.minCut || filters.maxCut) {
+    const grades = expandCutGradesForQuery(
+      gradesInRange(CUT_SLIDER_GRADES, filters.minCut, filters.maxCut),
+    );
+    query.cut = { $in: grades };
+  } else if (filters.cut) {
+    query.cut = filters.cut;
+  }
+
+  if (filters.minColor || filters.maxColor) {
+    query.color = {
+      $in: gradesInRange(COLOR_SLIDER_GRADES, filters.minColor, filters.maxColor),
+    };
+  } else if (filters.color) {
+    query.color = filters.color;
+  }
+
+  if (filters.minClarity || filters.maxClarity) {
+    query.clarity = {
+      $in: gradesInRange(
+        CLARITY_SLIDER_GRADES,
+        filters.minClarity,
+        filters.maxClarity,
+      ),
+    };
+  } else if (filters.clarity) {
+    query.clarity = filters.clarity;
+  }
+
+  if (filters.minFluorescence || filters.maxFluorescence) {
+    query.fluorescence = {
+      $in: gradesInRange(
+        FLUORESCENCE_SLIDER_GRADES,
+        filters.minFluorescence,
+        filters.maxFluorescence,
+      ),
+    };
+  }
+
+  if (filters.polish) query.polish = filters.polish;
+  if (filters.symmetry) query.symmetry = filters.symmetry;
+
   if (filters.certificationLab) {
     query["certification.lab"] = filters.certificationLab;
   }
@@ -222,6 +346,41 @@ function buildDiamondQuery(filters: DiamondFilters): FilterQuery<typeof Diamond>
     query.price = {};
     if (filters.minPrice !== undefined) query.price.$gte = filters.minPrice;
     if (filters.maxPrice !== undefined) query.price.$lte = filters.maxPrice;
+  }
+
+  if (filters.minLwRatio !== undefined || filters.maxLwRatio !== undefined) {
+    query.lengthWidthRatio = {};
+    if (filters.minLwRatio !== undefined) {
+      query.lengthWidthRatio.$gte = filters.minLwRatio;
+    }
+    if (filters.maxLwRatio !== undefined) {
+      query.lengthWidthRatio.$lte = filters.maxLwRatio;
+    }
+  }
+
+  if (filters.minTable !== undefined || filters.maxTable !== undefined) {
+    query.tablePercent = {};
+    if (filters.minTable !== undefined) query.tablePercent.$gte = filters.minTable;
+    if (filters.maxTable !== undefined) query.tablePercent.$lte = filters.maxTable;
+  }
+
+  if (
+    filters.minDepthPercent !== undefined ||
+    filters.maxDepthPercent !== undefined
+  ) {
+    query.depthPercent = {};
+    if (filters.minDepthPercent !== undefined) {
+      query.depthPercent.$gte = filters.minDepthPercent;
+    }
+    if (filters.maxDepthPercent !== undefined) {
+      query.depthPercent.$lte = filters.maxDepthPercent;
+    }
+  }
+
+  if (filters.collectionFlawless) query["collections.flawless"] = true;
+  if (filters.collectionBlockchain) query["collections.blockchain"] = true;
+  if (filters.collectionTrulyBrilliant) {
+    query["collections.trulyBrilliant"] = true;
   }
 
   return query;

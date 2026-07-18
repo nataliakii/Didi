@@ -79,7 +79,8 @@ export default async function CreateRingDiamondPage({
         <RingBuilderSteps current="diamond" settingId={settingId} />
 
         <div className="max-w-2xl">
-          <h1 className="font-serif text-3xl text-brand-navy sm:text-4xl">
+          <p className="section-eyebrow">{t("builderEyebrow")}</p>
+          <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
             {t("diamondTitle")}
           </h1>
           <p className="mt-3 text-sm text-brand-charcoal/65">

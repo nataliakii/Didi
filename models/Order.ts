@@ -86,10 +86,39 @@ const orderSchema = new Schema(
     currency: { type: String, default: "USD" },
     status: { type: String, enum: ORDER_STATUSES, default: "new" },
     paymentStatus: { type: String, enum: PAYMENT_STATUSES, default: "pending" },
+    paymentProvider: { type: String, enum: ["viva", "stripe", "manual"], default: "viva" },
+    vivaOrderCode: { type: String },
+    vivaTransactionId: { type: String },
     stripeCheckoutSessionId: { type: String },
     stripePaymentIntentId: { type: String },
     shippingAddress: addressSchema,
     billingAddress: addressSchema,
+    shippingMethod: {
+      carrier: { type: String },
+      productCode: { type: String },
+      localProductCode: { type: String },
+      productName: { type: String },
+      estimatedDelivery: { type: String },
+      source: { type: String, enum: ["dhl", "fallback"] },
+    },
+    dhlShipment: {
+      trackingNumber: { type: String },
+      trackingUrl: { type: String },
+      dispatchConfirmationNumber: { type: String },
+      createdAt: { type: Date },
+      status: {
+        type: String,
+        enum: ["pending", "created", "failed", "skipped"],
+      },
+      lastError: { type: String },
+      documents: [
+        {
+          typeCode: { type: String },
+          imageFormat: { type: String },
+          contentBase64: { type: String },
+        },
+      ],
+    },
     internalNotes: { type: String },
     trackingNumber: { type: String },
   },
@@ -99,6 +128,7 @@ const orderSchema = new Schema(
 orderSchema.index({ status: 1 });
 orderSchema.index({ paymentStatus: 1 });
 orderSchema.index({ "customer.email": 1 });
+orderSchema.index({ vivaOrderCode: 1 });
 orderSchema.index({ createdAt: -1 });
 
 export type OrderDocument = InferSchemaType<typeof orderSchema> & {

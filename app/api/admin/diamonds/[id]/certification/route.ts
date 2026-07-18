@@ -2,6 +2,8 @@ import {
   CERTIFICATION_LABS,
   type CertificationLab,
 } from "@/constants/certification";
+import { CATALOG_ROLES } from "@/constants/admin-roles";
+import { requireAdminApi } from "@/lib/admin-auth";
 import {
   updateDiamondCertification,
 } from "@/services/diamond-admin.service";
@@ -43,6 +45,9 @@ function parseCertificationInput(
 }
 
 export async function PATCH(request: Request, context: RouteContext) {
+  const gate = await requireAdminApi(CATALOG_ROLES);
+  if (!gate.ok) return gate.response;
+
   const { id } = await context.params;
 
   try {

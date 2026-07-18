@@ -110,24 +110,26 @@ export default async function AdminDashboardPage() {
           {recentOrders.length > 0 ? (
             <ul className="divide-y divide-stone-100">
               {recentOrders.map((order) => (
-                <li
-                  key={order._id}
-                  className="flex items-center justify-between px-6 py-4"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-stone-900">
-                      {order.orderNumber}
-                    </p>
-                    <p className="text-xs text-stone-500">
-                      {order.customer.name}
-                    </p>
-                  </div>
-                  <div className="text-right">
-                    <p className="text-sm font-medium text-stone-900">
-                      {formatPrice(order.total)}
-                    </p>
-                    <StatusBadge status={order.status} />
-                  </div>
+                <li key={order._id}>
+                  <Link
+                    href={`/admin/orders/${order._id}`}
+                    className="flex items-center justify-between px-6 py-4 hover:bg-stone-50"
+                  >
+                    <div>
+                      <p className="text-sm font-medium text-stone-900">
+                        {order.orderNumber}
+                      </p>
+                      <p className="text-xs text-stone-500">
+                        {order.customer.name}
+                      </p>
+                    </div>
+                    <div className="text-right">
+                      <p className="text-sm font-medium text-stone-900">
+                        {formatPrice(order.total)}
+                      </p>
+                      <StatusBadge status={order.status} />
+                    </div>
+                  </Link>
                 </li>
               ))}
             </ul>
@@ -156,19 +158,21 @@ export default async function AdminDashboardPage() {
           {recentAppointments.length > 0 ? (
             <ul className="divide-y divide-stone-100">
               {recentAppointments.map((appointment) => (
-                <li
-                  key={appointment._id}
-                  className="flex items-center justify-between px-6 py-4"
-                >
-                  <div>
-                    <p className="text-sm font-medium text-stone-900">
-                      {appointment.name}
-                    </p>
-                    <p className="text-xs text-stone-500">
-                      {APPOINTMENT_TYPE_LABELS[appointment.appointmentType]}
-                    </p>
-                  </div>
-                  <StatusBadge status={appointment.status} />
+                <li key={appointment._id}>
+                  <Link
+                    href={`/admin/appointments/${appointment._id}`}
+                    className="flex items-center justify-between px-6 py-4 hover:bg-stone-50"
+                  >
+                    <div>
+                      <p className="text-sm font-medium text-stone-900">
+                        {appointment.name}
+                      </p>
+                      <p className="text-xs text-stone-500">
+                        {APPOINTMENT_TYPE_LABELS[appointment.appointmentType]}
+                      </p>
+                    </div>
+                    <StatusBadge status={appointment.status} />
+                  </Link>
                 </li>
               ))}
             </ul>

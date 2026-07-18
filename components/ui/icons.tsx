@@ -120,6 +120,7 @@ export function DiamondShapeIcon({
     round: "M12 3l7 7-7 11L5 10z",
     oval: "M12 4c5 0 8 3.5 8 8s-3 8-8 8-8-3.5-8-8 3-8 8-8z",
     cushion: "M7 6h10l4 6-4 6H7l-4-6z",
+    "elongated-cushion": "M8 4h8l5 8-5 8H8L3 12z",
     princess: "M12 3l8 8-8 10-8-10z",
     emerald: "M8 4h8l4 8-4 8H8l-4-8z",
     pear: "M12 3c4 4 6 8 6 12s-2.5 6-6 6S6 19 6 15s2-8 6-12z",

@@ -168,10 +168,13 @@ export default async function CreateRingReviewPage({
         current="review"
         settingId={settingId}
         diamondId={diamondId}
+        metal={selectedMetal}
+        ringSize={selectedRingSize}
       />
 
       <div className="max-w-2xl">
-        <h1 className="font-serif text-3xl text-brand-navy sm:text-4xl">
+        <p className="section-eyebrow">{t("builderEyebrow")}</p>
+        <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
           {t("reviewTitle")}
         </h1>
         <p className="mt-4 leading-relaxed text-brand-charcoal/70">

@@ -123,6 +123,7 @@ export async function getAdminDiamondById(
       polish: doc.polish,
       symmetry: doc.symmetry,
       fluorescence: doc.fluorescence,
+      videoUrl: (diamond as { videoUrl?: string }).videoUrl,
     };
   } catch (error) {
     console.error("getAdminDiamondById error:", error);
@@ -162,5 +163,103 @@ export async function updateDiamondCertification(
   } catch (error) {
     console.error("updateDiamondCertification error:", error);
     return null;
+  }
+}
+
+export type UpsertDiamondAdminInput = {
+  diamondType: string;
+  shape: string;
+  carat: number;
+  cut: string;
+  color: string;
+  clarity: string;
+  price: number;
+  salePrice?: number | null;
+  availabilityStatus: string;
+  isActive: boolean;
+  imageUrl?: string;
+  videoUrl?: string;
+  certification?: {
+    lab?: string | null;
+    reportNumber?: string;
+    reportUrl?: string;
+    certificateFileUrl?: string;
+  };
+};
+
+function toDiamondFields(input: UpsertDiamondAdminInput) {
+  const images = input.imageUrl?.trim()
+    ? [{ url: input.imageUrl.trim(), isPrimary: true }]
+    : [];
+
+  return {
+    diamondType: input.diamondType,
+    shape: input.shape,
+    carat: input.carat,
+    cut: input.cut,
+    color: input.color,
+    clarity: input.clarity,
+    price: input.price,
+    salePrice: input.salePrice ?? undefined,
+    availabilityStatus: input.availabilityStatus,
+    isActive: input.isActive,
+    videoUrl: input.videoUrl?.trim() || undefined,
+    ...(images.length ? { images } : {}),
+    certification: {
+      lab: input.certification?.lab || undefined,
+      reportNumber: input.certification?.reportNumber?.trim() || undefined,
+      reportUrl: input.certification?.reportUrl?.trim() || undefined,
+      certificateFileUrl:
+        input.certification?.certificateFileUrl?.trim() || undefined,
+    },
+  };
+}
+
+export async function createAdminDiamond(
+  input: UpsertDiamondAdminInput,
+): Promise<string | null> {
+  const db = await safeConnectDB();
+  if (!db) return null;
+
+  try {
+    const diamond = await Diamond.create(toDiamondFields(input));
+    return diamond._id.toString();
+  } catch (error) {
+    console.error("createAdminDiamond error:", error);
+    return null;
+  }
+}
+
+export async function updateAdminDiamond(
+  id: string,
+  input: UpsertDiamondAdminInput,
+): Promise<boolean> {
+  const db = await safeConnectDB();
+  if (!db || !mongoose.Types.ObjectId.isValid(id)) return false;
+
+  try {
+    const fields = toDiamondFields(input);
+    const result = await Diamond.findByIdAndUpdate(
+      id,
+      { $set: fields },
+      { runValidators: true },
+    );
+    return Boolean(result);
+  } catch (error) {
+    console.error("updateAdminDiamond error:", error);
+    return false;
+  }
+}
+
+export async function deleteAdminDiamond(id: string): Promise<boolean> {
+  const db = await safeConnectDB();
+  if (!db || !mongoose.Types.ObjectId.isValid(id)) return false;
+
+  try {
+    const result = await Diamond.findByIdAndDelete(id);
+    return Boolean(result);
+  } catch (error) {
+    console.error("deleteAdminDiamond error:", error);
+    return false;
   }
 }

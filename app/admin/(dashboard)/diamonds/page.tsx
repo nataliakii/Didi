@@ -27,11 +27,19 @@ export default async function AdminDiamondsPage() {
 
   return (
     <div className="space-y-8">
-      <div>
-        <h2 className="text-2xl font-medium text-stone-900">Diamonds</h2>
-        <p className="mt-1 text-sm text-stone-500">
-          Manage diamond inventory and grading report details
-        </p>
+      <div className="flex flex-wrap items-end justify-between gap-4">
+        <div>
+          <h2 className="text-2xl font-medium text-stone-900">Diamonds</h2>
+          <p className="mt-1 text-sm text-stone-500">
+            Manage diamond inventory and grading report details
+          </p>
+        </div>
+        <Link
+          href="/admin/diamonds/new"
+          className="rounded-sm bg-stone-900 px-3 py-2 text-sm font-medium text-white hover:bg-stone-800"
+        >
+          New diamond
+        </Link>
       </div>
 
       {diamonds.length > 0 ? (

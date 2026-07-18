@@ -2,6 +2,8 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { ShopDiamondsByShape } from "@/components/home/ShopDiamondsByShape";
+import { ShopRingsByCategory } from "@/components/home/ShopRingsByCategory";
 import { ProductCard } from "@/components/product/ProductCard";
 import {
   DEMO_CONSULTATION_IMAGES,
@@ -183,6 +185,10 @@ export async function HomePageContent() {
           </div>
         </Container>
       </section>
+
+      <ShopDiamondsByShape />
+
+      <ShopRingsByCategory />
 
       <section className="py-16 sm:py-20">
         <Container>

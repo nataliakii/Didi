@@ -2,16 +2,19 @@ import { cn } from "@/lib/utils";
 import { Link } from "@/i18n/routing";
 import { getTranslations } from "next-intl/server";
 
-type BuilderStep = "start" | "setting" | "diamond" | "review";
+/** Brilliant Earth–style funnel: Setting → Diamond → Complete */
+type BuilderStep = "setting" | "diamond" | "review";
 
 interface RingBuilderStepsProps {
   current: BuilderStep;
   settingId?: string;
   diamondId?: string;
+  metal?: string;
+  ringSize?: string;
 }
 
 function getStepIndex(step: BuilderStep): number {
-  const order: BuilderStep[] = ["start", "setting", "diamond", "review"];
+  const order: BuilderStep[] = ["setting", "diamond", "review"];
   return order.indexOf(step);
 }
 
@@ -19,22 +22,25 @@ export async function RingBuilderSteps({
   current,
   settingId,
   diamondId,
+  metal,
+  ringSize,
 }: RingBuilderStepsProps) {
   const t = await getTranslations("ringBuilder");
 
   const steps: Array<{ id: BuilderStep; label: string; href: string }> = [
-    { id: "start", label: t("stepStart"), href: "/create-ring" },
     { id: "setting", label: t("stepSetting"), href: "/create-ring/setting" },
     { id: "diamond", label: t("stepDiamond"), href: "/create-ring/diamond" },
-    { id: "review", label: t("stepReview"), href: "/create-ring/review" },
+    { id: "review", label: t("stepComplete"), href: "/create-ring/review" },
   ];
 
   const currentIndex = getStepIndex(current);
 
   function buildHref(step: (typeof steps)[number]): string {
-    if (step.id === "start") return step.href;
     if (step.id === "review" && settingId && diamondId) {
-      return `/create-ring/review?settingId=${settingId}&diamondId=${diamondId}`;
+      const params = new URLSearchParams({ settingId, diamondId });
+      if (metal) params.set("metal", metal);
+      if (ringSize) params.set("ringSize", ringSize);
+      return `/create-ring/review?${params.toString()}`;
     }
     const params = new URLSearchParams();
     if (settingId) params.set("settingId", settingId);
@@ -49,15 +55,20 @@ export async function RingBuilderSteps({
         {steps.map((step, index) => {
           const isActive = step.id === current;
           const isComplete = index < currentIndex;
-          const isClickable = index <= currentIndex || (settingId && diamondId);
+          const canOpenReview = Boolean(settingId && diamondId);
+          const isClickable =
+            index <= currentIndex ||
+            (step.id === "review" && canOpenReview) ||
+            (step.id === "diamond" && settingId) ||
+            (step.id === "setting" && diamondId);
 
           return (
             <li key={step.id} className="flex items-center gap-2 sm:gap-4">
               {index > 0 && (
                 <span
                   className={cn(
-                    "hidden h-px w-6 sm:block sm:w-10",
-                    isComplete ? "bg-brand-gold" : "bg-brand-gold/25",
+                    "hidden h-px w-8 sm:block sm:w-14",
+                    isComplete || isActive ? "bg-brand-gold" : "bg-brand-gold/25",
                   )}
                   aria-hidden="true"
                 />

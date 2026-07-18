@@ -5,6 +5,8 @@ import {
   DIAMOND_CUTS,
   DIAMOND_SHAPES,
   DIAMOND_TYPES,
+  FINISH_GRADES,
+  FLUORESCENCE_GRADES,
 } from "@/constants/jewellery";
 import { CERTIFICATION_LABS } from "@/constants/certification";
 import { Schema, model, models, type InferSchemaType } from "mongoose";
@@ -28,6 +30,15 @@ const certificationSchema = new Schema(
   { _id: false },
 );
 
+const collectionsSchema = new Schema(
+  {
+    flawless: { type: Boolean, default: false },
+    blockchain: { type: Boolean, default: false },
+    trulyBrilliant: { type: Boolean, default: false },
+  },
+  { _id: false },
+);
+
 const diamondSchema = new Schema(
   {
     diamondType: { type: String, enum: DIAMOND_TYPES, required: true },
@@ -36,13 +47,21 @@ const diamondSchema = new Schema(
     cut: { type: String, enum: DIAMOND_CUTS, required: true },
     color: { type: String, enum: DIAMOND_COLORS, required: true },
     clarity: { type: String, enum: DIAMOND_CLARITY, required: true },
-    polish: { type: String },
-    symmetry: { type: String },
-    fluorescence: { type: String },
+    polish: { type: String, enum: FINISH_GRADES },
+    symmetry: { type: String, enum: FINISH_GRADES },
+    fluorescence: { type: String, enum: FLUORESCENCE_GRADES },
+    lengthMm: { type: Number, min: 0 },
+    widthMm: { type: Number, min: 0 },
+    depthMm: { type: Number, min: 0 },
+    tablePercent: { type: Number, min: 0, max: 100 },
+    depthPercent: { type: Number, min: 0, max: 100 },
+    lengthWidthRatio: { type: Number, min: 0 },
     certification: { type: certificationSchema, default: () => ({}) },
+    collections: { type: collectionsSchema, default: () => ({}) },
     price: { type: Number, required: true, min: 0 },
     salePrice: { type: Number, min: 0 },
     images: [diamondImageSchema],
+    videoUrl: { type: String, trim: true },
     availabilityStatus: {
       type: String,
       enum: AVAILABILITY_STATUSES,
@@ -60,6 +79,13 @@ diamondSchema.index({ price: 1 });
 diamondSchema.index({ color: 1 });
 diamondSchema.index({ clarity: 1 });
 diamondSchema.index({ cut: 1 });
+diamondSchema.index({ fluorescence: 1 });
+diamondSchema.index({ lengthWidthRatio: 1 });
+diamondSchema.index({ tablePercent: 1 });
+diamondSchema.index({ depthPercent: 1 });
+diamondSchema.index({ "collections.flawless": 1 });
+diamondSchema.index({ "collections.blockchain": 1 });
+diamondSchema.index({ "collections.trulyBrilliant": 1 });
 diamondSchema.index({ isActive: 1 });
 diamondSchema.index({ "certification.lab": 1 });
 

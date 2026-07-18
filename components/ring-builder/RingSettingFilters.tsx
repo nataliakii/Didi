@@ -1,112 +1,98 @@
 "use client";
 
-import { Checkbox } from "@/components/ui/Checkbox";
+import { ShapeFilterRow } from "@/components/filters/ShapeFilterRow";
+import { MetalFilterChips } from "@/components/ring-builder/MetalFilterChips";
+import { RingStylePicker } from "@/components/ring-builder/RingStylePicker";
 import { FilterDrawer } from "@/components/ui/FilterDrawer";
-import { Select } from "@/components/ui/Select";
-import { DIAMOND_SHAPES, METALS, RING_STYLES } from "@/constants/jewellery";
 import { setParam } from "@/lib/searchParams";
-import { cn, formatLabel } from "@/lib/utils";
+import { cn } from "@/lib/utils";
 import { usePathname, useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
 
 function FilterFields({
   params,
   onUpdate,
+  showStylePicker = true,
 }: {
   params: URLSearchParams;
   onUpdate: (key: string, value: string | null) => void;
+  showStylePicker?: boolean;
 }) {
+  const t = useTranslations("ringBuilder");
+  const tf = useTranslations("filters");
+
   return (
-    <div className="space-y-6">
-      <Select
-        id="style"
-        label="Style"
-        value={params.get("style") ?? ""}
-        placeholder="All styles"
-        options={RING_STYLES.map((style) => ({
-          value: style,
-          label: formatLabel(style),
-        }))}
-        onChange={(value) => onUpdate("style", value || null)}
+    <div className="space-y-8">
+      {showStylePicker && (
+        <RingStylePicker
+          value={params.get("style")}
+          onChange={(style) => onUpdate("style", style)}
+        />
+      )}
+
+      <MetalFilterChips
+        value={params.get("metal")}
+        onChange={(metal) => onUpdate("metal", metal)}
       />
 
-      <Select
-        id="metal"
-        label="Metal"
-        value={params.get("metal") ?? ""}
-        placeholder="All metals"
-        options={METALS.map((metal) => ({
-          value: metal,
-          label: formatLabel(metal),
-        }))}
-        onChange={(value) => onUpdate("metal", value || null)}
+      <ShapeFilterRow
+        label={t("compatibleShape")}
+        value={params.get("compatibleShape")}
+        onChange={(shape) => onUpdate("compatibleShape", shape)}
       />
 
-      <Select
-        id="compatibleShape"
-        label="Compatible Diamond Shape"
-        value={params.get("compatibleShape") ?? ""}
-        placeholder="All shapes"
-        options={DIAMOND_SHAPES.map((shape) => ({
-          value: shape,
-          label: formatLabel(shape),
-        }))}
-        onChange={(value) => onUpdate("compatibleShape", value || null)}
-      />
-
-      <div className="grid grid-cols-2 gap-3">
-        <div className="space-y-1.5">
-          <label
-            htmlFor="minPrice"
-            className="text-xs font-medium tracking-wide text-brand-charcoal/65 uppercase"
-          >
-            Min Price
-          </label>
-          <input
-            id="minPrice"
-            type="number"
-            min={0}
-            defaultValue={params.get("minPrice") ?? ""}
-            onBlur={(event) =>
-              onUpdate("minPrice", event.target.value || null)
-            }
-            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
-          />
-        </div>
-        <div className="space-y-1.5">
-          <label
-            htmlFor="maxPrice"
-            className="text-xs font-medium tracking-wide text-brand-charcoal/65 uppercase"
-          >
-            Max Price
-          </label>
-          <input
-            id="maxPrice"
-            type="number"
-            min={0}
-            defaultValue={params.get("maxPrice") ?? ""}
-            onBlur={(event) =>
-              onUpdate("maxPrice", event.target.value || null)
-            }
-            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
-          />
+      <div>
+        <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+          {tf("priceRange")}
+        </p>
+        <div className="grid grid-cols-2 gap-3">
+          <div className="space-y-1.5">
+            <label
+              htmlFor="minPrice"
+              className="text-xs text-brand-charcoal/55"
+            >
+              {tf("minPrice")}
+            </label>
+            <input
+              id="minPrice"
+              type="number"
+              min={0}
+              defaultValue={params.get("minPrice") ?? ""}
+              onBlur={(event) =>
+                onUpdate("minPrice", event.target.value || null)
+              }
+              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+            />
+          </div>
+          <div className="space-y-1.5">
+            <label
+              htmlFor="maxPrice"
+              className="text-xs text-brand-charcoal/55"
+            >
+              {tf("maxPrice")}
+            </label>
+            <input
+              id="maxPrice"
+              type="number"
+              min={0}
+              defaultValue={params.get("maxPrice") ?? ""}
+              onBlur={(event) =>
+                onUpdate("maxPrice", event.target.value || null)
+              }
+              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+            />
+          </div>
         </div>
       </div>
-
-      <Checkbox
-        id="isFeatured"
-        label="Featured only"
-        checked={params.get("isFeatured") === "true"}
-        onChange={(checked) =>
-          onUpdate("isFeatured", checked ? "true" : null)
-        }
-      />
     </div>
   );
 }
 
 export function RingSettingFilters({ className }: { className?: string }) {
+  const t = useTranslations("ringBuilder");
+  const tf = useTranslations("filters");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -143,40 +129,40 @@ export function RingSettingFilters({ className }: { className?: string }) {
     setDrawerOpen(false);
   };
 
-  const filterFields = (
-    <FilterFields params={params} onUpdate={handleUpdate} />
-  );
-
   return (
     <>
       <div className={cn("hidden lg:block", className)}>
         <div className="sticky top-24 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-brand-navy">Filters</h2>
+            <h2 className="text-sm font-medium text-brand-navy">{tf("filters")}</h2>
             <button
               type="button"
               onClick={handleClearFilters}
               className="text-xs text-brand-charcoal/55 hover:text-brand-navy"
             >
-              Clear all
+              {tf("resetAll")}
             </button>
           </div>
-          {filterFields}
+          <FilterFields params={params} onUpdate={handleUpdate} />
         </div>
       </div>
 
-      <div className="lg:hidden">
+      <div className="space-y-4 lg:hidden">
+        <RingStylePicker
+          value={params.get("style")}
+          onChange={(style) => handleUpdate("style", style)}
+        />
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
           className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-charcoal/75 hover:bg-brand-cream/50"
         >
-          Filters
+          {t("moreFilters")}
         </button>
         <FilterDrawer
           open={drawerOpen}
           onClose={() => setDrawerOpen(false)}
-          title="Filter Settings"
+          title={t("filterSettings")}
         >
           <div className="mb-4 flex justify-end">
             <button
@@ -184,10 +170,14 @@ export function RingSettingFilters({ className }: { className?: string }) {
               onClick={handleClearFilters}
               className="text-xs text-brand-charcoal/55 hover:text-brand-navy"
             >
-              Clear all
+              {tf("resetAll")}
             </button>
           </div>
-          {filterFields}
+          <FilterFields
+            params={params}
+            onUpdate={handleUpdate}
+            showStylePicker={false}
+          />
         </FilterDrawer>
       </div>
     </>

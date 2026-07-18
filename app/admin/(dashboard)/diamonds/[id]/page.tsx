@@ -1,3 +1,4 @@
+import { DiamondAdminForm } from "@/components/admin/DiamondAdminForm";
 import { DiamondCertificationPanel } from "@/components/admin/DiamondCertificationPanel";
 import { Button } from "@/components/ui/Button";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
@@ -22,6 +23,9 @@ export default async function AdminDiamondDetailPage({
   if (!diamond) {
     notFound();
   }
+
+  const primaryImage = diamond.images?.find((img) => img.isPrimary)?.url
+    ?? diamond.images?.[0]?.url;
 
   return (
     <div className="space-y-8">
@@ -48,6 +52,28 @@ export default async function AdminDiamondDetailPage({
           />
           <PriceDisplay price={diamond.price} salePrice={diamond.salePrice} />
         </div>
+      </div>
+
+      <div className="rounded-sm border border-stone-200 bg-white p-5">
+        <h3 className="mb-4 text-sm font-medium text-stone-900">Edit diamond</h3>
+        <DiamondAdminForm
+          diamondId={diamond._id}
+          initial={{
+            diamondType: diamond.diamondType,
+            shape: diamond.shape,
+            carat: diamond.carat,
+            cut: diamond.cut,
+            color: diamond.color,
+            clarity: diamond.clarity,
+            price: diamond.price,
+            salePrice: diamond.salePrice,
+            availabilityStatus: diamond.availabilityStatus,
+            isActive: diamond.isActive,
+            imageUrl: primaryImage,
+            videoUrl: diamond.videoUrl,
+            certification: diamond.certification,
+          }}
+        />
       </div>
 
       <DiamondCertificationPanel

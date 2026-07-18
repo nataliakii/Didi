@@ -9,6 +9,7 @@ import {
   demoImage,
 } from "@/constants/demo-images";
 import { connectDB } from "@/lib/db";
+import { hashPassword } from "@/lib/password";
 import { generateOrderNumber } from "@/lib/utils";
 import { Appointment } from "@/models/Appointment";
 import { Category } from "@/models/Category";
@@ -17,11 +18,6 @@ import { Order } from "@/models/Order";
 import { Product } from "@/models/Product";
 import { RingSetting } from "@/models/RingSetting";
 import { User } from "@/models/User";
-import { createHash } from "crypto";
-
-function hashPassword(password: string): string {
-  return createHash("sha256").update(password).digest("hex");
-}
 
 async function seed() {
   console.log("Connecting to MongoDB...");
@@ -42,7 +38,7 @@ async function seed() {
   await User.create({
     name: "Admin User",
     email: "admin@didi.com",
-    passwordHash: hashPassword("admin123"),
+    passwordHash: await hashPassword("admin123"),
     role: "super_admin",
     isActive: true,
   });
@@ -316,17 +312,24 @@ async function seed() {
       diamondType: "natural",
       shape: "round",
       carat: 1.02,
-      cut: "Excellent",
+      cut: "Ideal",
       color: "F",
       clarity: "VS1",
       polish: "Excellent",
       symmetry: "Excellent",
       fluorescence: "None",
+      lengthMm: 6.45,
+      widthMm: 6.48,
+      depthMm: 3.95,
+      tablePercent: 57,
+      depthPercent: 61.2,
+      lengthWidthRatio: 0.995,
       certification: {
         lab: "GIA",
         reportNumber: "2141234567",
         reportUrl: "https://www.gia.edu/report-check?reportno=2141234567",
       },
+      collections: { flawless: false, blockchain: true, trulyBrilliant: true },
       price: 5200,
       images: [
         demoImage(
@@ -341,17 +344,24 @@ async function seed() {
       diamondType: "lab",
       shape: "oval",
       carat: 1.5,
-      cut: "Excellent",
+      cut: "Super Ideal",
       color: "E",
       clarity: "VVS2",
       polish: "Excellent",
       symmetry: "Very Good",
       fluorescence: "Faint",
+      lengthMm: 8.9,
+      widthMm: 6.2,
+      depthMm: 3.85,
+      tablePercent: 58,
+      depthPercent: 62.1,
+      lengthWidthRatio: 1.435,
       certification: {
         lab: "IGI",
         reportNumber: "IGI-9876543210",
         reportUrl: "https://www.igi.org/reports",
       },
+      collections: { flawless: false, blockchain: false, trulyBrilliant: true },
       price: 3800,
       salePrice: 3499,
       images: [demoImage(DEMO_DIAMOND_IMAGES.oval, "1.50 ct Oval Diamond")],
@@ -368,14 +378,103 @@ async function seed() {
       polish: "Very Good",
       symmetry: "Very Good",
       fluorescence: "None",
+      lengthMm: 6.4,
+      widthMm: 4.7,
+      depthMm: 3.15,
+      tablePercent: 63,
+      depthPercent: 67,
+      lengthWidthRatio: 1.36,
       certification: {
         lab: "GIA",
         reportNumber: "5234567890",
       },
+      collections: { flawless: false, blockchain: false, trulyBrilliant: false },
       price: 3400,
       images: [
         demoImage(DEMO_DIAMOND_IMAGES.emeraldCut, "0.92 ct Emerald Cut Diamond"),
       ],
+      availabilityStatus: "in-stock",
+      isActive: true,
+    },
+    {
+      diamondType: "natural",
+      shape: "princess",
+      carat: 2.15,
+      cut: "Super Ideal",
+      color: "D",
+      clarity: "FL",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "None",
+      lengthMm: 7.12,
+      widthMm: 7.05,
+      depthMm: 5.1,
+      tablePercent: 68,
+      depthPercent: 72,
+      lengthWidthRatio: 1.01,
+      certification: {
+        lab: "GIA",
+        reportNumber: "6482100999",
+      },
+      collections: { flawless: true, blockchain: true, trulyBrilliant: true },
+      price: 18600,
+      images: [
+        demoImage(DEMO_DIAMOND_IMAGES.roundBrilliant, "2.15 ct Princess Diamond"),
+      ],
+      availabilityStatus: "in-stock",
+      isActive: true,
+    },
+    {
+      diamondType: "natural",
+      shape: "princess",
+      carat: 2.04,
+      cut: "Ideal",
+      color: "E",
+      clarity: "VVS1",
+      polish: "Excellent",
+      symmetry: "Excellent",
+      fluorescence: "Medium",
+      lengthMm: 6.95,
+      widthMm: 6.88,
+      depthMm: 4.95,
+      tablePercent: 69,
+      depthPercent: 71.5,
+      lengthWidthRatio: 1.01,
+      certification: {
+        lab: "GIA",
+        reportNumber: "6482100888",
+      },
+      collections: { flawless: false, blockchain: true, trulyBrilliant: true },
+      price: 14200,
+      images: [
+        demoImage(DEMO_DIAMOND_IMAGES.roundBrilliant, "2.04 ct Princess Diamond"),
+      ],
+      availabilityStatus: "in-stock",
+      isActive: true,
+    },
+    {
+      diamondType: "lab",
+      shape: "cushion",
+      carat: 1.21,
+      cut: "Good",
+      color: "H",
+      clarity: "SI1",
+      polish: "Good",
+      symmetry: "Very Good",
+      fluorescence: "Strong",
+      lengthMm: 6.1,
+      widthMm: 5.85,
+      depthMm: 4.0,
+      tablePercent: 61,
+      depthPercent: 66,
+      lengthWidthRatio: 1.043,
+      certification: {
+        lab: "IGI",
+        reportNumber: "IGI-1122334455",
+      },
+      collections: { flawless: false, blockchain: false, trulyBrilliant: false },
+      price: 2100,
+      images: [demoImage(DEMO_DIAMOND_IMAGES.oval, "1.21 ct Cushion Diamond")],
       availabilityStatus: "in-stock",
       isActive: true,
     },
@@ -389,10 +488,17 @@ async function seed() {
       polish: "Excellent",
       symmetry: "Excellent",
       fluorescence: "None",
+      lengthMm: 5.9,
+      widthMm: 5.93,
+      depthMm: 3.6,
+      tablePercent: 56,
+      depthPercent: 60.8,
+      lengthWidthRatio: 0.995,
       certification: {
         lab: "GIA",
         reportNumber: "1234567891",
       },
+      collections: { flawless: false, blockchain: false, trulyBrilliant: false },
       price: 2450,
       images: [
         demoImage(

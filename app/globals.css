@@ -154,3 +154,40 @@ details summary::-webkit-details-marker {
 .coming-soon-shimmer {
   animation: coming-soon-shimmer 5s ease-in-out infinite;
 }
+
+/* Dual-thumb grade range sliders (diamond filters) */
+.grade-range-input {
+  pointer-events: none;
+}
+
+.grade-range-input::-webkit-slider-thumb {
+  pointer-events: auto;
+  appearance: none;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--brand-navy);
+  border: 2px solid var(--brand-gold);
+  cursor: pointer;
+  margin-top: -5px;
+}
+
+.grade-range-input::-moz-range-thumb {
+  pointer-events: auto;
+  width: 14px;
+  height: 14px;
+  border-radius: 9999px;
+  background: var(--brand-navy);
+  border: 2px solid var(--brand-gold);
+  cursor: pointer;
+}
+
+.grade-range-input::-webkit-slider-runnable-track {
+  height: 6px;
+  background: transparent;
+}
+
+.grade-range-input::-moz-range-track {
+  height: 6px;
+  background: transparent;
+}

@@ -40,8 +40,8 @@ export function CartSummary({ items, subtotal }: CartSummaryProps) {
         {t("taxNote")}
       </p>
 
-      <Button disabled variant="secondary" className="mt-6 w-full">
-        {t("checkoutComingSoon")}
+      <Button href="/checkout" variant="gold" className="mt-6 w-full">
+        {t("proceedToCheckout")}
       </Button>
 
       <Button href="/products" variant="outline" className="mt-3 w-full">

@@ -76,7 +76,11 @@ export default async function ProductDetailPage({
       />
       <Container className="py-12 lg:py-16">
       <div className="grid gap-12 lg:grid-cols-2">
-        <ProductGallery images={product.images} productName={product.name} />
+        <ProductGallery
+          images={product.images}
+          productName={product.name}
+          videoUrl={product.videoUrl}
+        />
 
         <div className="space-y-6">
           <div>

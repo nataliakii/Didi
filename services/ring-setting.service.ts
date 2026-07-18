@@ -44,6 +44,7 @@ function toRingSettingSummary(setting: {
   basePrice: number;
   description?: string;
   images?: Array<{ url: string; alt?: string; isPrimary?: boolean }>;
+  videoUrl?: string;
   availableMetals?: string[];
   compatibleDiamondShapes?: string[];
   minRingSize: string;
@@ -59,6 +60,7 @@ function toRingSettingSummary(setting: {
     basePrice: setting.basePrice,
     description: setting.description,
     images: setting.images ?? [],
+    videoUrl: setting.videoUrl,
     availableMetals: (setting.availableMetals ?? []) as RingSettingSummary["availableMetals"],
     compatibleDiamondShapes: (setting.compatibleDiamondShapes ??
       []) as RingSettingSummary["compatibleDiamondShapes"],

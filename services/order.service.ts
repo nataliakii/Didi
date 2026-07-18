@@ -92,6 +92,109 @@ export async function getTotalSales(): Promise<number> {
   }
 }
 
+export async function getOrders(limit = 50): Promise<OrderSummary[]> {
+  const db = await safeConnectDB();
+  if (!db) return [];
+
+  try {
+    const orders = await Order.find()
+      .sort({ createdAt: -1 })
+      .limit(limit)
+      .lean();
+
+    return orders.map((order) =>
+      toOrderSummary(order as unknown as Parameters<typeof toOrderSummary>[0]),
+    );
+  } catch (error) {
+    console.error("getOrders error:", error);
+    return [];
+  }
+}
+
+export type AdminOrderDetail = {
+  _id: { toString(): string };
+  orderNumber: string;
+  customer: { name: string; email: string; phone?: string };
+  items: Array<{
+    quantity: number;
+    unitPrice: number;
+    totalPrice: number;
+    snapshot?: { name?: string };
+  }>;
+  subtotal: number;
+  shippingTotal?: number;
+  total: number;
+  currency?: string;
+  status: string;
+  paymentStatus: string;
+  trackingNumber?: string;
+  internalNotes?: string;
+  shippingAddress?: {
+    line1: string;
+    line2?: string;
+    city: string;
+    state?: string;
+    postalCode: string;
+    country: string;
+  };
+  shippingMethod?: {
+    productCode?: string;
+    localProductCode?: string;
+    productName?: string;
+    source?: string;
+    estimatedDelivery?: string;
+  };
+  dhlShipment?: {
+    status?: string;
+    trackingNumber?: string;
+    trackingUrl?: string;
+    lastError?: string;
+    documents?: Array<{ typeCode?: string }>;
+  };
+};
+
+export async function getOrderById(id: string): Promise<AdminOrderDetail | null> {
+  const db = await safeConnectDB();
+  if (!db) return null;
+
+  try {
+    const order = await Order.findById(id).lean();
+    if (!order || Array.isArray(order)) return null;
+    return order as unknown as AdminOrderDetail;
+  } catch (error) {
+    console.error("getOrderById error:", error);
+    return null;
+  }
+}
+
+export type UpdateOrderAdminInput = {
+  status?: string;
+  paymentStatus?: string;
+  trackingNumber?: string;
+  internalNotes?: string;
+};
+
+export async function updateOrderAdmin(
+  id: string,
+  input: UpdateOrderAdminInput,
+): Promise<AdminOrderDetail | null> {
+  const db = await safeConnectDB();
+  if (!db) return null;
+
+  try {
+    const order = await Order.findByIdAndUpdate(
+      id,
+      { $set: input },
+      { new: true, runValidators: true },
+    ).lean();
+    if (!order || Array.isArray(order)) return null;
+    return order as unknown as AdminOrderDetail;
+  } catch (error) {
+    console.error("updateOrderAdmin error:", error);
+    return null;
+  }
+}
+
 export async function getDashboardStats(): Promise<DashboardStats> {
   const [
     totalSales,

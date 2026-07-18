@@ -1,35 +1,69 @@
 "use client";
 
 import { DEFAULT_LOCALE } from "@/constants/i18n";
+import {
+  CATALOG_ROLES,
+  hasRole,
+  OPS_ROLES,
+  USER_MGMT_ROLES,
+} from "@/constants/admin-roles";
+import type { UserRole } from "@/constants/order-status";
 import { localizePath } from "@/lib/i18n";
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 
-const adminNavItems = [
-  { label: "Dashboard", href: "/admin", icon: "◻" },
-  { label: "Products", href: "/admin/products", icon: "◇" },
-  { label: "Diamonds", href: "/admin/diamonds", icon: "◆" },
-  { label: "Ring Settings", href: "/admin/ring-settings", icon: "○" },
-  { label: "Orders", href: "/admin/orders", icon: "▤" },
-  { label: "Appointments", href: "/admin/appointments", icon: "▦" },
-  { label: "Categories", href: "/admin/categories", icon: "▣" },
-  { label: "Content", href: "/admin/content", icon: "▧" },
-  { label: "Users", href: "/admin/users", icon: "▥" },
+type NavItem = {
+  label: string;
+  href: string;
+  icon: string;
+  roles: readonly UserRole[];
+};
+
+const adminNavItems: NavItem[] = [
+  { label: "Dashboard", href: "/admin", icon: "◻", roles: OPS_ROLES },
+  { label: "Products", href: "/admin/products", icon: "◇", roles: CATALOG_ROLES },
+  { label: "Diamonds", href: "/admin/diamonds", icon: "◆", roles: CATALOG_ROLES },
+  {
+    label: "Ring Settings",
+    href: "/admin/ring-settings",
+    icon: "○",
+    roles: CATALOG_ROLES,
+  },
+  { label: "Orders", href: "/admin/orders", icon: "▤", roles: OPS_ROLES },
+  {
+    label: "Appointments",
+    href: "/admin/appointments",
+    icon: "▦",
+    roles: OPS_ROLES,
+  },
+  {
+    label: "Categories",
+    href: "/admin/categories",
+    icon: "▣",
+    roles: CATALOG_ROLES,
+  },
+  { label: "Users", href: "/admin/users", icon: "▥", roles: USER_MGMT_ROLES },
 ];
 
 interface AdminSidebarProps {
+  role: UserRole;
   mobileOpen?: boolean;
   onNavigate?: () => void;
 }
 
-export function AdminSidebar({ mobileOpen, onNavigate }: AdminSidebarProps) {
+export function AdminSidebar({
+  role,
+  mobileOpen,
+  onNavigate,
+}: AdminSidebarProps) {
   const pathname = usePathname();
+  const items = adminNavItems.filter((item) => hasRole(role, item.roles));
 
   const navContent = (
     <nav className="flex flex-1 flex-col gap-1 px-3 py-4">
-      {adminNavItems.map((item) => {
+      {items.map((item) => {
         const isActive =
           item.href === "/admin"
             ? pathname === "/admin"
