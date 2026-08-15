@@ -2,10 +2,11 @@
  * Local demo/seed image paths for Asteria Diamond House.
  * Files live under public/images/demo/ — replace assets without changing code.
  *
- * Set NEXT_PUBLIC_DEMO_ASSETS_READY=true once demo files are on disk.
+ * Demo assets ship in git. Opt out with NEXT_PUBLIC_DEMO_ASSETS_READY=false.
+ * (Missing env used to hide every demo photo behind ivory placeholders on prod.)
  */
 export const DEMO_ASSETS_READY =
-  process.env.NEXT_PUBLIC_DEMO_ASSETS_READY === "true";
+  process.env.NEXT_PUBLIC_DEMO_ASSETS_READY !== "false";
 
 const DEMO_IMAGE_PREFIX = "/images/demo/";
 
@@ -13,9 +14,24 @@ export function isDemoImagePath(path?: string | null): boolean {
   return Boolean(path?.trim().startsWith(DEMO_IMAGE_PREFIX));
 }
 
+/**
+ * Demo files were compressed to .jpg; older DB rows may still store .png.
+ * Rewrite at read-time so production works without an immediate re-seed.
+ */
+export function normalizeDemoImagePath(
+  path?: string | null,
+): string | undefined {
+  const trimmed = path?.trim();
+  if (!trimmed) return undefined;
+  if (isDemoImagePath(trimmed) && /\.png$/i.test(trimmed)) {
+    return trimmed.replace(/\.png$/i, ".jpg");
+  }
+  return trimmed;
+}
+
 /** Use ivory UI placeholder instead of loading a missing demo asset. */
 export function shouldUseDemoPlaceholder(path?: string | null): boolean {
-  const trimmed = path?.trim();
+  const trimmed = normalizeDemoImagePath(path);
   if (!trimmed) return true;
   return isDemoImagePath(trimmed) && !DEMO_ASSETS_READY;
 }
@@ -167,10 +183,10 @@ export function getDemoImage(
   path?: string | null,
   fallback?: string,
 ): string {
-  const trimmed = path?.trim();
+  const trimmed = normalizeDemoImagePath(path);
   if (trimmed) return trimmed;
 
-  const trimmedFallback = fallback?.trim();
+  const trimmedFallback = normalizeDemoImagePath(fallback);
   if (trimmedFallback) return trimmedFallback;
 
   return DEMO_PLACEHOLDER_IMAGES.diamond;
