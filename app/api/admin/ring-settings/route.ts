@@ -1,5 +1,6 @@
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
+import { revalidateRingSettingCatalog } from "@/lib/cache";
 import { createAdminRingSetting } from "@/services/ring-setting-admin.service";
 import { ringSettingAdminSchema } from "@/validation/admin/ring-setting.schema";
 import { NextResponse } from "next/server";
@@ -26,6 +27,7 @@ export async function POST(request: Request) {
       );
     }
 
+    revalidateRingSettingCatalog();
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/ring-settings error:", error);

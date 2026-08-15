@@ -51,7 +51,10 @@
     "closeSearch": "Close search",
     "wishlist": "Wishlist",
     "wishlistComingSoon": "Wishlist coming soon",
-    "categoryNav": "Shop categories"
+    "categoryNav": "Shop categories",
+    "aboutUs": "About Us",
+    "switchToLight": "Switch to light theme",
+    "switchToDark": "Switch to dark theme"
   },
   "breadcrumb": {
     "navLabel": "Breadcrumb navigation",
@@ -89,6 +92,9 @@
   "home": {
     "heroEyebrow": "Asteria Diamond House",
     "heroTitle": "Certified Diamonds,\nDesigned Around You",
+    "poemLine1": "A diamond",
+    "poemLine2": "is a story",
+    "poemLine3": "kept forever.",
     "heroDescription": "Choose a certified diamond, select your setting, and create a ring with quiet confidence.",
     "exploreDiamonds": "Explore Diamonds",
     "shopDiamonds": "Shop Diamonds",
@@ -205,7 +211,16 @@
     "founderTitle": "Founder & Creative Director",
     "founderBio": "Diana Angelaki (officially Diana Koubatiadou Angelaki) is the founder of Asteria Diamond House and also the founder of Diana Lux Travel.",
     "houseTitle": "Diamonds chosen with care",
-    "houseDescription": "Asteria Diamond House offers a calm, considered path to your diamond — certified stones, expert guidance, and rings made around your story. We focus on diamonds alone, so every detail earns its place."
+    "houseDescription": "Asteria Diamond House offers a calm, considered path to your diamond — certified stones, expert guidance, and rings made around your story. We focus on diamonds alone, so every detail earns its place.",
+    "journeyEyebrow": "Our Journey",
+    "chapter1Title": "Origin",
+    "chapter1Body": "Diana Angelaki built Asteria from a life shaped by travel, craft, and quiet luxury. Alongside Diana Lux Travel, she founded a diamond house devoted to stones chosen with intention — never haste.",
+    "chapter2Title": "The House",
+    "chapter2Body": "Asteria Diamond House is focused on diamonds alone: certified stones, expert guidance, and rings made around your story. Every detail earns its place — calm, considered, and personal.",
+    "chapter3Title": "Your Story",
+    "chapter3Body": "Your ring begins with a diamond and becomes something only you could wear. Design with us, or book a private consultation — we walk the path with you.",
+    "createRingCta": "Create Your Ring",
+    "bookAppointmentCta": "Book a Consultation"
   },
   "comingSoon": {
     "metaTitle": "Coming Soon | Asteria Diamond House",

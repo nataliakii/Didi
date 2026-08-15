@@ -65,7 +65,7 @@ function BuilderDiamondCard({
           sizes="(max-width: 768px) 50vw, 33vw"
         />
         {diamond.certification?.lab && (
-          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/30 bg-white/90 px-2 py-0.5 text-[9px] tracking-[0.15em] text-brand-navy/70 uppercase backdrop-blur-sm">
+          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/30 bg-brand-surface/90 px-2 py-0.5 text-[9px] tracking-[0.15em] text-brand-text/70 uppercase backdrop-blur-sm">
             {diamond.certification.lab}
           </span>
         )}
@@ -77,7 +77,7 @@ function BuilderDiamondCard({
             <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
               {formatLabel(diamond.diamondType)} · {formatLabel(diamond.shape)}
             </p>
-            <h3 className="mt-1 font-serif text-lg text-brand-navy">
+            <h3 className="mt-1 font-serif text-lg text-brand-text">
               {diamond.carat.toFixed(2)} ct
             </h3>
           </div>
@@ -93,25 +93,25 @@ function BuilderDiamondCard({
             <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
               Cut
             </dt>
-            <dd className="font-medium text-brand-navy">{diamond.cut}</dd>
+            <dd className="font-medium text-brand-text">{diamond.cut}</dd>
           </div>
           <div>
             <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
               Color
             </dt>
-            <dd className="font-medium text-brand-navy">{diamond.color}</dd>
+            <dd className="font-medium text-brand-text">{diamond.color}</dd>
           </div>
           <div>
             <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
               Clarity
             </dt>
-            <dd className="font-medium text-brand-navy">{diamond.clarity}</dd>
+            <dd className="font-medium text-brand-text">{diamond.clarity}</dd>
           </div>
           <div>
             <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
               Report
             </dt>
-            <dd className="font-medium text-brand-navy">
+            <dd className="font-medium text-brand-text">
               {diamond.certification?.reportNumber ?? "—"}
             </dd>
           </div>

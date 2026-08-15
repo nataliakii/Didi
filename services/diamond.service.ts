@@ -1,4 +1,8 @@
 import {
+  CERTIFICATION_LABS,
+  type CertificationLab,
+} from "@/constants/certification";
+import {
   AVAILABILITY_STATUSES,
   CLARITY_SLIDER_GRADES,
   COLOR_SLIDER_GRADES,
@@ -13,9 +17,9 @@ import {
   FLUORESCENCE_SLIDER_GRADES,
 } from "@/constants/jewellery";
 import {
-  CERTIFICATION_LABS,
-  type CertificationLab,
-} from "@/constants/certification";
+  CACHE_TAGS,
+  CATALOG_REVALIDATE_SECONDS,
+} from "@/lib/cache";
 import {
   expandCutGradesForQuery,
   gradesInRange,
@@ -32,6 +36,8 @@ import type {
   PaginatedResult,
 } from "@/types";
 import mongoose, { type FilterQuery, type SortOrder } from "mongoose";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 const DEFAULT_LIMIT = 12;
 const MAX_LIMIT = 48;
@@ -386,7 +392,7 @@ function buildDiamondQuery(filters: DiamondFilters): FilterQuery<typeof Diamond>
   return query;
 }
 
-export async function getDiamonds(
+async function queryDiamonds(
   filters: DiamondFilters,
 ): Promise<PaginatedResult<DiamondSummary>> {
   const page = filters.page ?? 1;
@@ -424,7 +430,21 @@ export async function getDiamonds(
   }
 }
 
-export async function getDiamondById(id: string): Promise<DiamondDetail | null> {
+export async function getDiamonds(
+  filters: DiamondFilters,
+): Promise<PaginatedResult<DiamondSummary>> {
+  const cacheKey = JSON.stringify(filters);
+  return unstable_cache(
+    () => queryDiamonds(filters),
+    ["diamonds-list", cacheKey],
+    {
+      tags: [CACHE_TAGS.diamonds],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+}
+
+async function queryDiamondById(id: string): Promise<DiamondDetail | null> {
   const db = await safeConnectDB();
   if (!db || !mongoose.Types.ObjectId.isValid(id)) return null;
 
@@ -439,25 +459,45 @@ export async function getDiamondById(id: string): Promise<DiamondDetail | null> 
   }
 }
 
+export const getDiamondById = cache(async (id: string) => {
+  return unstable_cache(
+    () => queryDiamondById(id),
+    ["diamond-by-id", id],
+    {
+      tags: [CACHE_TAGS.diamonds, CACHE_TAGS.diamond(id)],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+});
+
 export async function getFeaturedDiamonds(
   limit = 4,
 ): Promise<DiamondSummary[]> {
-  const db = await safeConnectDB();
-  if (!db) return [];
+  return unstable_cache(
+    async () => {
+      const db = await safeConnectDB();
+      if (!db) return [];
 
-  try {
-    const diamonds = await Diamond.find({ isActive: true })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .lean();
+      try {
+        const diamonds = await Diamond.find({ isActive: true })
+          .sort({ createdAt: -1 })
+          .limit(limit)
+          .lean();
 
-    return diamonds.map((diamond) =>
-      toDiamondSummary(diamond as unknown as Parameters<typeof toDiamondSummary>[0]),
-    );
-  } catch (error) {
-    console.error("getFeaturedDiamonds error:", error);
-    return [];
-  }
+        return diamonds.map((diamond) =>
+          toDiamondSummary(diamond as unknown as Parameters<typeof toDiamondSummary>[0]),
+        );
+      } catch (error) {
+        console.error("getFeaturedDiamonds error:", error);
+        return [];
+      }
+    },
+    ["featured-diamonds", String(limit)],
+    {
+      tags: [CACHE_TAGS.diamonds],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
 }
 
 export async function getDiamondsCount(): Promise<number> {

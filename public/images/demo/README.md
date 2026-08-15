@@ -49,15 +49,28 @@ public/images/demo/
 | `oval-diamond.jpg` | Oval loose diamond |
 | `emerald-cut-diamond.jpg` | Emerald cut loose diamond |
 | `pear-diamond.jpg` | Pear shape loose diamond |
+| `marquise-diamond.jpg` | Marquise loose diamond |
+| `princess-diamond.jpg` | Princess cut loose diamond |
+| `cushion-diamond.jpg` | Cushion cut loose diamond |
+| `radiant-diamond.jpg` | Radiant cut loose diamond |
+| `asscher-diamond.jpg` | Asscher cut loose diamond |
+| `heart-diamond.jpg` | Heart shape loose diamond |
 
 ### Rings (`rings/`)
 
 | File | Usage |
 |------|--------|
 | `oval-solitaire-ring.jpg` | Oval solitaire diamond ring |
-| `round-solitaire-ring.jpg` | Round brilliant solitaire ring |
+| `round-solitaire-ring.jpg` | Round brilliant / halo solitaire ring |
+| `round-halo-ring.jpg` | Round halo pavé ring |
 | `emerald-cut-ring.jpg` | Emerald cut signature ring |
 | `hidden-halo-ring.jpg` | Hidden halo diamond ring |
+| `radiant-hidden-halo-ring.jpg` | Radiant with hidden halo |
+| `cushion-split-shank-ring.jpg` | Cushion split-shank pavé |
+| `princess-channel-ring.jpg` | Princess channel-set ring |
+| `pear-filigree-ring.jpg` | Pear filigree yellow gold |
+| `marquise-bezel-ring.jpg` | East-west marquise bezel |
+| `asscher-three-stone-ring.jpg` | Asscher three-stone ring |
 
 ### Settings (`settings/`)
 
@@ -68,11 +81,17 @@ public/images/demo/
 | `cathedral-setting.jpg` | Cathedral solitaire setting |
 | `signature-prong-setting.jpg` | Signature prong setting |
 
+### About (`about/`)
+
+| File | Usage |
+|------|--------|
+| `diana-angelaki-founder.jpg` | About page — founder portrait (Diana Angelaki) |
+
 ### Consultation (`consultation/`)
 
 | File | Usage |
 |------|--------|
-| `private-diamond-consultation.jpg` | Private consultation section |
+| `private-diamond-consultation.jpg` | Prefer personal guidance / consultation section |
 | `ring-design-consultation.jpg` | Ring design consultation |
 
 ### Placeholders (`placeholders/`)

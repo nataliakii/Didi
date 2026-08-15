@@ -53,7 +53,7 @@ export function AddCustomRingToCartButton({
           <p>Custom ring added to cart</p>
           <Link
             href="/cart"
-            className="mt-1 inline-block font-medium text-brand-navy underline underline-offset-4 hover:text-brand-charcoal/65"
+            className="mt-1 inline-block font-medium text-brand-text underline underline-offset-4 hover:text-brand-charcoal/65"
           >
             View cart
           </Link>

@@ -44,7 +44,7 @@ function FilterFields({
       />
 
       <div>
-        <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+        <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
           {tf("priceRange")}
         </p>
         <div className="grid grid-cols-2 gap-3">
@@ -63,7 +63,7 @@ function FilterFields({
               onBlur={(event) =>
                 onUpdate("minPrice", event.target.value || null)
               }
-              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-teal"
             />
           </div>
           <div className="space-y-1.5">
@@ -81,7 +81,7 @@ function FilterFields({
               onBlur={(event) =>
                 onUpdate("maxPrice", event.target.value || null)
               }
-              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+              className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-teal"
             />
           </div>
         </div>
@@ -134,11 +134,11 @@ export function RingSettingFilters({ className }: { className?: string }) {
       <div className={cn("hidden lg:block", className)}>
         <div className="sticky top-24 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-sm font-medium text-brand-navy">{tf("filters")}</h2>
+            <h2 className="text-sm font-medium text-brand-text">{tf("filters")}</h2>
             <button
               type="button"
               onClick={handleClearFilters}
-              className="text-xs text-brand-charcoal/55 hover:text-brand-navy"
+              className="text-xs text-brand-charcoal/55 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>
@@ -168,7 +168,7 @@ export function RingSettingFilters({ className }: { className?: string }) {
             <button
               type="button"
               onClick={handleClearFilters}
-              className="text-xs text-brand-charcoal/55 hover:text-brand-navy"
+              className="text-xs text-brand-charcoal/55 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>

@@ -12,6 +12,7 @@ import {
   ProductSortSelect,
 } from "@/components/product/ProductFilters";
 import { ProductGrid } from "@/components/product/ProductGrid";
+import { SkeletonGrid } from "@/components/ui/SkeletonCard";
 import { generateLocalizedMetadata } from "@/lib/i18n-metadata";
 import {
   getActiveCategories,
@@ -48,6 +49,69 @@ function CatalogControlsFallback() {
   );
 }
 
+async function ProductsCatalog({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const t = await getTranslations("products");
+  const tf = await getTranslations("filters");
+  const filters = parseProductFilters(searchParams);
+
+  const [result, categories] = await Promise.all([
+    getProducts(filters),
+    getActiveCategories(),
+  ]);
+
+  return (
+    <>
+      <div className="mt-8">
+        <Suspense fallback={null}>
+          <StyleCategoryCarousel label={tf("styleCategory")} />
+        </Suspense>
+      </div>
+
+      <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
+        <aside className="w-full shrink-0 lg:w-72">
+          <Suspense
+            fallback={
+              <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
+            }
+          >
+            <ProductFilters categories={categories} />
+          </Suspense>
+        </aside>
+
+        <div className="min-w-0 flex-1 space-y-6">
+          <Suspense fallback={<CatalogControlsFallback />}>
+            <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+              <ProductSearchBar />
+              <ProductSortSelect />
+            </div>
+            <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
+              <p className="text-sm text-brand-charcoal/60">
+                {t("resultsCount", { count: result.total })}
+              </p>
+              <ActiveFilterChips
+                configs={PRODUCT_ACTIVE_FILTER_CONFIGS}
+                resetLabel={tf("resetAll")}
+              />
+            </div>
+          </Suspense>
+
+          <ProductGrid products={result.items} />
+
+          <Pagination
+            currentPage={result.page}
+            totalPages={result.totalPages}
+            searchParams={searchParams}
+          />
+        </div>
+      </div>
+    </>
+  );
+}
+
 export default async function ProductsPage({
   params,
   searchParams,
@@ -57,14 +121,7 @@ export default async function ProductsPage({
 
   const t = await getTranslations("products");
   const tb = await getTranslations("breadcrumb");
-  const tf = await getTranslations("filters");
   const resolvedParams = await searchParams;
-  const filters = parseProductFilters(resolvedParams);
-
-  const [result, categories] = await Promise.all([
-    getProducts(filters),
-    getActiveCategories(),
-  ]);
 
   return (
     <>
@@ -77,54 +134,20 @@ export default async function ProductsPage({
       <Container className="py-10 lg:py-14">
         <div className="max-w-2xl">
           <p className="section-eyebrow">{t("collectionEyebrow")}</p>
-          <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
+          <h1 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">
             {t("pageTitle")}
           </h1>
         </div>
 
-        <div className="mt-8">
-          <Suspense fallback={null}>
-            <StyleCategoryCarousel label={tf("styleCategory")} />
-          </Suspense>
-        </div>
-
-        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-          <aside className="w-full shrink-0 lg:w-72">
-            <Suspense
-              fallback={
-                <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
-              }
-            >
-              <ProductFilters categories={categories} />
-            </Suspense>
-          </aside>
-
-          <div className="min-w-0 flex-1 space-y-6">
-            <Suspense fallback={<CatalogControlsFallback />}>
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <ProductSearchBar />
-                <ProductSortSelect />
-              </div>
-              <div className="flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-                <p className="text-sm text-brand-charcoal/60">
-                  {t("resultsCount", { count: result.total })}
-                </p>
-                <ActiveFilterChips
-                  configs={PRODUCT_ACTIVE_FILTER_CONFIGS}
-                  resetLabel={tf("resetAll")}
-                />
-              </div>
-            </Suspense>
-
-            <ProductGrid products={result.items} />
-
-            <Pagination
-              currentPage={result.page}
-              totalPages={result.totalPages}
-              searchParams={resolvedParams}
-            />
-          </div>
-        </div>
+        <Suspense
+          fallback={
+            <div className="mt-10">
+              <SkeletonGrid count={9} />
+            </div>
+          }
+        >
+          <ProductsCatalog searchParams={resolvedParams} />
+        </Suspense>
       </Container>
     </>
   );

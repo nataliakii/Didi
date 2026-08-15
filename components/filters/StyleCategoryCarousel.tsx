@@ -41,7 +41,7 @@ export function StyleCategoryCarousel({
 
   return (
     <div className={cn("border-b border-brand-gold/10 pb-5", className)}>
-      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         {label}
       </p>
       <div className="-mx-1 flex gap-2 overflow-x-auto px-1 pb-1 [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
@@ -53,7 +53,7 @@ export function StyleCategoryCarousel({
             "shrink-0 snap-start rounded-sm border px-4 py-2 font-serif text-sm transition-colors",
             !activeStyle
               ? "border-brand-navy bg-brand-navy text-brand-gold"
-              : "border-brand-gold/25 bg-white text-brand-navy/70 hover:border-brand-gold/50",
+              : "border-brand-gold/25 bg-brand-surface text-brand-text/70 hover:border-brand-gold/50",
           )}
         >
           {tf("allStyles")}
@@ -73,7 +73,7 @@ export function StyleCategoryCarousel({
                 "shrink-0 snap-start rounded-sm border px-4 py-2 font-serif text-sm whitespace-nowrap transition-colors",
                 isActive
                   ? "border-brand-navy bg-brand-navy text-brand-gold"
-                  : "border-brand-gold/25 bg-white text-brand-navy/70 hover:border-brand-gold/50",
+                  : "border-brand-gold/25 bg-brand-surface text-brand-text/70 hover:border-brand-gold/50",
               )}
             >
               {styleLabel}

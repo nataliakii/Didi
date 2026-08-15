@@ -87,7 +87,7 @@ export default async function ProductDetailPage({
             <p className="text-xs tracking-widest text-brand-charcoal/45 uppercase">
               {formatLabel(product.productType)}
             </p>
-            <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
+            <h1 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">
               {product.name}
             </h1>
             {product.shortDescription && (
@@ -124,7 +124,7 @@ export default async function ProductDetailPage({
               {product.attributes.metal && product.attributes.metal.length > 0 && (
                 <div>
                   <dt className="text-brand-charcoal/45">Metal Options</dt>
-                  <dd className="mt-1 font-medium text-brand-navy">
+                  <dd className="mt-1 font-medium text-brand-text">
                     {product.attributes.metal.map(formatLabel).join(", ")}
                   </dd>
                 </div>
@@ -132,7 +132,7 @@ export default async function ProductDetailPage({
               {product.attributes.stoneType && (
                 <div>
                   <dt className="text-brand-charcoal/45">Stone Type</dt>
-                  <dd className="mt-1 font-medium text-brand-navy">
+                  <dd className="mt-1 font-medium text-brand-text">
                     {formatLabel(product.attributes.stoneType)}
                   </dd>
                 </div>
@@ -140,7 +140,7 @@ export default async function ProductDetailPage({
               {product.attributes.diamondShape && (
                 <div>
                   <dt className="text-brand-charcoal/45">Diamond Shape</dt>
-                  <dd className="mt-1 font-medium text-brand-navy">
+                  <dd className="mt-1 font-medium text-brand-text">
                     {formatLabel(product.attributes.diamondShape)}
                   </dd>
                 </div>
@@ -148,7 +148,7 @@ export default async function ProductDetailPage({
               {product.attributes.style && (
                 <div>
                   <dt className="text-brand-charcoal/45">Style</dt>
-                  <dd className="mt-1 font-medium text-brand-navy">
+                  <dd className="mt-1 font-medium text-brand-text">
                     {formatLabel(product.attributes.style)}
                   </dd>
                 </div>
@@ -157,14 +157,14 @@ export default async function ProductDetailPage({
                 product.attributes.ringSizes.length > 0 && (
                   <div className="col-span-2">
                     <dt className="text-brand-charcoal/45">Ring Sizes</dt>
-                    <dd className="mt-1 font-medium text-brand-navy">
+                    <dd className="mt-1 font-medium text-brand-text">
                       {product.attributes.ringSizes.join(", ")}
                     </dd>
                   </div>
                 )}
               <div>
                 <dt className="text-brand-charcoal/45">Stock</dt>
-                <dd className="mt-1 font-medium text-brand-navy">
+                <dd className="mt-1 font-medium text-brand-text">
                   {product.stockQuantity > 0
                     ? `${product.stockQuantity} available`
                     : "Made to order"}
@@ -173,7 +173,7 @@ export default async function ProductDetailPage({
               {product.productionTime && (
                 <div>
                   <dt className="text-brand-charcoal/45">Production Time</dt>
-                  <dd className="mt-1 font-medium text-brand-navy">
+                  <dd className="mt-1 font-medium text-brand-text">
                     {product.productionTime}
                   </dd>
                 </div>
@@ -198,7 +198,7 @@ export default async function ProductDetailPage({
 
       {product.description && (
         <section className="mt-16 max-w-3xl">
-          <h2 className="font-serif text-2xl text-brand-navy">Description</h2>
+          <h2 className="font-serif text-2xl text-brand-text">Description</h2>
           <div className="mt-4 whitespace-pre-line text-brand-charcoal/65 leading-relaxed">
             {product.description}
           </div>
@@ -207,7 +207,7 @@ export default async function ProductDetailPage({
 
       {relatedProducts.length > 0 && (
         <section className="mt-16 border-t border-brand-gold/20 pt-16">
-          <h2 className="font-serif text-2xl text-brand-navy">
+          <h2 className="font-serif text-2xl text-brand-text">
             Related Products
           </h2>
           <div className="mt-8">

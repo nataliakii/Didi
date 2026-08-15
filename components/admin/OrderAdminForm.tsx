@@ -6,7 +6,7 @@ import {
   PAYMENT_STATUSES,
   PAYMENT_STATUS_LABELS,
 } from "@/constants/order-status";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -25,7 +25,7 @@ export function OrderAdminForm({
   trackingNumber?: string;
   internalNotes?: string;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [formStatus, setFormStatus] = useState(status);
   const [formPayment, setFormPayment] = useState(paymentStatus);
   const [formTracking, setFormTracking] = useState(trackingNumber ?? "");
@@ -57,7 +57,7 @@ export function OrderAdminForm({
         return;
       }
       setSaved(true);
-      router.refresh();
+      refetch();
     } catch {
       setError("Could not save order.");
     } finally {

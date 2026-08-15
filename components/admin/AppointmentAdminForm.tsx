@@ -4,7 +4,7 @@ import {
   APPOINTMENT_STATUSES,
   APPOINTMENT_STATUS_LABELS,
 } from "@/constants/order-status";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -19,7 +19,7 @@ export function AppointmentAdminForm({
   status: string;
   internalNotes?: string;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [formStatus, setFormStatus] = useState(status);
   const [formNotes, setFormNotes] = useState(internalNotes ?? "");
   const [loading, setLoading] = useState(false);
@@ -50,7 +50,7 @@ export function AppointmentAdminForm({
         return;
       }
       setSaved(true);
-      router.refresh();
+      refetch();
     } catch {
       setError("Could not save appointment.");
     } finally {

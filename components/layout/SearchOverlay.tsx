@@ -55,12 +55,12 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
     >
       <form
         key="search-overlay-form"
-        className="w-full max-w-xl rounded-sm border border-brand-gold/30 bg-brand-ivory p-4 shadow-none"
+        className="w-full max-w-xl rounded-sm border border-brand-gold/30 bg-brand-bg p-4 shadow-none"
         onSubmit={handleSubmit}
         onClick={(event) => event.stopPropagation()}
       >
         <div className="flex items-center gap-3">
-          <SearchIcon className="shrink-0 text-brand-navy/50" />
+          <SearchIcon className="shrink-0 text-brand-text/50" />
           <input
             ref={inputRef}
             type="search"
@@ -68,14 +68,14 @@ export function SearchOverlay({ open, onClose }: SearchOverlayProps) {
             defaultValue=""
             placeholder={t("searchPlaceholder")}
             className={cn(
-              "min-w-0 flex-1 bg-transparent font-serif text-lg text-brand-navy",
-              "placeholder:text-brand-navy/40 focus:outline-none",
+              "min-w-0 flex-1 bg-transparent font-serif text-lg text-brand-text",
+              "placeholder:text-brand-text/40 focus:outline-none",
             )}
           />
           <button
             type="button"
             onClick={onClose}
-            className="rounded-sm p-1.5 text-brand-navy/60 hover:text-brand-navy"
+            className="rounded-sm p-1.5 text-brand-text/60 hover:text-brand-text"
             aria-label={t("closeSearch")}
           >
             <CloseIcon className="h-5 w-5" />

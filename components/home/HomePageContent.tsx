@@ -2,6 +2,7 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { EmptyState } from "@/components/ui/EmptyState";
+import { PoemHero } from "@/components/home/PoemHero";
 import { ShopDiamondsByShape } from "@/components/home/ShopDiamondsByShape";
 import { ShopRingsByCategory } from "@/components/home/ShopRingsByCategory";
 import { ProductCard } from "@/components/product/ProductCard";
@@ -9,7 +10,6 @@ import {
   DEMO_CONSULTATION_IMAGES,
   DEMO_CREATE_RING_IMAGES,
   DEMO_DIAMOND_IMAGES,
-  DEMO_HERO_IMAGES,
   DEMO_RING_IMAGES,
   DEMO_SETTING_IMAGES,
 } from "@/constants/demo-images";
@@ -52,7 +52,7 @@ function TrustStripItem({ label }: { label: string }) {
         className="h-px w-4 shrink-0 bg-brand-gold/40 sm:w-5"
         aria-hidden
       />
-      <span className="text-[11px] tracking-[0.08em] text-brand-navy/65 uppercase sm:text-xs">
+      <span className="text-[11px] tracking-[0.08em] text-brand-text/65 uppercase sm:text-xs">
         {label}
       </span>
     </div>
@@ -138,45 +138,9 @@ export async function HomePageContent() {
 
   return (
     <>
-      <section className="relative flex min-h-[70vh] items-center bg-brand-navy sm:min-h-[75vh]">
-        <div className="absolute inset-0">
-          <DemoImage
-            src={DEMO_HERO_IMAGES.diamondMinimal}
-            fallback={DEMO_HERO_IMAGES.solitaireRing}
-            alt={t("heroImageAlt")}
-            placeholderKind="diamond"
-            fill
-            className="object-cover object-[center_35%] opacity-40 sm:object-center"
-            priority
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-b from-brand-navy/80 via-brand-navy/60 to-brand-navy/95" />
-        </div>
-        <Container className="relative py-20 text-center sm:py-28">
-          <p className="section-eyebrow text-brand-gold">{t("heroEyebrow")}</p>
-          <h1 className="mx-auto mt-4 max-w-3xl font-serif text-4xl leading-tight text-brand-ivory whitespace-pre-line sm:text-5xl lg:text-[3.25rem] lg:leading-tight">
-            {t("heroTitle")}
-          </h1>
-          <p className="mx-auto mt-5 max-w-md text-base leading-relaxed text-brand-ivory/75 sm:text-lg">
-            {t("heroDescription")}
-          </p>
-          <div className="mt-9 flex flex-col items-stretch justify-center gap-3 px-4 sm:flex-row sm:items-center sm:px-0">
-            <Button href="/create-ring" variant="gold" size="lg" className="w-full sm:w-auto sm:min-w-[200px]">
-              {t("createYourRing")}
-            </Button>
-            <Button
-              href="/diamonds"
-              variant="outline"
-              size="lg"
-              className="w-full border-brand-gold/80 text-brand-ivory hover:bg-brand-gold/10 sm:w-auto sm:min-w-[200px]"
-            >
-              {t("shopDiamonds")}
-            </Button>
-          </div>
-        </Container>
-      </section>
+      <PoemHero />
 
-      <section className="border-b border-brand-gold/15 bg-brand-ivory py-6">
+      <section className="border-b border-brand-gold/15 bg-brand-bg py-6">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {trustItems.map((item) => (
@@ -194,7 +158,7 @@ export async function HomePageContent() {
         <Container>
           <div className="text-center">
             <p className="section-eyebrow">{t("collectionsEyebrow")}</p>
-            <h2 className="mt-2 font-serif text-3xl text-brand-navy">
+            <h2 className="mt-2 font-serif text-3xl text-brand-text">
               {t("featuredCategories")}
             </h2>
           </div>
@@ -219,13 +183,13 @@ export async function HomePageContent() {
           <div className="flex items-end justify-between">
             <div>
               <p className="section-eyebrow">{t("curatedEyebrow")}</p>
-              <h2 className="mt-2 font-serif text-3xl text-brand-navy">
+              <h2 className="mt-2 font-serif text-3xl text-brand-text">
                 {t("featuredProducts")}
               </h2>
             </div>
             <Link
               href="/products"
-              className="hidden text-sm text-brand-navy/70 transition-colors hover:text-brand-gold sm:block"
+              className="hidden text-sm text-brand-text/70 transition-colors hover:text-brand-gold sm:block"
             >
               {tCommon("viewAll")}
             </Link>
@@ -264,7 +228,7 @@ export async function HomePageContent() {
             </div>
             <div>
               <p className="section-eyebrow">{t("consultationEyebrow")}</p>
-              <h2 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
+              <h2 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">
                 {t("appointmentTitle")}
               </h2>
               <p className="mt-4 max-w-md text-base leading-relaxed text-brand-charcoal/70">
@@ -284,13 +248,13 @@ export async function HomePageContent() {
         <Container>
           <div className="text-center">
             <p className="section-eyebrow">{t("testimonialsEyebrow")}</p>
-            <h2 className="mt-2 font-serif text-xl text-brand-navy sm:text-2xl">
+            <h2 className="mt-2 font-serif text-xl text-brand-text sm:text-2xl">
               {t("testimonialsTitle")}
             </h2>
           </div>
           <div className="mt-6 grid gap-5 sm:grid-cols-3">
             {reviews.map((review) => (
-              <blockquote key={review.name} className="rounded-sm border border-brand-gold/15 bg-white p-4">
+              <blockquote key={review.name} className="rounded-sm border border-brand-gold/15 bg-brand-surface p-4">
                 <div className="flex gap-0.5 text-brand-gold/80">
                   {Array.from({ length: review.rating }).map((_, i) => (
                     <span key={i} className="text-sm">
@@ -301,7 +265,7 @@ export async function HomePageContent() {
                 <p className="mt-3 text-sm leading-relaxed text-brand-charcoal/70 line-clamp-4">
                   &ldquo;{review.text}&rdquo;
                 </p>
-                <footer className="mt-3 text-sm text-brand-navy/80">
+                <footer className="mt-3 text-sm text-brand-text/80">
                   {review.name}
                 </footer>
               </blockquote>
@@ -314,14 +278,14 @@ export async function HomePageContent() {
         <Container>
           <div className="text-center">
             <p className="section-eyebrow">{t("faqEyebrow")}</p>
-            <h2 className="mt-2 font-serif text-xl text-brand-navy sm:text-2xl">
+            <h2 className="mt-2 font-serif text-xl text-brand-text sm:text-2xl">
               {t("faqTitle")}
             </h2>
           </div>
           <div className="mx-auto mt-6 max-w-xl divide-y divide-brand-gold/15">
             {faqs.map((faq) => (
               <details key={faq.question} className="group py-4">
-                <summary className="cursor-pointer list-none text-sm font-medium text-brand-navy">
+                <summary className="cursor-pointer list-none text-sm font-medium text-brand-text">
                   {faq.question}
                   <span className="float-right text-brand-gold/80 transition-transform group-open:rotate-45">
                     +

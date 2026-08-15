@@ -1,3 +1,4 @@
+import { revalidateProductCatalog } from "@/lib/cache";
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
 import {
@@ -28,6 +29,7 @@ export async function PUT(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Product not found." }, { status: 404 });
     }
 
+    revalidateProductCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("PUT /api/admin/products/[id] error:", error);
@@ -48,6 +50,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
     if (!ok) {
       return NextResponse.json({ error: "Product not found." }, { status: 404 });
     }
+    revalidateProductCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("DELETE /api/admin/products/[id] error:", error);

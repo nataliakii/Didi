@@ -45,7 +45,7 @@ function GuideList({
               "rounded-sm border px-2 py-1 text-xs",
               grade === focus
                 ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                : "border-brand-gold/25 text-brand-navy/70",
+                : "border-brand-gold/25 text-brand-text/70",
             )}
           >
             {grade}
@@ -94,18 +94,18 @@ export function GradeInfoModal({
         role="dialog"
         aria-modal="true"
         aria-labelledby="grade-info-title"
-        className="relative z-10 max-h-[85vh] w-full max-w-md overflow-y-auto rounded-sm border border-brand-gold/25 bg-white p-6 shadow-xl"
+        className="relative z-10 max-h-[85vh] w-full max-w-md overflow-y-auto rounded-sm border border-brand-gold/25 bg-brand-surface p-6 shadow-xl"
       >
         <button
           type="button"
           onClick={onClose}
-          className="absolute top-3 right-3 text-sm text-brand-charcoal/45 hover:text-brand-navy"
+          className="absolute top-3 right-3 text-sm text-brand-charcoal/45 hover:text-brand-text"
         >
           ✕
         </button>
         <h2
           id="grade-info-title"
-          className="pr-8 font-serif text-2xl text-brand-navy"
+          className="pr-8 font-serif text-2xl text-brand-text"
         >
           {copy.title}
         </h2>
@@ -136,14 +136,14 @@ export function GradeInfoModal({
         )}
         {topic === "lwRatio" && (
           <div className="mt-5">
-            <p className="text-xs font-medium tracking-[0.16em] text-brand-navy/60 uppercase">
+            <p className="text-xs font-medium tracking-[0.16em] text-brand-text/60 uppercase">
               Popular ratios by shape
             </p>
             <dl className="mt-3 space-y-2 text-sm">
               {Object.entries(POPULAR_LW_RATIOS).map(([shape, ratio]) => (
                 <div key={shape} className="flex justify-between gap-4">
                   <dt className="text-brand-charcoal/65">{shape}</dt>
-                  <dd className="font-medium text-brand-navy">{ratio}</dd>
+                  <dd className="font-medium text-brand-text">{ratio}</dd>
                 </div>
               ))}
             </dl>

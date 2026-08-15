@@ -35,7 +35,7 @@ export async function RingBuilderStart() {
     <Container className="py-10 lg:py-14">
       <div className="mx-auto max-w-2xl text-center">
         <p className="section-eyebrow">{t("builderEyebrow")}</p>
-        <h1 className="mt-3 font-serif text-3xl text-brand-navy sm:text-4xl lg:text-5xl">
+        <h1 className="mt-3 font-serif text-3xl text-brand-text sm:text-4xl lg:text-5xl">
           {t("startTitle")}
         </h1>
         <p className="mt-4 text-base leading-relaxed text-brand-charcoal/65">
@@ -75,7 +75,7 @@ export async function RingBuilderStart() {
       </div>
 
       <div className="mx-auto mt-16 max-w-4xl border-t border-brand-gold/20 pt-12">
-        <h2 className="text-center font-serif text-2xl text-brand-navy">
+        <h2 className="text-center font-serif text-2xl text-brand-text">
           {t("howItWorks")}
         </h2>
         <ol className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
@@ -84,7 +84,7 @@ export async function RingBuilderStart() {
               <span className="inline-flex h-8 w-8 items-center justify-center rounded-full bg-brand-navy text-xs font-medium text-brand-gold">
                 {step.n}
               </span>
-              <h3 className="mt-3 font-serif text-lg text-brand-navy">
+              <h3 className="mt-3 font-serif text-lg text-brand-text">
                 {t(step.titleKey)}
               </h3>
               <p className="mt-1.5 text-sm leading-relaxed text-brand-charcoal/60">

@@ -3,6 +3,10 @@ import {
   METALS,
   RING_STYLES,
 } from "@/constants/jewellery";
+import {
+  CACHE_TAGS,
+  CATALOG_REVALIDATE_SECONDS,
+} from "@/lib/cache";
 import { safeConnectDB } from "@/lib/db";
 import { getParam, type SearchParamValue } from "@/lib/searchParams";
 import { RingSetting } from "@/models/RingSetting";
@@ -13,6 +17,8 @@ import type {
   RingSettingSummary,
 } from "@/types";
 import mongoose, { type FilterQuery, type SortOrder } from "mongoose";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 const DEFAULT_LIMIT = 12;
 const MAX_LIMIT = 48;
@@ -122,7 +128,7 @@ function buildRingSettingQuery(
   return query;
 }
 
-export async function getRingSettings(
+async function queryRingSettings(
   filters: RingSettingFilters,
 ): Promise<PaginatedResult<RingSettingSummary>> {
   const page = filters.page ?? 1;
@@ -162,7 +168,21 @@ export async function getRingSettings(
   }
 }
 
-export async function getRingSettingById(
+export async function getRingSettings(
+  filters: RingSettingFilters,
+): Promise<PaginatedResult<RingSettingSummary>> {
+  const cacheKey = JSON.stringify(filters);
+  return unstable_cache(
+    () => queryRingSettings(filters),
+    ["ring-settings-list", cacheKey],
+    {
+      tags: [CACHE_TAGS.ringSettings],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+}
+
+async function queryRingSettingById(
   id: string,
 ): Promise<RingSettingDetail | null> {
   const db = await safeConnectDB();
@@ -185,28 +205,48 @@ export async function getRingSettingById(
   }
 }
 
+export const getRingSettingById = cache(async (id: string) => {
+  return unstable_cache(
+    () => queryRingSettingById(id),
+    ["ring-setting-by-id", id],
+    {
+      tags: [CACHE_TAGS.ringSettings, CACHE_TAGS.ringSetting(id)],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+});
+
 export async function getFeaturedRingSettings(
   limit = 4,
 ): Promise<RingSettingSummary[]> {
-  const db = await safeConnectDB();
-  if (!db) return [];
+  return unstable_cache(
+    async () => {
+      const db = await safeConnectDB();
+      if (!db) return [];
 
-  try {
-    const settings = await RingSetting.find({
-      status: "published",
-      isFeatured: true,
-    })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .lean();
+      try {
+        const settings = await RingSetting.find({
+          status: "published",
+          isFeatured: true,
+        })
+          .sort({ createdAt: -1 })
+          .limit(limit)
+          .lean();
 
-    return settings.map((setting) =>
-      toRingSettingSummary(
-        setting as unknown as Parameters<typeof toRingSettingSummary>[0],
-      ),
-    );
-  } catch (error) {
-    console.error("getFeaturedRingSettings error:", error);
-    return [];
-  }
+        return settings.map((setting) =>
+          toRingSettingSummary(
+            setting as unknown as Parameters<typeof toRingSettingSummary>[0],
+          ),
+        );
+      } catch (error) {
+        console.error("getFeaturedRingSettings error:", error);
+        return [];
+      }
+    },
+    ["featured-ring-settings", String(limit)],
+    {
+      tags: [CACHE_TAGS.ringSettings],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
 }

@@ -39,7 +39,7 @@ export default async function CheckoutPage({
       />
       <Container className="py-12 lg:py-16">
         <div className="max-w-2xl">
-          <h1 className="font-serif text-3xl text-brand-navy sm:text-4xl">
+          <h1 className="font-serif text-3xl text-brand-text sm:text-4xl">
             {t("pageTitle")}
           </h1>
           <p className="mt-4 text-brand-charcoal/70">{t("pageDescription")}</p>

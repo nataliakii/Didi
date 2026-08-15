@@ -7,7 +7,7 @@ import {
   RING_STYLES,
 } from "@/constants/jewellery";
 import { formatLabel } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -41,7 +41,7 @@ export function ProductAdminForm({
   initial?: Partial<ProductFormValues>;
   categoryOptions?: Array<{ _id: string; name: string }>;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [values, setValues] = useState<ProductFormValues>({
     name: initial?.name ?? "",
     slug: initial?.slug ?? "",
@@ -108,8 +108,7 @@ export function ProductAdminForm({
         setError(data.error ?? "Could not save product.");
         return;
       }
-      router.push(`/admin/products/${productId ?? data.id}`);
-      router.refresh();
+      refetch(`/admin/products/${productId ?? data.id}`);
     } catch {
       setError("Could not save product.");
     } finally {
@@ -128,8 +127,7 @@ export function ProductAdminForm({
         setError("Could not delete product.");
         return;
       }
-      router.push("/admin/products");
-      router.refresh();
+      refetch("/admin/products");
     } catch {
       setError("Could not delete product.");
     } finally {

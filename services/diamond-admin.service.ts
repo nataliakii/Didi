@@ -87,6 +87,7 @@ export async function getAdminDiamonds(): Promise<AdminDiamondSummary[]> {
   try {
     const diamonds = await Diamond.find()
       .sort({ updatedAt: -1 })
+      .limit(500)
       .lean();
 
     return diamonds.map((diamond) =>

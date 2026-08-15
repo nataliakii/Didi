@@ -51,7 +51,10 @@
     "closeSearch": "Close search",
     "wishlist": "Wishlist",
     "wishlistComingSoon": "Wishlist coming soon",
-    "categoryNav": "Shop categories"
+    "categoryNav": "Shop categories",
+    "aboutUs": "Über uns",
+    "switchToLight": "Zum hellen Design wechseln",
+    "switchToDark": "Zum dunklen Design wechseln"
   },
   "footer": {
     "description": "A refined diamond house — certified loose diamonds, custom engagement rings, and private consultations.",
@@ -64,7 +67,7 @@
     "bookAppointment": "Book Appointment",
     "ringSizeGuide": "Ring Size Guide",
     "diamondGuide": "Diamond Guide",
-    "aboutUs": "About Us",
+    "aboutUs": "Über uns",
     "deliveryInfo": "Delivery Info",
     "returnsPolicy": "Returns Policy",
     "contact": "Contact",
@@ -75,7 +78,7 @@
   "home": {
     "heroEyebrow": "Asteria Diamond House",
     "heroTitle": "Certified Diamonds,\nDesigned Around You",
-    "heroDescription": "Choose a certified diamond, select your setting, and create a ring with quiet confidence.",
+    "heroDescription": "Wählen Sie einen zertifizierten Diamanten, Ihre Fassung und gestalten Sie einen Ring mit ruhiger Gewissheit.",
     "exploreDiamonds": "Explore Diamonds",
     "shopDiamonds": "Shop Diamonds",
     "createYourRing": "Create Your Ring",
@@ -181,17 +184,29 @@
       "createRing": "Create Your Ring",
       "settings": "Ring Settings",
       "diamondRings": "All Diamond Rings"
-    }
+    },
+    "poemLine1": "Ein Diamant",
+    "poemLine2": "ist eine Geschichte",
+    "poemLine3": "für immer bewahrt."
   },
   "about": {
-    "pageTitle": "About Us",
-    "pageDescription": "Learn about Asteria Diamond House and its founder, Diana Angelaki.",
+    "pageTitle": "Über uns",
+    "pageDescription": "Erfahren Sie mehr über Asteria Diamond House und die Gründerin Diana Angelaki.",
     "eyebrow": "Asteria Diamond House",
     "founderName": "Diana Angelaki",
-    "founderTitle": "Founder & Creative Director",
-    "founderBio": "Diana Angelaki (officially Diana Koubatiadou Angelaki) is the founder of Asteria Diamond House and also the founder of Diana Lux Travel.",
-    "houseTitle": "Diamonds chosen with care",
-    "houseDescription": "Asteria Diamond House offers a calm, considered path to your diamond — certified stones, expert guidance, and rings made around your story. We focus on diamonds alone, so every detail earns its place."
+    "founderTitle": "Gründerin & Creative Director",
+    "founderBio": "Diana Angelaki (offiziell Diana Koubatiadou Angelaki) ist die Gründerin von Asteria Diamond House und auch die Gründerin von Diana Lux Travel.",
+    "houseTitle": "Diamanten mit Sorgfalt gewählt",
+    "houseDescription": "Asteria Diamond House bietet einen ruhigen, durchdachten Weg zu Ihrem Diamanten — zertifizierte Steine, fachkundige Beratung und Ringe um Ihre Geschichte. Wir konzentrieren uns allein auf Diamanten, damit jedes Detail seinen Platz verdient.",
+    "journeyEyebrow": "Unsere Reise",
+    "chapter1Title": "Ursprung",
+    "chapter1Body": "Diana Angelaki hat Asteria aus einem Leben geformt, das von Reisen, Handwerk und stillem Luxus geprägt ist. Neben Diana Lux Travel gründete sie ein Diamanthaus für Steine mit Absicht — nie in Eile.",
+    "chapter2Title": "Das Haus",
+    "chapter2Body": "Asteria Diamond House widmet sich allein Diamanten: zertifizierte Steine, fachkundige Beratung und Ringe um Ihre Geschichte. Jedes Detail hat seinen Platz — ruhig, durchdacht und persönlich.",
+    "chapter3Title": "Ihre Geschichte",
+    "chapter3Body": "Ihr Ring beginnt mit einem Diamanten und wird zu etwas, das nur Sie tragen können. Gestalten Sie mit uns oder buchen Sie eine private Beratung — wir gehen den Weg mit Ihnen.",
+    "createRingCta": "Ring gestalten",
+    "bookAppointmentCta": "Beratung buchen"
   },
   "products": {
     "collectionEyebrow": "Diamond Rings",
@@ -469,8 +484,8 @@
     "cartDescription": "Review your diamond and custom ring selections.",
     "appointmentTitle": "Book a Consultation | Diamond Specialist",
     "appointmentDescription": "Book a diamond or custom ring consultation with our specialists.",
-    "aboutTitle": "About Us | Asteria Diamond House",
-    "aboutDescription": "Meet Diana Angelaki, founder of Asteria Diamond House — certified diamonds, custom rings, and quiet luxury.",
+    "aboutTitle": "Über uns | Asteria Diamond House",
+    "aboutDescription": "Lernen Sie Diana Angelaki kennen, Gründerin von Asteria Diamond House — zertifizierte Diamanten, individuelle Ringe und stiller Luxus.",
     "checkoutTitle": "Checkout | Asteria Diamond House",
     "checkoutDescription": "Secure checkout powered by Viva.com for certified diamonds and custom rings."
   },
@@ -485,7 +500,7 @@
     "appointments": "Appointments",
     "looseDiamonds": "Loose Diamonds",
     "navLabel": "Breadcrumb navigation",
-    "about": "About Us",
+    "about": "Über uns",
     "checkout": "Checkout"
   },
   "comingSoon": {

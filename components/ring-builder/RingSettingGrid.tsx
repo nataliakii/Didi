@@ -25,7 +25,7 @@ export function RingSettingGrid({
     return (
       <EmptyState
         title="No ring settings found"
-        description="Try adjusting your filters to find available settings."
+        description="MongoDB is unavailable or the catalogue is empty. Whitelist your IP in Atlas, then run npm run seed."
       />
     );
   }

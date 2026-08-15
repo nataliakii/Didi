@@ -29,16 +29,16 @@ export function PriceDisplay({
       {hasSale ? (
         <>
           <span
-            className={cn("font-medium text-brand-navy", sizeStyles[size])}
+            className={cn("font-medium text-brand-gold", sizeStyles[size])}
           >
             {formatPrice(salePrice, currency)}
           </span>
-          <span className="text-sm text-brand-charcoal/40 line-through">
+          <span className="text-sm text-brand-muted line-through">
             {formatPrice(price, currency)}
           </span>
         </>
       ) : (
-        <span className={cn("font-medium text-brand-navy", sizeStyles[size])}>
+        <span className={cn("font-medium text-brand-gold", sizeStyles[size])}>
           {formatPrice(price, currency)}
         </span>
       )}

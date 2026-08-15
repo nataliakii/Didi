@@ -2,6 +2,7 @@ import {
   CERTIFICATION_LABS,
   type CertificationLab,
 } from "@/constants/certification";
+import { revalidateDiamondCatalog } from "@/lib/cache";
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
 import {
@@ -67,6 +68,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Diamond not found." }, { status: 404 });
     }
 
+    revalidateDiamondCatalog();
     return NextResponse.json({
       certification,
       message: "Grading report details saved.",

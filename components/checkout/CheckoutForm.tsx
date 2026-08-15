@@ -228,16 +228,16 @@ export function CheckoutForm() {
   }
 
   const fieldClass =
-    "mt-1.5 w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50";
+    "mt-1.5 w-full rounded-sm border border-brand-gold/30 bg-brand-surface px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50";
 
   return (
     <form onSubmit={handleSubmit} className="grid gap-10 lg:grid-cols-[1fr_320px] lg:items-start">
       <div className="space-y-8">
         <section className="panel-luxury p-6">
-          <h2 className="font-serif text-xl text-brand-navy">{t("contactTitle")}</h2>
+          <h2 className="font-serif text-xl text-brand-text">{t("contactTitle")}</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className="block text-sm sm:col-span-2">
-              <span className="text-brand-navy/80">{t("name")}</span>
+              <span className="text-brand-text/80">{t("name")}</span>
               <input
                 required
                 value={name}
@@ -247,7 +247,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("email")}</span>
+              <span className="text-brand-text/80">{t("email")}</span>
               <input
                 required
                 type="email"
@@ -258,7 +258,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("phone")}</span>
+              <span className="text-brand-text/80">{t("phone")}</span>
               <input
                 required
                 type="tel"
@@ -272,10 +272,10 @@ export function CheckoutForm() {
         </section>
 
         <section className="panel-luxury p-6">
-          <h2 className="font-serif text-xl text-brand-navy">{t("shippingTitle")}</h2>
+          <h2 className="font-serif text-xl text-brand-text">{t("shippingTitle")}</h2>
           <div className="mt-5 grid gap-4 sm:grid-cols-2">
             <label className="block text-sm sm:col-span-2">
-              <span className="text-brand-navy/80">{t("addressLine1")}</span>
+              <span className="text-brand-text/80">{t("addressLine1")}</span>
               <input
                 required
                 value={line1}
@@ -285,7 +285,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm sm:col-span-2">
-              <span className="text-brand-navy/80">{t("addressLine2")}</span>
+              <span className="text-brand-text/80">{t("addressLine2")}</span>
               <input
                 value={line2}
                 onChange={(e) => setLine2(e.target.value)}
@@ -294,7 +294,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("city")}</span>
+              <span className="text-brand-text/80">{t("city")}</span>
               <input
                 required
                 value={city}
@@ -304,7 +304,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("state")}</span>
+              <span className="text-brand-text/80">{t("state")}</span>
               <input
                 value={state}
                 onChange={(e) => setState(e.target.value)}
@@ -313,7 +313,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("postalCode")}</span>
+              <span className="text-brand-text/80">{t("postalCode")}</span>
               <input
                 required
                 value={postalCode}
@@ -323,7 +323,7 @@ export function CheckoutForm() {
               />
             </label>
             <label className="block text-sm">
-              <span className="text-brand-navy/80">{t("country")}</span>
+              <span className="text-brand-text/80">{t("country")}</span>
               <input
                 required
                 value={country}
@@ -338,7 +338,7 @@ export function CheckoutForm() {
         </section>
 
         <section className="panel-luxury p-6">
-          <h2 className="font-serif text-xl text-brand-navy">{t("shippingMethodTitle")}</h2>
+          <h2 className="font-serif text-xl text-brand-text">{t("shippingMethodTitle")}</h2>
           <p className="mt-2 text-sm text-brand-charcoal/60">
             {t("shippingMethodDescription")}
           </p>
@@ -386,7 +386,7 @@ export function CheckoutForm() {
                         value={option.productCode}
                       />
                       <span>
-                        <span className="block text-sm text-brand-navy">
+                        <span className="block text-sm text-brand-text">
                           {option.productName}
                         </span>
                         {delivery && (
@@ -396,7 +396,7 @@ export function CheckoutForm() {
                         )}
                       </span>
                     </span>
-                    <span className="shrink-0 font-serif text-sm text-brand-navy">
+                    <span className="shrink-0 font-serif text-sm text-brand-text">
                       {formatPrice(option.price)}
                     </span>
                   </label>
@@ -443,7 +443,7 @@ export function CheckoutForm() {
                   : "—"}
             </span>
           </div>
-          <div className="flex items-center justify-between pt-2 font-serif text-brand-navy">
+          <div className="flex items-center justify-between pt-2 font-serif text-brand-text">
             <span>{tCommon("total")}</span>
             <span>{formatPrice(total)}</span>
           </div>

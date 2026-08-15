@@ -26,9 +26,9 @@ function ProductBadge({
   variant?: "default" | "accent" | "sale";
 }) {
   const styles = {
-    default: "bg-white/95 text-brand-navy border border-brand-gold/20",
+    default: "bg-brand-surface/95 text-brand-text border border-brand-gold/20",
     accent: "bg-brand-navy/90 text-brand-ivory",
-    sale: "bg-brand-gold text-brand-navy",
+    sale: "bg-brand-gold text-brand-text",
   };
 
   return (
@@ -112,7 +112,7 @@ export function ProductCard({ product }: ProductCardProps) {
           }
           aria-pressed={wishlisted}
           onClick={() => setWishlisted((value) => !value)}
-          className="absolute top-3 right-3 z-10 rounded-full bg-white/90 p-2 text-brand-navy/50 transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
+          className="absolute top-3 right-3 z-10 rounded-full bg-brand-surface/90 p-2 text-brand-text/50 transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
         >
           <HeartIcon filled={wishlisted} className="h-4 w-4" />
         </button>
@@ -132,7 +132,7 @@ export function ProductCard({ product }: ProductCardProps) {
           <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
             {formatLabel(product.productType)}
           </p>
-          <h3 className="line-clamp-2 min-h-[2.5rem] font-serif text-base leading-snug text-brand-navy group-hover:text-brand-gold">
+          <h3 className="line-clamp-2 min-h-[2.5rem] font-serif text-base leading-snug text-brand-text group-hover:text-brand-gold">
             {product.name}
           </h3>
           <p

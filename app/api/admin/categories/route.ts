@@ -1,5 +1,6 @@
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
+import { revalidateCategoryCatalog } from "@/lib/cache";
 import { createAdminCategory } from "@/services/category-admin.service";
 import { categoryAdminSchema } from "@/validation/admin/category.schema";
 import { NextResponse } from "next/server";
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
+    revalidateCategoryCatalog();
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/categories error:", error);

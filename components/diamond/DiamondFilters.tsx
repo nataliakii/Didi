@@ -47,7 +47,7 @@ function DiamondOriginToggle({
 
   return (
     <div>
-      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         {t("diamondOrigin")}
       </p>
       <div className="grid grid-cols-2 gap-2">
@@ -63,7 +63,7 @@ function DiamondOriginToggle({
                 "rounded-sm border px-3 py-2.5 text-sm transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold",
                 isActive
                   ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                  : "border-brand-gold/30 bg-white text-brand-navy hover:border-brand-gold/60",
+                  : "border-brand-gold/30 bg-brand-surface text-brand-text hover:border-brand-gold/60",
               )}
             >
               {type === "natural" ? t("naturalDiamonds") : t("labDiamonds")}
@@ -101,7 +101,7 @@ function NumberPairInputs({
       <div className="space-y-1.5">
         <label
           htmlFor={minId}
-          className="text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase"
+          className="text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase"
         >
           {minLabel}
         </label>
@@ -112,13 +112,13 @@ function NumberPairInputs({
           step={step}
           defaultValue={minValue}
           onBlur={(event) => onMinBlur(event.target.value)}
-          className="w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2 text-sm text-brand-navy focus:border-brand-navy focus:outline-none"
+          className="w-full rounded-sm border border-brand-gold/30 bg-brand-surface px-3 py-2 text-sm text-brand-text focus:border-brand-navy focus:outline-none"
         />
       </div>
       <div className="space-y-1.5">
         <label
           htmlFor={maxId}
-          className="text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase"
+          className="text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase"
         >
           {maxLabel}
         </label>
@@ -129,7 +129,7 @@ function NumberPairInputs({
           step={step}
           defaultValue={maxValue}
           onBlur={(event) => onMaxBlur(event.target.value)}
-          className="w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2 text-sm text-brand-navy focus:border-brand-navy focus:outline-none"
+          className="w-full rounded-sm border border-brand-gold/30 bg-brand-surface px-3 py-2 text-sm text-brand-text focus:border-brand-navy focus:outline-none"
         />
       </div>
     </div>
@@ -150,7 +150,7 @@ function CollapsibleSection({
       open={defaultOpen}
       className="group border-t border-brand-gold/15 pt-4"
     >
-      <summary className="cursor-pointer list-none text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <summary className="cursor-pointer list-none text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         <span className="flex items-center justify-between">
           {title}
           <span className="text-brand-gold transition-transform group-open:rotate-180">
@@ -348,7 +348,7 @@ export function DiamondFilters({
       />
 
       <div>
-        <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+        <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
           {tf("collections")}
         </p>
         <div className="space-y-2">
@@ -385,7 +385,7 @@ export function DiamondFilters({
           <button
             type="button"
             onClick={() => setInfoTopic("lwRatio")}
-            className="flex h-4 w-4 items-center justify-center rounded-full border border-brand-gold/40 text-[10px] text-brand-navy/55"
+            className="flex h-4 w-4 items-center justify-center rounded-full border border-brand-gold/40 text-[10px] text-brand-text/55"
             aria-label={tf("lwRatio")}
           >
             i
@@ -499,13 +499,13 @@ export function DiamondFilters({
       <div className={cn("hidden lg:block", className)}>
         <div className="sticky top-36 max-h-[calc(100vh-8rem)] space-y-6 overflow-y-auto pr-1">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-medium tracking-[0.2em] text-brand-navy uppercase">
+            <h2 className="text-xs font-medium tracking-[0.2em] text-brand-text uppercase">
               {tf("filters")}
             </h2>
             <button
               type="button"
               onClick={handleClear}
-              className="text-xs text-brand-navy/50 hover:text-brand-navy"
+              className="text-xs text-brand-text/50 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>
@@ -518,7 +518,7 @@ export function DiamondFilters({
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-navy hover:bg-brand-cream/50"
+          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-text hover:bg-brand-cream/50"
         >
           {tf("filters")}
         </button>
@@ -531,7 +531,7 @@ export function DiamondFilters({
             <button
               type="button"
               onClick={handleClear}
-              className="text-xs text-brand-navy/50 hover:text-brand-navy"
+              className="text-xs text-brand-text/50 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>

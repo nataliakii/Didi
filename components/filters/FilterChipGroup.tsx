@@ -27,7 +27,7 @@ export function FilterChipGroup({
 }: FilterChipGroupProps) {
   return (
     <div className={className}>
-      <p className="mb-2.5 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <p className="mb-2.5 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         {label}
       </p>
       <div className="flex flex-wrap gap-1.5" role="group" aria-label={label}>
@@ -48,15 +48,15 @@ export function FilterChipGroup({
                 onChange(isActive ? null : option.value);
               }}
               className={cn(
-                "rounded-full border px-3 py-1 text-xs tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-brand-gold",
+                "rounded-full border px-3 py-1 text-xs tracking-wide transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-1 focus-visible:outline-brand-teal",
                 option.disabled &&
-                  "cursor-not-allowed border-dashed border-brand-gold/25 bg-brand-cream/30 text-brand-navy/40 italic",
+                  "cursor-not-allowed border-dashed border-brand-border bg-brand-surface/50 text-brand-muted italic",
                 !option.disabled &&
                   isActive &&
-                  "border-brand-navy bg-brand-navy text-brand-gold",
+                  "border-brand-teal bg-brand-teal/15 text-brand-teal-soft",
                 !option.disabled &&
                   !isActive &&
-                  "border-brand-gold/30 bg-white text-brand-navy/70 hover:border-brand-gold/60",
+                  "border-brand-border bg-brand-surface text-brand-muted hover:border-brand-teal/50 hover:text-brand-text",
               )}
             >
               {option.label}

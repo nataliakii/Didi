@@ -1,4 +1,5 @@
 import { USER_MGMT_ROLES } from "@/constants/admin-roles";
+import { revalidateOpsLists } from "@/lib/cache";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { createAdminUser } from "@/services/user-admin.service";
 import { userAdminCreateSchema } from "@/validation/admin/user.schema";
@@ -32,6 +33,7 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: message }, { status });
     }
 
+    revalidateOpsLists();
     return NextResponse.json({ id: result.id }, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/users error:", error);

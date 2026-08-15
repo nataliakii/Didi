@@ -108,7 +108,10 @@ export async function getAdminRingSettings(): Promise<AdminRingSettingSummary[]>
   if (!db) return [];
 
   try {
-    const settings = await RingSetting.find().sort({ updatedAt: -1 }).lean();
+    const settings = await RingSetting.find()
+      .sort({ updatedAt: -1 })
+      .limit(500)
+      .lean();
     return settings.map((setting) =>
       toAdminRingSettingSummary(
         setting as unknown as Parameters<typeof toAdminRingSettingSummary>[0],

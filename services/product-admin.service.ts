@@ -128,6 +128,7 @@ export async function getAdminProducts(): Promise<AdminProductSummary[]> {
     const products = await Product.find()
       .populate("categoryId", "name")
       .sort({ updatedAt: -1 })
+      .limit(500)
       .lean();
 
     return products.map((product) => {

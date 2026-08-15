@@ -7,8 +7,8 @@ interface CompatibilityNoticeProps {
 }
 
 const variantStyles = {
-  info: "border-brand-gold/30 bg-brand-cream text-brand-navy",
-  warning: "border-brand-gold/50 bg-brand-gold-soft/30 text-brand-navy",
+  info: "border-brand-gold/30 bg-brand-cream text-brand-text",
+  warning: "border-brand-gold/50 bg-brand-gold-soft/30 text-brand-text",
   error: "border-red-200 bg-red-50 text-red-800",
 };
 

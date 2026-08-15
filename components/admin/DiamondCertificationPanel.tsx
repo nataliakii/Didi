@@ -5,7 +5,7 @@ import { Input } from "@/components/ui/Input";
 import { Select } from "@/components/ui/Select";
 import { CERTIFICATION_LABS } from "@/constants/certification";
 import type { DiamondCertification, UpdateDiamondCertificationInput } from "@/types";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState } from "react";
 
 interface DiamondCertificationPanelProps {
@@ -17,7 +17,7 @@ export function DiamondCertificationPanel({
   diamondId,
   certification,
 }: DiamondCertificationPanelProps) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [form, setForm] = useState<UpdateDiamondCertificationInput>({
     lab: certification?.lab,
     reportNumber: certification?.reportNumber ?? "",
@@ -50,7 +50,7 @@ export function DiamondCertificationPanel({
       }
 
       setMessage(data.message ?? "Grading report details saved.");
-      router.refresh();
+      refetch();
     } catch {
       setMessage("Could not save grading report details.");
     } finally {

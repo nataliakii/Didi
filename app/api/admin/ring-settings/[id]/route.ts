@@ -1,3 +1,4 @@
+import { revalidateRingSettingCatalog } from "@/lib/cache";
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
 import {
@@ -34,6 +35,7 @@ export async function PUT(request: Request, context: RouteContext) {
       );
     }
 
+    revalidateRingSettingCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("PUT /api/admin/ring-settings/[id] error:", error);
@@ -57,6 +59,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
         { status: 404 },
       );
     }
+    revalidateRingSettingCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("DELETE /api/admin/ring-settings/[id] error:", error);

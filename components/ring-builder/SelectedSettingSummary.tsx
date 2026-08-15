@@ -34,7 +34,7 @@ export function SelectedSettingSummary({ setting }: SelectedSettingSummaryProps)
           />
         </div>
         <div className="min-w-0 flex-1">
-          <h3 className="font-serif text-brand-navy">{setting.name}</h3>
+          <h3 className="font-serif text-brand-text">{setting.name}</h3>
           <p className="text-sm text-brand-charcoal/60">
             {formatLabel(setting.style)}
           </p>

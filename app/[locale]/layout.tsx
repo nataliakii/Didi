@@ -1,32 +1,13 @@
-import { CartProvider } from "@/components/cart/CartProvider";
+import { DocumentLang } from "@/components/layout/DocumentLang";
+import { StorefrontChrome } from "@/components/layout/StorefrontChrome";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
-import { Footer } from "@/components/layout/Footer";
-import { Header } from "@/components/layout/Header";
 import { SUPPORTED_LOCALES, type Locale } from "@/constants/i18n";
 import { COMING_SOON } from "@/constants/site";
 import { routing } from "@/i18n/routing";
 import { buildSiteMetadata } from "@/lib/seo";
-import { Geist, Geist_Mono, Cormorant_Garamond } from "next/font/google";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
-import "../globals.css";
-
-const geistSans = Geist({
-  variable: "--font-geist-sans",
-  subsets: ["latin"],
-});
-
-const geistMono = Geist_Mono({
-  variable: "--font-geist-mono",
-  subsets: ["latin"],
-});
-
-const cormorant = Cormorant_Garamond({
-  variable: "--font-cormorant",
-  subsets: ["latin"],
-  weight: ["400", "500", "600", "700"],
-});
 
 export function generateStaticParams() {
   return SUPPORTED_LOCALES.map((locale) => ({ locale }));
@@ -71,25 +52,13 @@ export default async function LocaleLayout({
   const messages = await getMessages();
 
   return (
-    <html
-      lang={locale}
-      className={`${geistSans.variable} ${geistMono.variable} ${cormorant.variable} h-full antialiased`}
-    >
-      <body className="min-h-full bg-brand-ivory text-brand-charcoal">
-        <NextIntlClientProvider locale={locale} messages={messages}>
-          {COMING_SOON ? (
-            <ComingSoonPage />
-          ) : (
-            <CartProvider>
-              <div className="flex min-h-full flex-col">
-                <Header />
-                <main className="flex-1">{children}</main>
-                <Footer />
-              </div>
-            </CartProvider>
-          )}
-        </NextIntlClientProvider>
-      </body>
-    </html>
+    <NextIntlClientProvider locale={locale} messages={messages}>
+      <DocumentLang locale={locale} />
+      {COMING_SOON ? (
+        <ComingSoonPage />
+      ) : (
+        <StorefrontChrome>{children}</StorefrontChrome>
+      )}
+    </NextIntlClientProvider>
   );
 }

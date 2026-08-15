@@ -34,7 +34,7 @@ export function MetalSelector({
 
   return (
     <div>
-      <h3 className="text-sm font-medium tracking-wide text-brand-navy">
+      <h3 className="text-sm font-medium tracking-wide text-brand-text">
         {t("chooseMetal")}
       </h3>
       <div className="mt-3 flex flex-wrap gap-2">
@@ -47,7 +47,7 @@ export function MetalSelector({
               "rounded-sm border px-4 py-2 text-sm transition-colors",
               selectedMetal === metal
                 ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                : "border-brand-gold/35 bg-white text-brand-navy hover:border-brand-gold hover:bg-brand-cream",
+                : "border-brand-gold/35 bg-brand-surface text-brand-text hover:border-brand-gold hover:bg-brand-cream",
             )}
           >
             {formatLabel(metal)}

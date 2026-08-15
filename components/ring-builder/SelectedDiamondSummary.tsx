@@ -19,7 +19,7 @@ export function SelectedDiamondSummary({ diamond }: SelectedDiamondSummaryProps)
         Selected Diamond
       </p>
       <div className="mt-3">
-        <h3 className="font-serif text-brand-navy">
+        <h3 className="font-serif text-brand-text">
           {diamond.carat.toFixed(2)} ct {formatLabel(diamond.shape)}
         </h3>
         <p className="text-sm text-brand-charcoal/60">
@@ -34,7 +34,7 @@ export function SelectedDiamondSummary({ diamond }: SelectedDiamondSummaryProps)
         />
 
         {diamond.certification?.lab && (
-          <p className="mt-3 text-sm text-brand-navy/80">
+          <p className="mt-3 text-sm text-brand-text/80">
             {getCertificationLabLabel(diamond.certification.lab)}
           </p>
         )}
@@ -48,7 +48,7 @@ export function SelectedDiamondSummary({ diamond }: SelectedDiamondSummaryProps)
             href={reportHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-2 inline-block text-sm font-medium text-brand-gold underline underline-offset-4 hover:text-brand-navy"
+            className="mt-2 inline-block text-sm font-medium text-brand-gold underline underline-offset-4 hover:text-brand-text"
           >
             Check official report
           </a>

@@ -54,7 +54,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
             <div>
               <Link
                 href={`/products/${item.slug}`}
-                className="font-medium text-brand-navy hover:underline"
+                className="font-medium text-brand-text hover:underline"
               >
                 {item.name}
               </Link>
@@ -88,7 +88,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
               </button>
               <span
                 id={`qty-${item.id}`}
-                className="min-w-8 text-center text-sm font-medium text-brand-navy"
+                className="min-w-8 text-center text-sm font-medium text-brand-text"
               >
                 {item.quantity}
               </span>
@@ -107,7 +107,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
             <button
               type="button"
               onClick={() => removeItem(item.id)}
-              className="text-sm text-brand-charcoal/60 underline underline-offset-4 hover:text-brand-navy"
+              className="text-sm text-brand-charcoal/60 underline underline-offset-4 hover:text-brand-text"
             >
               Remove
             </button>
@@ -144,7 +144,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
       <div className="min-w-0 flex-1">
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
-            <h3 className="font-medium text-brand-navy">{item.name}</h3>
+            <h3 className="font-medium text-brand-text">{item.name}</h3>
             <p className="mt-1 text-sm text-brand-charcoal/60">
               Setting: {settingSnapshot.name}
             </p>
@@ -176,20 +176,20 @@ export function CartItemCard({ item }: CartItemCardProps) {
           <p className="text-xs text-brand-charcoal/45">Qty: 1</p>
           <Link
             href={reviewHref}
-            className="text-sm text-brand-charcoal/65 underline underline-offset-4 hover:text-brand-navy"
+            className="text-sm text-brand-charcoal/65 underline underline-offset-4 hover:text-brand-text"
           >
             Edit ring
           </Link>
           <Link
             href={appointmentHref}
-            className="text-sm text-brand-charcoal/65 underline underline-offset-4 hover:text-brand-navy"
+            className="text-sm text-brand-charcoal/65 underline underline-offset-4 hover:text-brand-text"
           >
             {tAppointment("cartBookRing")}
           </Link>
           <button
             type="button"
             onClick={() => removeItem(item.id)}
-            className="text-sm text-brand-charcoal/60 underline underline-offset-4 hover:text-brand-navy"
+            className="text-sm text-brand-charcoal/60 underline underline-offset-4 hover:text-brand-text"
           >
             Remove
           </button>

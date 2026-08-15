@@ -1,6 +1,5 @@
 import { RING_SIZES, type Metal } from "@/constants/jewellery";
-import { DEFAULT_LOCALE, type Locale } from "@/constants/i18n";
-import { localizePath } from "@/lib/i18n";
+import type { Locale } from "@/constants/i18n";
 import type {
   CustomRingPriceBreakdown,
   DiamondDetail,
@@ -73,19 +72,20 @@ function buildQuery(params: Record<string, string | undefined>): string {
   return query ? `?${query}` : "";
 }
 
+/**
+ * Paths for next-intl <Link> / AppLink — do NOT prefix locale here
+ * (the router adds it). Unused `locale` kept for call-site compatibility.
+ */
 export function buildRingReviewHref(
   params: RingBuilderParams,
-  locale: Locale = DEFAULT_LOCALE,
+  _locale?: Locale,
 ): string {
-  return localizePath(
-    locale,
-    `/create-ring/review${buildQuery({
-      settingId: params.settingId,
-      diamondId: params.diamondId,
-      metal: params.metal,
-      ringSize: params.ringSize,
-    })}`,
-  );
+  return `/create-ring/review${buildQuery({
+    settingId: params.settingId,
+    diamondId: params.diamondId,
+    metal: params.metal,
+    ringSize: params.ringSize,
+  })}`;
 }
 
 const RING_BUILDER_KEYS = new Set([
@@ -99,7 +99,6 @@ function buildRingStepHref(
   path: "/create-ring/setting" | "/create-ring/diamond",
   params: RingBuilderParams & Record<string, string | undefined>,
   keepKey: "diamondId" | "settingId",
-  locale: Locale = DEFAULT_LOCALE,
 ): string {
   const query: Record<string, string | undefined> = {};
   const keepValue = params[keepKey];
@@ -111,36 +110,33 @@ function buildRingStepHref(
     }
   }
 
-  return localizePath(locale, `${path}${buildQuery(query)}`);
+  return `${path}${buildQuery(query)}`;
 }
 
 export function buildRingSettingHref(
   params: RingBuilderParams & Record<string, string | undefined>,
-  locale: Locale = DEFAULT_LOCALE,
+  _locale?: Locale,
 ): string {
-  return buildRingStepHref("/create-ring/setting", params, "diamondId", locale);
+  return buildRingStepHref("/create-ring/setting", params, "diamondId");
 }
 
 export function buildRingDiamondHref(
   params: RingBuilderParams & Record<string, string | undefined>,
-  locale: Locale = DEFAULT_LOCALE,
+  _locale?: Locale,
 ): string {
-  return buildRingStepHref("/create-ring/diamond", params, "settingId", locale);
+  return buildRingStepHref("/create-ring/diamond", params, "settingId");
 }
 
 export function buildAppointmentHref(
   params: RingBuilderParams,
-  locale: Locale = DEFAULT_LOCALE,
+  _locale?: Locale,
 ): string {
-  return localizePath(
-    locale,
-    `/appointment${buildQuery({
-      settingId: params.settingId,
-      diamondId: params.diamondId,
-      metal: params.metal,
-      ringSize: params.ringSize,
-    })}`,
-  );
+  return `/appointment${buildQuery({
+    settingId: params.settingId,
+    diamondId: params.diamondId,
+    metal: params.metal,
+    ringSize: params.ringSize,
+  })}`;
 }
 
 export function getCompatibleShapesLabel(shapes: DiamondShape[]): string {

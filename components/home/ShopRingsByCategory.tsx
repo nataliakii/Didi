@@ -66,10 +66,10 @@ export function ShopRingsByCategory() {
   }
 
   return (
-    <section className="bg-brand-ivory py-14 sm:py-16">
+    <section className="bg-brand-bg py-14 sm:py-16">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl">
-          <h2 className="font-serif text-3xl text-brand-navy sm:text-4xl">
+          <h2 className="font-serif text-3xl text-brand-text sm:text-4xl">
             {t("shopByCategoryTitle")}
           </h2>
           <p className="mt-3 text-base leading-relaxed text-brand-charcoal/65">
@@ -82,7 +82,7 @@ export function ShopRingsByCategory() {
             type="button"
             onClick={() => scrollBy(-1)}
             aria-label={t("shopByCategoryPrev")}
-            className="absolute top-1/2 left-0 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/30 bg-white text-brand-navy shadow-sm transition-colors hover:border-brand-navy md:flex"
+            className="absolute top-1/2 left-0 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/30 bg-brand-surface text-brand-text shadow-sm transition-colors hover:border-brand-navy md:flex"
           >
             ‹
           </button>
@@ -90,7 +90,7 @@ export function ShopRingsByCategory() {
             type="button"
             onClick={() => scrollBy(1)}
             aria-label={t("shopByCategoryNext")}
-            className="absolute top-1/2 right-0 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/30 bg-white text-brand-navy shadow-sm transition-colors hover:border-brand-navy md:flex"
+            className="absolute top-1/2 right-0 z-10 hidden h-10 w-10 -translate-y-1/2 items-center justify-center rounded-full border border-brand-gold/30 bg-brand-surface text-brand-text shadow-sm transition-colors hover:border-brand-navy md:flex"
           >
             ›
           </button>
@@ -119,7 +119,7 @@ export function ShopRingsByCategory() {
                     sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 18vw"
                   />
                 </div>
-                <p className="mt-3 text-center text-sm text-brand-navy/85 transition-colors group-hover:text-brand-navy sm:text-left">
+                <p className="mt-3 text-center text-sm text-brand-text/85 transition-colors group-hover:text-brand-text sm:text-left">
                   {t(`shopByCategoryCards.${category.key}`)}
                 </p>
               </Link>

@@ -9,7 +9,7 @@ import {
   DIAMOND_TYPES,
 } from "@/constants/jewellery";
 import { CERTIFICATION_LABS } from "@/constants/certification";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -43,7 +43,7 @@ export function DiamondAdminForm({
   diamondId?: string;
   initial?: Partial<DiamondFormValues>;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [values, setValues] = useState<DiamondFormValues>({
     diamondType: initial?.diamondType ?? "natural",
     shape: initial?.shape ?? "round",
@@ -104,8 +104,7 @@ export function DiamondAdminForm({
         setError(data.error ?? "Could not save diamond.");
         return;
       }
-      router.push(`/admin/diamonds/${diamondId ?? data.id}`);
-      router.refresh();
+      refetch(`/admin/diamonds/${diamondId ?? data.id}`);
     } catch {
       setError("Could not save diamond.");
     } finally {
@@ -124,8 +123,7 @@ export function DiamondAdminForm({
         setError("Could not delete diamond.");
         return;
       }
-      router.push("/admin/diamonds");
-      router.refresh();
+      refetch("/admin/diamonds");
     } catch {
       setError("Could not delete diamond.");
     } finally {

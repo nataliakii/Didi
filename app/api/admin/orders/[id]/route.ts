@@ -1,4 +1,5 @@
 import { OPS_ROLES } from "@/constants/admin-roles";
+import { revalidateOpsLists } from "@/lib/cache";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { updateOrderAdmin } from "@/services/order.service";
 import { updateOrderAdminSchema } from "@/validation/admin/order.schema";
@@ -29,6 +30,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Order not found." }, { status: 404 });
     }
 
+    revalidateOpsLists();
     return NextResponse.json({ order });
   } catch (error) {
     console.error("PATCH /api/admin/orders/[id] error:", error);

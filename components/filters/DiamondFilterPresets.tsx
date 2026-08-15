@@ -23,7 +23,7 @@ export function DiamondFilterPresets({
 
   return (
     <div>
-      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         {t("quickFilters")}
       </p>
       <div className="flex flex-wrap gap-2">
@@ -39,7 +39,7 @@ export function DiamondFilterPresets({
                 "rounded-sm border px-3 py-1.5 text-xs tracking-wide transition-colors",
                 isActive
                   ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                  : "border-brand-gold/30 bg-white text-brand-navy/75 hover:border-brand-gold/60",
+                  : "border-brand-gold/30 bg-brand-surface text-brand-text/75 hover:border-brand-gold/60",
               )}
             >
               {t(PRESET_LABEL_KEYS[preset])}

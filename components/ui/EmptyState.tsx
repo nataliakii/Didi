@@ -21,7 +21,7 @@ export function EmptyState({
         className,
       )}
     >
-      <h3 className="font-serif text-lg text-brand-navy">{title}</h3>
+      <h3 className="font-serif text-lg text-brand-text">{title}</h3>
       {description && (
         <p className="mt-2 max-w-sm text-sm text-brand-charcoal/70">
           {description}

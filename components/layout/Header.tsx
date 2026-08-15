@@ -4,6 +4,7 @@ import { BrandLogo } from "@/components/layout/BrandLogo";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { CartIconButton } from "@/components/cart/CartIconButton";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
+import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Container } from "@/components/ui/Container";
 import {
   CalendarIcon,
@@ -35,7 +36,7 @@ function IconLink({
   onClick?: () => void;
 }) {
   const className =
-    "inline-flex items-center justify-center rounded-sm p-2 text-brand-navy/60 transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold";
+    "inline-flex items-center justify-center rounded-sm p-2 text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal";
 
   if (external && href) {
     return (
@@ -85,6 +86,7 @@ export function Header() {
     { label: t("ringSettings"), href: "/create-ring/setting" as const },
     { label: t("createYourRing"), href: "/create-ring" as const },
     { label: t("consultations"), href: "/appointment" as const },
+    { label: t("aboutUs"), href: "/about" as const },
   ];
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);
@@ -107,14 +109,14 @@ export function Header() {
 
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-brand-gold/20 bg-brand-ivory/95 backdrop-blur-sm">
+      <header className="sticky top-0 z-50 border-b border-brand-border bg-brand-bg/95 backdrop-blur-sm">
         <Container>
           <div className="grid h-14 grid-cols-[1fr_auto_1fr] items-center lg:h-16">
             {/* Left */}
-            <div className="flex items-center justify-start gap-0.5">
+            <div className="flex items-center justify-start gap-1.5 sm:gap-2">
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-sm p-2 text-brand-navy lg:hidden"
+                className="inline-flex items-center justify-center rounded-sm p-2 text-brand-text lg:hidden"
                 aria-label={t("toggleMenu")}
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen((open) => !open)}
@@ -125,7 +127,7 @@ export function Header() {
                   <MenuIcon className="h-6 w-6" />
                 )}
               </button>
-              <div className="hidden items-center gap-0.5 lg:flex">
+              <div className="hidden items-center gap-1.5 sm:gap-2 lg:flex">
                 <IconLink
                   href={BRAND_CONTACT.phoneHref}
                   external
@@ -149,13 +151,13 @@ export function Header() {
             </Link>
 
             {/* Right */}
-            <div className="flex items-center justify-end gap-0.5">
+            <div className="flex items-center justify-end gap-1.5 sm:gap-2">
               <IconLink label={t("search")} onClick={() => setSearchOpen(true)}>
                 <SearchIcon />
               </IconLink>
               <button
                 type="button"
-                className="hidden rounded-sm p-2 text-brand-navy/60 transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold sm:inline-flex"
+                className="hidden rounded-sm p-2 text-brand-text transition-colors hover:text-brand-crimson-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-crimson sm:inline-flex"
                 aria-label={t("wishlist")}
                 disabled
                 title={t("wishlistComingSoon")}
@@ -163,7 +165,8 @@ export function Header() {
                 <HeartIcon />
               </button>
               <CartIconButton onNavigate={closeMobile} />
-              <div className="hidden lg:block">
+              <div className="ml-1 hidden items-center gap-2 border-l border-brand-border pl-3 lg:flex">
+                <ThemeToggle />
                 <Suspense fallback={null}>
                   <LanguageSwitcher />
                 </Suspense>
@@ -173,7 +176,7 @@ export function Header() {
         </Container>
 
         {/* Row 2 — category navigation (desktop) */}
-        <div className="hidden border-t border-brand-gold/15 lg:block">
+        <div className="hidden border-t border-brand-border lg:block">
           <Container>
             <nav
               className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-2.5"
@@ -183,7 +186,7 @@ export function Header() {
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="group inline-flex items-center gap-1 text-[11px] tracking-[0.2em] text-brand-navy/70 uppercase transition-colors hover:text-brand-navy"
+                  className="group inline-flex items-center gap-1 text-[11px] tracking-[0.2em] text-brand-text uppercase transition-colors hover:text-brand-teal"
                 >
                   {link.label}
                   <ChevronDownIcon className="h-3 w-3 opacity-0 transition-opacity group-hover:opacity-40" />
@@ -196,7 +199,7 @@ export function Header() {
         {/* Mobile drawer */}
         <div
           className={cn(
-            "border-t border-brand-gold/20 bg-brand-ivory lg:hidden",
+            "border-t border-brand-gold/20 bg-brand-bg lg:hidden",
             mobileOpen ? "block" : "hidden",
           )}
           role="dialog"
@@ -204,7 +207,7 @@ export function Header() {
           aria-label={t("menu")}
         >
           <Container className="py-4">
-            <div className="mb-4 flex flex-wrap items-center gap-2 border-b border-brand-gold/15 pb-4">
+            <div className="mb-4 flex flex-wrap items-center gap-2 border-b border-brand-border pb-4">
               <IconLink
                 href={BRAND_CONTACT.phoneHref}
                 external
@@ -220,16 +223,19 @@ export function Header() {
               >
                 <CalendarIcon />
               </IconLink>
-              <Suspense fallback={null}>
-                <LanguageSwitcher className="ml-auto" />
-              </Suspense>
+              <div className="ml-auto flex items-center gap-2">
+                <ThemeToggle />
+                <Suspense fallback={null}>
+                  <LanguageSwitcher />
+                </Suspense>
+              </div>
             </div>
             <nav className="flex flex-col gap-0.5" aria-label={t("categoryNav")}>
               {categoryLinks.map((link) => (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className="py-2.5 text-sm tracking-wide text-brand-navy/80 hover:text-brand-navy"
+                  className="py-2.5 text-sm tracking-wide text-brand-text/80 hover:text-brand-text"
                   onClick={closeMobile}
                 >
                   {link.label}
@@ -237,7 +243,7 @@ export function Header() {
               ))}
               <Link
                 href="/cart"
-                className="py-2.5 text-sm tracking-wide text-brand-navy/80 hover:text-brand-navy"
+                className="py-2.5 text-sm tracking-wide text-brand-text/80 hover:text-brand-text"
                 onClick={closeMobile}
               >
                 {t("shoppingBag")}

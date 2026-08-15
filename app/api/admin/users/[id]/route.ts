@@ -1,4 +1,5 @@
 import { USER_MGMT_ROLES } from "@/constants/admin-roles";
+import { revalidateOpsLists } from "@/lib/cache";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { updateAdminUser } from "@/services/user-admin.service";
 import { userAdminUpdateSchema } from "@/validation/admin/user.schema";
@@ -44,6 +45,7 @@ export async function PUT(request: Request, context: RouteContext) {
       return NextResponse.json({ error: message }, { status });
     }
 
+    revalidateOpsLists();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("PUT /api/admin/users/[id] error:", error);

@@ -7,6 +7,7 @@ import {
 } from "@/components/filters/ActiveFilterChips";
 import { DiamondFilters, DiamondSortSelect } from "@/components/diamond/DiamondFilters";
 import { DiamondGrid } from "@/components/diamond/DiamondGrid";
+import { SkeletonGrid } from "@/components/ui/SkeletonCard";
 import { generateLocalizedMetadata } from "@/lib/i18n-metadata";
 import { getDiamonds, parseDiamondFilters } from "@/services/diamond.service";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -30,6 +31,59 @@ interface DiamondsPageProps {
   searchParams: Promise<Record<string, string | string[] | undefined>>;
 }
 
+async function DiamondsCatalog({
+  searchParams,
+}: {
+  searchParams: Record<string, string | string[] | undefined>;
+}) {
+  const t = await getTranslations("diamonds");
+  const tf = await getTranslations("filters");
+  const filters = parseDiamondFilters(searchParams);
+  const result = await getDiamonds(filters);
+
+  return (
+    <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
+      <aside className="w-full shrink-0 lg:w-72">
+        <Suspense
+          fallback={
+            <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
+          }
+        >
+          <DiamondFilters />
+        </Suspense>
+      </aside>
+
+      <div className="min-w-0 flex-1 space-y-6">
+        <Suspense
+          fallback={
+            <div className="h-10 w-48 animate-pulse rounded-sm bg-brand-cream" />
+          }
+        >
+          <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
+            <p className="text-sm text-brand-charcoal/60">
+              {t("resultsCount", { count: result.total })}
+            </p>
+            <DiamondSortSelect />
+          </div>
+          <ActiveFilterChips
+            configs={DIAMOND_ACTIVE_FILTER_CONFIGS}
+            resetLabel={tf("resetAll")}
+            className="mt-2"
+          />
+        </Suspense>
+
+        <DiamondGrid diamonds={result.items} />
+
+        <Pagination
+          currentPage={result.page}
+          totalPages={result.totalPages}
+          searchParams={searchParams}
+        />
+      </div>
+    </div>
+  );
+}
+
 export default async function DiamondsPage({
   params,
   searchParams,
@@ -39,10 +93,7 @@ export default async function DiamondsPage({
 
   const t = await getTranslations("diamonds");
   const tb = await getTranslations("breadcrumb");
-  const tf = await getTranslations("filters");
   const resolvedParams = await searchParams;
-  const filters = parseDiamondFilters(resolvedParams);
-  const result = await getDiamonds(filters);
 
   return (
     <>
@@ -55,50 +106,20 @@ export default async function DiamondsPage({
       <Container className="py-10 lg:py-14">
         <div className="max-w-2xl">
           <p className="section-eyebrow">{t("pageEyebrow")}</p>
-          <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
+          <h1 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">
             {t("pageTitle")}
           </h1>
         </div>
 
-        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-          <aside className="w-full shrink-0 lg:w-72">
-            <Suspense
-              fallback={
-                <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
-              }
-            >
-              <DiamondFilters />
-            </Suspense>
-          </aside>
-
-          <div className="min-w-0 flex-1 space-y-6">
-            <Suspense
-              fallback={
-                <div className="h-10 w-48 animate-pulse rounded-sm bg-brand-cream" />
-              }
-            >
-              <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-                <p className="text-sm text-brand-charcoal/60">
-                  {t("resultsCount", { count: result.total })}
-                </p>
-                <DiamondSortSelect />
-              </div>
-              <ActiveFilterChips
-                configs={DIAMOND_ACTIVE_FILTER_CONFIGS}
-                resetLabel={tf("resetAll")}
-                className="mt-2"
-              />
-            </Suspense>
-
-            <DiamondGrid diamonds={result.items} />
-
-            <Pagination
-              currentPage={result.page}
-              totalPages={result.totalPages}
-              searchParams={resolvedParams}
-            />
-          </div>
-        </div>
+        <Suspense
+          fallback={
+            <div className="mt-10">
+              <SkeletonGrid count={9} />
+            </div>
+          }
+        >
+          <DiamondsCatalog searchParams={resolvedParams} />
+        </Suspense>
       </Container>
     </>
   );

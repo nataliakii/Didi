@@ -24,13 +24,13 @@ export function CartSummary({ items, subtotal }: CartSummaryProps) {
       <dl className="mt-6 space-y-3 text-sm">
         <div className="flex items-center justify-between">
           <dt className="text-brand-charcoal/65">{tCommon("subtotal")}</dt>
-          <dd className="font-medium text-brand-navy">{formatPrice(subtotal)}</dd>
+          <dd className="font-medium text-brand-text">{formatPrice(subtotal)}</dd>
         </div>
         <div className="flex items-center justify-between border-t border-brand-gold/25 pt-3">
-          <dt className="font-serif font-medium text-brand-navy">
+          <dt className="font-serif font-medium text-brand-text">
             {t("estimatedTotal")}
           </dt>
-          <dd className="font-serif font-medium text-brand-navy">
+          <dd className="font-serif font-medium text-brand-text">
             {formatPrice(subtotal)}
           </dd>
         </div>

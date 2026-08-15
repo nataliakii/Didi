@@ -1,9 +1,8 @@
 /**
  * Local demo/seed image paths for Asteria Diamond House.
- * Files live under public/images/demo/ — replace JPGs without changing code.
+ * Files live under public/images/demo/ — replace assets without changing code.
  *
- * Until real JPGs are added, leave NEXT_PUBLIC_DEMO_ASSETS_READY unset so the UI
- * shows styled placeholders instead of requesting missing files.
+ * Set NEXT_PUBLIC_DEMO_ASSETS_READY=true once demo files are on disk.
  */
 export const DEMO_ASSETS_READY =
   process.env.NEXT_PUBLIC_DEMO_ASSETS_READY === "true";
@@ -14,7 +13,7 @@ export function isDemoImagePath(path?: string | null): boolean {
   return Boolean(path?.trim().startsWith(DEMO_IMAGE_PREFIX));
 }
 
-/** Use ivory UI placeholder instead of loading a missing demo JPG. */
+/** Use ivory UI placeholder instead of loading a missing demo asset. */
 export function shouldUseDemoPlaceholder(path?: string | null): boolean {
   const trimmed = path?.trim();
   if (!trimmed) return true;
@@ -31,13 +30,26 @@ export const DEMO_DIAMOND_IMAGES = {
   oval: "/images/demo/diamonds/oval-diamond.jpg",
   emeraldCut: "/images/demo/diamonds/emerald-cut-diamond.jpg",
   pear: "/images/demo/diamonds/pear-diamond.jpg",
+  marquise: "/images/demo/diamonds/marquise-diamond.jpg",
+  princess: "/images/demo/diamonds/princess-diamond.jpg",
+  cushion: "/images/demo/diamonds/cushion-diamond.jpg",
+  radiant: "/images/demo/diamonds/radiant-diamond.jpg",
+  asscher: "/images/demo/diamonds/asscher-diamond.jpg",
+  heart: "/images/demo/diamonds/heart-diamond.jpg",
 } as const;
 
 export const DEMO_RING_IMAGES = {
   ovalSolitaire: "/images/demo/rings/oval-solitaire-ring.jpg",
   roundSolitaire: "/images/demo/rings/round-solitaire-ring.jpg",
+  roundHalo: "/images/demo/rings/round-halo-ring.jpg",
   emeraldCut: "/images/demo/rings/emerald-cut-ring.jpg",
   hiddenHalo: "/images/demo/rings/hidden-halo-ring.jpg",
+  radiantHiddenHalo: "/images/demo/rings/radiant-hidden-halo-ring.jpg",
+  cushionSplitShank: "/images/demo/rings/cushion-split-shank-ring.jpg",
+  princessChannel: "/images/demo/rings/princess-channel-ring.jpg",
+  pearFiligree: "/images/demo/rings/pear-filigree-ring.jpg",
+  marquiseBezel: "/images/demo/rings/marquise-bezel-ring.jpg",
+  asscherThreeStone: "/images/demo/rings/asscher-three-stone-ring.jpg",
 } as const;
 
 export const DEMO_SETTING_IMAGES = {
@@ -52,13 +64,17 @@ export const DEMO_CONSULTATION_IMAGES = {
   ringDesign: "/images/demo/consultation/ring-design-consultation.jpg",
 } as const;
 
+export const DEMO_ABOUT_IMAGES = {
+  founder: "/images/demo/about/diana-angelaki-founder.jpg",
+} as const;
+
 export const DEMO_PLACEHOLDER_IMAGES = {
   diamond: "/images/demo/placeholders/diamond-placeholder.jpg",
   ring: "/images/demo/placeholders/ring-placeholder.jpg",
   setting: "/images/demo/placeholders/setting-placeholder.jpg",
 } as const;
 
-/** Ring builder step cards — replace JPGs in public/images/demo/create-ring/ */
+/** Ring builder step cards — replace files in public/images/demo/create-ring/ */
 export const DEMO_CREATE_RING_IMAGES = {
   diamond: "/images/demo/create-ring/create-ring-diamond.jpg",
   setting: "/images/demo/create-ring/create-ring-setting.jpg",
@@ -66,7 +82,7 @@ export const DEMO_CREATE_RING_IMAGES = {
   review: "/images/demo/create-ring/create-ring-review.jpg",
 } as const;
 
-/** Per-metal product variant images — replace JPGs in public/images/demo/products/ */
+/** Per-metal product variant images — replace files in public/images/demo/products/ */
 export const DEMO_PRODUCT_VARIANT_IMAGES = {
   "yellow-gold": "/images/demo/products/product-solitaire-yellow-gold.jpg",
   "white-gold": "/images/demo/products/product-solitaire-white-gold.jpg",
@@ -97,6 +113,12 @@ export const DEMO_IMAGES = {
     oval: DEMO_DIAMOND_IMAGES.oval,
     emerald: DEMO_DIAMOND_IMAGES.emeraldCut,
     pear: DEMO_DIAMOND_IMAGES.pear,
+    marquise: DEMO_DIAMOND_IMAGES.marquise,
+    princess: DEMO_DIAMOND_IMAGES.princess,
+    cushion: DEMO_DIAMOND_IMAGES.cushion,
+    radiant: DEMO_DIAMOND_IMAGES.radiant,
+    asscher: DEMO_DIAMOND_IMAGES.asscher,
+    heart: DEMO_DIAMOND_IMAGES.heart,
   },
   ring: {
     ovalSolitaire: DEMO_RING_IMAGES.ovalSolitaire,
@@ -104,6 +126,11 @@ export const DEMO_IMAGES = {
     solitaire: DEMO_RING_IMAGES.ovalSolitaire,
     halo: DEMO_RING_IMAGES.hiddenHalo,
     emerald: DEMO_RING_IMAGES.emeraldCut,
+    cushion: DEMO_RING_IMAGES.cushionSplitShank,
+    princess: DEMO_RING_IMAGES.princessChannel,
+    pear: DEMO_RING_IMAGES.pearFiligree,
+    marquise: DEMO_RING_IMAGES.marquiseBezel,
+    asscher: DEMO_RING_IMAGES.asscherThreeStone,
   },
   setting: {
     classicSolitaire: DEMO_SETTING_IMAGES.classicSolitaire,
@@ -114,6 +141,9 @@ export const DEMO_IMAGES = {
   consultation: {
     private: DEMO_CONSULTATION_IMAGES.privateDiamond,
     ringDesign: DEMO_CONSULTATION_IMAGES.ringDesign,
+  },
+  about: {
+    founder: DEMO_ABOUT_IMAGES.founder,
   },
   createRing: DEMO_CREATE_RING_IMAGES,
   productVariants: DEMO_PRODUCT_VARIANT_IMAGES,
@@ -176,6 +206,13 @@ const DIAMOND_SHAPE_IMAGE_MAP: Record<string, string> = {
   oval: DEMO_DIAMOND_IMAGES.oval,
   emerald: DEMO_DIAMOND_IMAGES.emeraldCut,
   pear: DEMO_DIAMOND_IMAGES.pear,
+  marquise: DEMO_DIAMOND_IMAGES.marquise,
+  princess: DEMO_DIAMOND_IMAGES.princess,
+  cushion: DEMO_DIAMOND_IMAGES.cushion,
+  "elongated-cushion": DEMO_DIAMOND_IMAGES.cushion,
+  radiant: DEMO_DIAMOND_IMAGES.radiant,
+  asscher: DEMO_DIAMOND_IMAGES.asscher,
+  heart: DEMO_DIAMOND_IMAGES.heart,
 };
 
 /** Map a diamond shape to its demo image path. */

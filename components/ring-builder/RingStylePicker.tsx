@@ -32,7 +32,7 @@ export function RingStylePicker({
     <div className={className}>
       <div className="mb-3 flex items-end justify-between gap-3">
         <div>
-          <p className="text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+          <p className="text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
             {t("settingStyle")}
           </p>
           <p className="mt-1 text-sm text-brand-charcoal/55">
@@ -43,7 +43,7 @@ export function RingStylePicker({
           <button
             type="button"
             onClick={() => onChange(null)}
-            className="text-xs text-brand-charcoal/55 transition-colors hover:text-brand-navy"
+            className="text-xs text-brand-charcoal/55 transition-colors hover:text-brand-text"
           >
             {t("clearStyle")}
           </button>
@@ -63,13 +63,13 @@ export function RingStylePicker({
                 "group flex flex-col items-start rounded-sm border px-3 py-3 text-left transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold",
                 isActive
                   ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                  : "border-brand-gold/25 bg-white text-brand-navy hover:border-brand-gold/50 hover:bg-brand-cream/40",
+                  : "border-brand-gold/25 bg-brand-surface text-brand-text hover:border-brand-gold/50 hover:bg-brand-cream/40",
               )}
             >
               <span
                 className={cn(
                   "font-serif text-sm",
-                  isActive ? "text-brand-ivory" : "text-brand-navy",
+                  isActive ? "text-brand-ivory" : "text-brand-text",
                 )}
               >
                 {formatLabel(style)}

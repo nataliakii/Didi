@@ -18,7 +18,7 @@ export function DiamondGradingReport({
   if (!certification?.lab && !certification?.reportNumber) {
     return (
       <div className={className}>
-        <h2 className="text-sm font-medium text-brand-navy">Official Grading Report</h2>
+        <h2 className="text-sm font-medium text-brand-text">Official Grading Report</h2>
         <p className="mt-2 text-sm text-brand-charcoal/55">
           Grading report information is not yet available for this diamond.
         </p>
@@ -28,10 +28,10 @@ export function DiamondGradingReport({
 
   return (
     <div className={className}>
-      <h2 className="text-sm font-medium text-brand-navy">Official Grading Report</h2>
+      <h2 className="text-sm font-medium text-brand-text">Official Grading Report</h2>
       <div className="mt-4 rounded-sm border border-brand-gold/20 p-6 text-sm">
         {certification.lab && (
-          <p className="font-medium text-brand-navy">
+          <p className="font-medium text-brand-text">
             {getCertificationLabLabel(certification.lab)}
           </p>
         )}
@@ -48,7 +48,7 @@ export function DiamondGradingReport({
           href={reportHref}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-4 inline-flex rounded-sm border border-brand-gold/30 px-4 py-2 text-sm font-medium text-brand-navy transition-colors hover:bg-brand-cream/50"
+          className="mt-4 inline-flex rounded-sm border border-brand-gold/30 px-4 py-2 text-sm font-medium text-brand-text transition-colors hover:bg-brand-cream/50"
         >
           Check official report
         </a>

@@ -3,7 +3,7 @@
 import type { UserRole } from "@/constants/order-status";
 import { USER_ROLES } from "@/constants/order-status";
 import { formatLabel } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -31,7 +31,7 @@ export function UserAdminForm({
   actorRole: UserRole;
   initial?: Partial<Omit<UserFormValues, "password">>;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const roles = assignableRoles(actorRole);
   const [values, setValues] = useState<UserFormValues>({
     name: initial?.name ?? "",
@@ -84,8 +84,7 @@ export function UserAdminForm({
         setError(data.error ?? "Could not save user.");
         return;
       }
-      router.push(`/admin/users/${userId ?? data.id}`);
-      router.refresh();
+      refetch(`/admin/users/${userId ?? data.id}`);
     } catch {
       setError("Could not save user.");
     } finally {

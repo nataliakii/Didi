@@ -8,7 +8,7 @@ import {
   RING_SIZES,
 } from "@/constants/jewellery";
 import { formatLabel } from "@/lib/utils";
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -38,7 +38,7 @@ export function RingSettingAdminForm({
   settingId?: string;
   initial?: Partial<RingSettingFormValues>;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [values, setValues] = useState<RingSettingFormValues>({
     name: initial?.name ?? "",
     slug: initial?.slug ?? "",
@@ -98,8 +98,7 @@ export function RingSettingAdminForm({
         setError(data.error ?? "Could not save ring setting.");
         return;
       }
-      router.push(`/admin/ring-settings/${settingId ?? data.id}`);
-      router.refresh();
+      refetch(`/admin/ring-settings/${settingId ?? data.id}`);
     } catch {
       setError("Could not save ring setting.");
     } finally {
@@ -118,8 +117,7 @@ export function RingSettingAdminForm({
         setError("Could not delete ring setting.");
         return;
       }
-      router.push("/admin/ring-settings");
-      router.refresh();
+      refetch("/admin/ring-settings");
     } catch {
       setError("Could not delete ring setting.");
     } finally {

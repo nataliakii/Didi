@@ -46,7 +46,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
       <button
         type="button"
         onClick={() => setOpen((value) => !value)}
-        className="inline-flex items-center gap-1.5 rounded-sm border border-brand-gold/30 px-2.5 py-1.5 text-xs text-brand-navy/70 transition-colors hover:border-brand-gold hover:text-brand-navy"
+        className="inline-flex items-center gap-1.5 rounded-sm border border-brand-border bg-brand-surface px-2.5 py-1.5 text-xs text-brand-text transition-colors hover:border-brand-teal/50"
         aria-expanded={open}
         aria-haspopup="listbox"
         aria-label={t("selectLanguage")}
@@ -72,7 +72,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         <ul
           role="listbox"
           aria-label={t("language")}
-          className="absolute right-0 z-50 mt-2 max-h-72 w-48 overflow-auto rounded-sm border border-brand-gold/25 bg-white py-1 shadow-lg"
+          className="absolute right-0 z-50 mt-2 max-h-72 w-48 overflow-auto rounded-sm border border-brand-border bg-brand-surface py-1 shadow-lg"
         >
           {SUPPORTED_LOCALES.map((supportedLocale) => (
             <li
@@ -84,10 +84,10 @@ export function LanguageSwitcher({ className }: { className?: string }) {
                 type="button"
                 onClick={() => switchLocale(supportedLocale)}
                 className={cn(
-                  "flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-brand-cream",
+                  "flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-brand-surface-hover",
                   supportedLocale === locale
-                    ? "font-medium text-brand-navy"
-                    : "text-brand-navy/70",
+                    ? "font-medium text-brand-text"
+                    : "text-brand-muted",
                 )}
               >
                 <span aria-hidden="true">{LOCALE_FLAGS[supportedLocale]}</span>

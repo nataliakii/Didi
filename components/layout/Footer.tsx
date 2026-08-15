@@ -31,19 +31,19 @@ export async function Footer() {
   };
 
   return (
-    <footer className="border-t border-brand-gold/20 bg-brand-navy text-brand-ivory">
+    <footer className="border-t border-brand-border bg-brand-bg-deep text-brand-on-deep">
       <Container className="py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-block transition-opacity hover:opacity-90">
               <BrandLogo size="md" variant="light" />
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-ivory/70">
+            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-muted-on-deep">
               {t("description")}
             </p>
             <div className="mt-6">
-              <p className="font-serif text-base text-brand-ivory">{t("founderName")}</p>
-              <p className="mt-1 text-[11px] tracking-[0.12em] text-brand-gold/90 uppercase">
+              <p className="font-serif text-base text-brand-on-deep">{t("founderName")}</p>
+              <p className="mt-1 text-[11px] tracking-[0.12em] text-brand-gold uppercase">
                 {t("founderTitle")}
               </p>
             </div>
@@ -64,7 +64,7 @@ export async function Footer() {
                   <li key={link.href + link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-brand-ivory/70 transition-colors hover:text-brand-gold"
+                      className="text-sm text-brand-muted-on-deep transition-colors hover:text-brand-teal-soft"
                     >
                       {link.label}
                     </Link>
@@ -75,15 +75,15 @@ export async function Footer() {
           ))}
         </div>
 
-        <p className="mt-12 border-t border-brand-gold/20 pt-8 text-xs leading-relaxed text-brand-ivory/50">
+        <p className="mt-12 border-t border-white/10 pt-8 text-xs leading-relaxed text-brand-muted-on-deep">
           {t("trustNote")}
         </p>
 
         <div className="mt-6 flex flex-col items-center justify-between gap-3 sm:flex-row">
-          <p className="text-xs text-brand-ivory/50">
+          <p className="text-xs text-brand-muted-on-deep/80">
             {tCommon("copyright", { year: new Date().getFullYear() })}
           </p>
-          <p className="text-xs text-brand-gold/80">{tCommon("tagline")}</p>
+          <p className="footer-tagline text-xs">{tCommon("tagline")}</p>
         </div>
       </Container>
     </footer>

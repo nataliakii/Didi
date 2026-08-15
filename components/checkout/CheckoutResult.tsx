@@ -42,12 +42,12 @@ export function CheckoutResult({
       <p className="section-eyebrow">
         {variant === "success" ? "Asteria Diamond House" : "Payment"}
       </p>
-      <h1 className="mt-3 font-serif text-3xl text-brand-navy sm:text-4xl">
+      <h1 className="mt-3 font-serif text-3xl text-brand-text sm:text-4xl">
         {title}
       </h1>
       <p className="mt-4 leading-relaxed text-brand-charcoal/70">{description}</p>
       {orderNumber && (
-        <p className="mt-6 text-sm text-brand-navy/80">
+        <p className="mt-6 text-sm text-brand-text/80">
           {orderLabel}: <span className="font-medium">{orderNumber}</span>
         </p>
       )}

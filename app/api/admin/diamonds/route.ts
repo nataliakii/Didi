@@ -1,5 +1,6 @@
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
+import { revalidateDiamondCatalog } from "@/lib/cache";
 import { createAdminDiamond } from "@/services/diamond-admin.service";
 import { diamondAdminSchema } from "@/validation/admin/diamond.schema";
 import { NextResponse } from "next/server";
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
+    revalidateDiamondCatalog();
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/diamonds error:", error);

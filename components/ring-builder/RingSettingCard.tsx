@@ -18,7 +18,7 @@ interface RingSettingCardProps {
 
 function ShapeChip({ label }: { label: string }) {
   return (
-    <span className="inline-flex rounded-sm border border-brand-gold/25 bg-brand-cream px-2 py-0.5 text-xs text-brand-navy">
+    <span className="inline-flex rounded-sm border border-brand-gold/25 bg-brand-cream px-2 py-0.5 text-xs text-brand-text">
       {label}
     </span>
   );
@@ -64,7 +64,7 @@ export function RingSettingCard({
         <p className="text-xs tracking-[0.2em] text-brand-gold uppercase">
           {formatLabel(setting.style)}
         </p>
-        <h3 className="mt-1 font-serif text-lg text-brand-navy">
+        <h3 className="mt-1 font-serif text-lg text-brand-text">
           {setting.name}
         </h3>
         <PriceDisplay price={setting.basePrice} size="sm" className="mt-2" />
@@ -74,7 +74,7 @@ export function RingSettingCard({
             <dt className="text-xs tracking-wide text-brand-charcoal/50 uppercase">
               Metals
             </dt>
-            <dd className="mt-1 font-medium text-brand-navy">
+            <dd className="mt-1 font-medium text-brand-text">
               {setting.availableMetals.map(formatLabel).join(", ")}
             </dd>
           </div>
@@ -103,7 +103,7 @@ export function RingSettingCard({
           ) : (
             <Link
               href="/create-ring/setting"
-              className="inline-flex w-full items-center justify-center rounded-sm border border-brand-gold/40 px-4 py-2.5 text-sm text-brand-navy transition-colors hover:bg-brand-cream"
+              className="inline-flex w-full items-center justify-center rounded-sm border border-brand-gold/40 px-4 py-2.5 text-sm text-brand-text transition-colors hover:bg-brand-cream"
             >
               View Setting
             </Link>

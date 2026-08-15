@@ -1,27 +1,90 @@
 @import "tailwindcss";
 
-:root {
-  --background: #faf7f0;
-  --foreground: #1e1e1e;
-  --muted: #6b7280;
-  --border: #e8d8a8;
-  --accent: #081b33;
+:root,
+html[data-theme="light"] {
+  /* Light theme (default) — airy ivory + deep navy accents */
+  --brand-bg: #faf7f0;
+  --brand-bg-deep: #06182b;
+  --brand-surface: #ffffff;
+  --brand-surface-hover: #f3eee4;
+  --brand-gold: #d4aa45;
+  --brand-gold-soft: #e5c875;
+  --brand-teal: #2cb9be;
+  --brand-teal-soft: #1a9a9f;
+  --brand-crimson: #7a2435;
+  --brand-crimson-soft: #a63d50;
+  --brand-text: #06182b;
+  --brand-muted: #5c6b7a;
+  --brand-border: #d9cfbe;
+  --brand-on-deep: #f7f4ed;
+  --brand-muted-on-deep: #a9b5c2;
 
-  --color-navy: #081b33;
-  --color-navy-light: #102a47;
-  --color-gold: #c9a24a;
-  --color-gold-soft: #e8d8a8;
-  --color-ivory: #faf7f0;
-  --color-cream: #f6f0e6;
-  --color-charcoal: #1e1e1e;
+  --brand-navy: var(--brand-bg-deep);
+  --brand-navy-light: #10273d;
+  --brand-ivory: #faf7f0;
+  --brand-cream: #f6f0e6;
+  --brand-charcoal: var(--brand-text);
 
-  --brand-navy: var(--color-navy);
-  --brand-navy-light: var(--color-navy-light);
-  --brand-gold: var(--color-gold);
-  --brand-gold-soft: var(--color-gold-soft);
-  --brand-ivory: var(--color-ivory);
-  --brand-cream: var(--color-cream);
-  --brand-charcoal: var(--color-charcoal);
+  --background: var(--brand-bg);
+  --foreground: var(--brand-text);
+  --muted: var(--brand-muted);
+  --border: var(--brand-border);
+  --accent: var(--brand-gold);
+
+  --color-navy: var(--brand-bg-deep);
+  --color-navy-light: var(--brand-navy-light);
+  --color-gold: var(--brand-gold);
+  --color-gold-soft: var(--brand-gold-soft);
+  --color-ivory: var(--brand-ivory);
+  --color-cream: var(--brand-cream);
+  --color-charcoal: var(--brand-charcoal);
+}
+
+html[data-theme="light"] {
+  color-scheme: light;
+}
+
+html[data-theme="dark"] {
+  color-scheme: dark;
+  --brand-bg: #06182b;
+  --brand-bg-deep: #020d1a;
+  --brand-surface: #10273d;
+  --brand-surface-hover: #17344b;
+  --brand-gold: #d4aa45;
+  --brand-gold-soft: #e5c875;
+  --brand-teal: #2cb9be;
+  --brand-teal-soft: #72d5d2;
+  --brand-crimson: #7a2435;
+  --brand-crimson-soft: #a63d50;
+  --brand-text: #f7f4ed;
+  --brand-muted: #a9b5c2;
+  --brand-border: #294258;
+  --brand-on-deep: #f7f4ed;
+  --brand-muted-on-deep: #a9b5c2;
+
+  --brand-navy: var(--brand-bg-deep);
+  --brand-navy-light: var(--brand-surface-hover);
+  --brand-ivory: var(--brand-text);
+  --brand-cream: var(--brand-surface);
+  --brand-charcoal: var(--brand-text);
+
+  --background: var(--brand-bg);
+  --foreground: var(--brand-text);
+  --muted: var(--brand-muted);
+  --border: var(--brand-border);
+  --accent: var(--brand-gold);
+
+  --color-navy: var(--brand-bg-deep);
+  --color-navy-light: var(--brand-navy-light);
+  --color-gold: var(--brand-gold);
+  --color-gold-soft: var(--brand-gold-soft);
+  --color-ivory: var(--brand-ivory);
+  --color-cream: var(--brand-cream);
+  --color-charcoal: var(--brand-charcoal);
+}
+
+html:not([data-theme]) {
+  color-scheme: light;
 }
 
 @theme inline {
@@ -30,21 +93,38 @@
   --color-muted: var(--muted);
   --color-border: var(--border);
   --color-accent: var(--accent);
-  --color-brand-navy: var(--brand-navy);
-  --color-brand-navy-light: var(--brand-navy-light);
+
+  --color-brand-bg: var(--brand-bg);
+  --color-brand-bg-deep: var(--brand-bg-deep);
+  --color-brand-surface: var(--brand-surface);
+  --color-brand-surface-hover: var(--brand-surface-hover);
   --color-brand-gold: var(--brand-gold);
   --color-brand-gold-soft: var(--brand-gold-soft);
+  --color-brand-teal: var(--brand-teal);
+  --color-brand-teal-soft: var(--brand-teal-soft);
+  --color-brand-crimson: var(--brand-crimson);
+  --color-brand-crimson-soft: var(--brand-crimson-soft);
+  --color-brand-text: var(--brand-text);
+  --color-brand-muted: var(--brand-muted);
+  --color-brand-border: var(--brand-border);
+  --color-brand-on-deep: var(--brand-on-deep);
+  --color-brand-muted-on-deep: var(--brand-muted-on-deep);
+
+  /* Legacy Tailwind colour names */
+  --color-brand-navy: var(--brand-navy);
+  --color-brand-navy-light: var(--brand-navy-light);
   --color-brand-ivory: var(--brand-ivory);
   --color-brand-cream: var(--brand-cream);
   --color-brand-charcoal: var(--brand-charcoal);
+
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
   --font-serif: var(--font-cormorant);
 }
 
 body {
-  background: var(--brand-ivory);
-  color: var(--brand-charcoal);
+  background: var(--brand-bg);
+  color: var(--brand-text);
   font-family: var(--font-sans), system-ui, sans-serif;
 }
 
@@ -54,8 +134,8 @@ body {
 }
 
 ::selection {
-  background-color: var(--brand-gold-soft);
-  color: var(--brand-navy);
+  background-color: color-mix(in srgb, var(--brand-gold) 35%, transparent);
+  color: var(--brand-text);
 }
 
 /* Brand utility classes */
@@ -63,19 +143,44 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
+  color: var(--brand-text);
+}
+
+html[data-theme="dark"] .section-eyebrow {
+  color: var(--brand-gold);
+}
+
+/* Light theme: gold type is too faint on ivory — use deep navy for copy.
+   Keep gold on deep/navy surfaces where contrast is already high. */
+html[data-theme="light"] [class*="text-brand-gold"] {
+  color: var(--brand-text);
+}
+
+html[data-theme="light"]
+  :is(.bg-brand-bg-deep, .bg-brand-navy, .hero-section)
+  [class*="text-brand-gold"] {
   color: var(--brand-gold);
 }
 
 .card-luxury {
   border-radius: 0.125rem;
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 25%, transparent);
-  background-color: #ffffff;
+  border: 1px solid var(--brand-border);
+  background-color: var(--brand-surface);
 }
 
 .panel-luxury {
   border-radius: 0.125rem;
-  border: 1px solid color-mix(in srgb, var(--brand-gold) 20%, transparent);
-  background-color: var(--brand-cream);
+  border: 1px solid var(--brand-border);
+  background-color: var(--brand-surface-hover);
+}
+
+.link-brand {
+  color: var(--brand-teal);
+  transition: color 0.2s ease;
+}
+
+.link-brand:hover {
+  color: var(--brand-teal-soft);
 }
 
 details summary::-webkit-details-marker {
@@ -115,9 +220,9 @@ details summary::-webkit-details-marker {
   pointer-events: none;
   background: radial-gradient(
     circle,
-    rgba(255, 255, 255, 0.55) 0%,
-    rgba(232, 216, 168, 0.45) 35%,
-    rgba(201, 162, 74, 0.2) 55%,
+    rgba(255, 255, 255, 0.45) 0%,
+    rgba(229, 200, 117, 0.4) 35%,
+    rgba(212, 170, 69, 0.2) 55%,
     transparent 72%
   );
   animation: button-ripple 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -130,10 +235,10 @@ details summary::-webkit-details-marker {
   background: linear-gradient(
     105deg,
     transparent 38%,
-    rgba(255, 255, 255, 0.18) 46%,
-    rgba(255, 255, 255, 0.42) 50%,
-    rgba(232, 216, 168, 0.35) 54%,
-    rgba(255, 255, 255, 0.18) 58%,
+    rgba(255, 255, 255, 0.12) 46%,
+    rgba(229, 200, 117, 0.45) 50%,
+    rgba(212, 170, 69, 0.3) 54%,
+    rgba(255, 255, 255, 0.12) 58%,
     transparent 66%
   );
   animation: button-shimmer-sweep 700ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -155,6 +260,382 @@ details summary::-webkit-details-marker {
   animation: coming-soon-shimmer 5s ease-in-out infinite;
 }
 
+/* Footer tagline — soft gold light drifting across the words */
+.footer-tagline {
+  background-image: linear-gradient(
+    105deg,
+    rgba(212, 170, 69, 0.45) 0%,
+    rgba(212, 170, 69, 0.55) 38%,
+    rgba(247, 241, 228, 0.95) 50%,
+    rgba(226, 192, 107, 0.85) 58%,
+    rgba(212, 170, 69, 0.5) 100%
+  );
+  background-size: 220% 100%;
+  background-position: 100% 50%;
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-text-fill-color: transparent;
+  animation: footer-tagline-shine 7.5s ease-in-out infinite;
+}
+
+@keyframes footer-tagline-shine {
+  0%,
+  18% {
+    background-position: 100% 50%;
+  }
+  42%,
+  58% {
+    background-position: 0% 50%;
+  }
+  82%,
+  100% {
+    background-position: 100% 50%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .footer-tagline {
+    animation: none;
+    background: none;
+    color: rgba(212, 170, 69, 0.9);
+    -webkit-text-fill-color: rgba(212, 170, 69, 0.9);
+  }
+}
+
+/* Poem hero — stacked line reveal + atmospheric night sky */
+.poem-reveal {
+  opacity: 0;
+  transform: translateY(1.1rem);
+  transition:
+    opacity 0.9s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.9s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.poem-reveal.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Soft secondary copy — never set opacity here; it fights .poem-reveal */
+.poem-reveal.hero-description {
+  transition-duration: 1.15s;
+}
+
+.poem-reveal.hero-description.is-visible {
+  opacity: 0.9;
+}
+
+.poem-reveal.hero-cta-group {
+  transition-duration: 1.15s;
+}
+
+.hero-section {
+  --navy: #06182b;
+  --navy-deep: #020d1a;
+  --navy-light: #102a3d;
+  --gold: #d4aa45;
+  --gold-light: #e2c06b;
+  --turquoise: #2cb9be;
+  --turquoise-light: #72d5d2;
+  --wine: #7a2435;
+  --text-primary: #f7f4ed;
+  --text-secondary: #b8c3ce;
+  background-color: var(--navy-deep);
+  color: var(--text-primary);
+}
+
+.hero-atmosphere {
+  background:
+    radial-gradient(
+      circle at 12% 38%,
+      rgba(44, 185, 190, 0.2),
+      transparent 34%
+    ),
+    radial-gradient(
+      circle at 72% 30%,
+      rgba(44, 185, 190, 0.12),
+      transparent 30%
+    ),
+    radial-gradient(
+      circle at 54% 12%,
+      rgba(212, 170, 69, 0.07),
+      transparent 24%
+    ),
+    radial-gradient(
+      circle at 83% 67%,
+      rgba(122, 36, 53, 0.07),
+      transparent 20%
+    ),
+    linear-gradient(135deg, #06182b 0%, #020d1a 100%);
+}
+
+.hero-eyebrow {
+  color: var(--gold);
+  font-size: 0.75rem;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+}
+
+.hero-title {
+  color: var(--text-primary);
+}
+
+.hero-description {
+  color: var(--text-secondary);
+}
+
+.hero-cta-primary {
+  background: var(--gold) !important;
+  color: var(--navy) !important;
+  border-color: transparent !important;
+  box-shadow: none;
+  transition:
+    background 0.25s ease,
+    box-shadow 0.25s ease;
+}
+
+.hero-cta-primary:hover {
+  background: var(--gold-light) !important;
+  box-shadow: 0 0 24px rgba(212, 170, 69, 0.28);
+}
+
+.hero-cta-secondary {
+  background: rgba(2, 13, 26, 0.35) !important;
+  border: 1px solid rgba(44, 185, 190, 0.65) !important;
+  color: var(--text-primary) !important;
+  transition:
+    background 0.25s ease,
+    border-color 0.25s ease;
+}
+
+.hero-cta-secondary:hover {
+  background: rgba(44, 185, 190, 0.12) !important;
+  border-color: var(--turquoise-light) !important;
+}
+
+.hero-sky {
+  z-index: 1;
+}
+
+.hero-constellation--desktop {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .hero-constellation--desktop {
+    display: inline;
+  }
+}
+
+/* Measured SVG path draw — dash used only during intro, then cleared */
+.constellationPath {
+  fill: none;
+  vector-effect: non-scaling-stroke;
+  stroke-width: 0.45px;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  /* Dash pattern is applied only in JS while drawing; resting state is continuous */
+  stroke-dasharray: none;
+  stroke-dashoffset: 0;
+  opacity: 0;
+}
+
+.constellationPath--gold {
+  stroke: rgba(212, 170, 69, 0.32);
+}
+
+.constellationPath--teal {
+  stroke: rgba(44, 185, 190, 0.28);
+}
+
+.constellationStar {
+  opacity: 0;
+  transform: scale(0.92);
+  transform-box: fill-box;
+  transform-origin: center;
+  will-change: opacity, transform;
+}
+
+.constellationStar.isVisible {
+  opacity: 0.92;
+  transform: scale(1);
+}
+
+.constellationStar--gold {
+  fill: #d4aa45;
+  filter: drop-shadow(0 0 1.5px rgba(212, 170, 69, 0.55));
+}
+
+.constellationStar--teal {
+  fill: #72d5d2;
+  filter: drop-shadow(0 0 2px rgba(44, 185, 190, 0.5));
+}
+
+.constellationStar--wine {
+  fill: #9b3048;
+  filter:
+    drop-shadow(0 0 1.5px rgba(155, 48, 72, 0.75))
+    drop-shadow(0 0 4px rgba(122, 36, 53, 0.25));
+}
+
+.constellationStar--white {
+  fill: #f2ebe0;
+  filter: drop-shadow(0 0 1.2px rgba(242, 235, 224, 0.45));
+}
+
+.constellationStar--field.isVisible {
+  opacity: 0.55;
+}
+
+/* Rare idle spark — one-shot, scheduled in JS every 5–10 minutes */
+.constellationStar--spark {
+  animation: constellation-spark 1.35s ease-in-out 1;
+}
+
+.constellationStar--field.constellationStar--spark {
+  animation-name: constellation-spark-field;
+}
+
+.constellationFlare-ray {
+  fill: none;
+  stroke: rgba(226, 192, 107, 0.45);
+  stroke-width: 0.28px;
+  stroke-linecap: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.constellationDrawTip {
+  fill: #f7f1e4;
+  filter: drop-shadow(0 0 1.25px rgba(226, 192, 107, 0.65));
+  pointer-events: none;
+}
+
+@keyframes constellation-spark {
+  0%,
+  100% {
+    opacity: 0.92;
+  }
+  45% {
+    opacity: 1;
+  }
+}
+
+@keyframes constellation-spark-field {
+  0%,
+  100% {
+    opacity: 0.55;
+  }
+  45% {
+    opacity: 0.92;
+  }
+}
+
+@media (max-width: 767px) {
+  .constellationPath {
+    stroke-width: 0.4px;
+  }
+
+  .hero-atmosphere {
+    background:
+      radial-gradient(
+        circle at 18% 36%,
+        rgba(44, 185, 190, 0.14),
+        transparent 30%
+      ),
+      radial-gradient(
+        circle at 70% 28%,
+        rgba(44, 185, 190, 0.08),
+        transparent 26%
+      ),
+      linear-gradient(135deg, #06182b 0%, #020d1a 100%);
+  }
+}
+
+/* About journey chapters */
+.journey-chapter {
+  opacity: 0;
+  transform: translateY(1.75rem);
+  transition:
+    opacity 0.95s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.95s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-chapter.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.journey-hairline {
+  display: block;
+  height: 1px;
+  width: 0;
+  background: color-mix(in srgb, var(--brand-gold) 55%, transparent);
+  transition: width 1s cubic-bezier(0.22, 1, 0.36, 1) 0.15s;
+}
+
+.journey-chapter.is-visible .journey-hairline {
+  width: 3.5rem;
+}
+
+.journey-cta {
+  opacity: 0;
+  transform: translateY(0.75rem);
+  transition:
+    opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.journey-cta.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .poem-reveal,
+  .journey-chapter,
+  .journey-cta {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .constellationPath {
+    stroke-dasharray: none !important;
+    stroke-dashoffset: 0 !important;
+    opacity: 0.34 !important;
+    animation: none !important;
+  }
+
+  .constellationPath--teal {
+    opacity: 0.3 !important;
+  }
+
+  .constellationStar {
+    opacity: 0.92 !important;
+    transform: none !important;
+    animation: none !important;
+  }
+
+  .constellationStar--field {
+    opacity: 0.55 !important;
+  }
+
+  .constellationFlare {
+    opacity: 0.22 !important;
+  }
+
+  .constellationDrawTip {
+    display: none !important;
+  }
+
+  .journey-hairline {
+    width: 3.5rem;
+    transition: none;
+  }
+}
+
 /* Dual-thumb grade range sliders (diamond filters) */
 .grade-range-input {
   pointer-events: none;
@@ -166,7 +647,7 @@ details summary::-webkit-details-marker {
   width: 14px;
   height: 14px;
   border-radius: 9999px;
-  background: var(--brand-navy);
+  background: var(--brand-surface);
   border: 2px solid var(--brand-gold);
   cursor: pointer;
   margin-top: -5px;
@@ -177,7 +658,7 @@ details summary::-webkit-details-marker {
   width: 14px;
   height: 14px;
   border-radius: 9999px;
-  background: var(--brand-navy);
+  background: var(--brand-surface);
   border: 2px solid var(--brand-gold);
   cursor: pointer;
 }

@@ -98,10 +98,10 @@ export function ActiveFilterChips({
           key={`${filter.key}-${filter.value}`}
           type="button"
           onClick={() => removeFilter(filter.key)}
-          className="inline-flex items-center gap-1.5 rounded-full border border-brand-gold/40 bg-brand-cream/60 px-3 py-1 text-xs text-brand-navy transition-colors hover:border-brand-navy/30"
+          className="inline-flex items-center gap-1.5 rounded-full border border-brand-gold/40 bg-brand-cream/60 px-3 py-1 text-xs text-brand-text transition-colors hover:border-brand-navy/30"
         >
           <span>{filter.label}</span>
-          <span className="text-brand-navy/50" aria-hidden="true">
+          <span className="text-brand-text/50" aria-hidden="true">
             ×
           </span>
           <span className="sr-only">Remove {filter.label} filter</span>
@@ -110,7 +110,7 @@ export function ActiveFilterChips({
       <button
         type="button"
         onClick={resetAll}
-        className="text-xs tracking-wide text-brand-navy/50 underline-offset-2 hover:text-brand-navy hover:underline"
+        className="text-xs tracking-wide text-brand-text/50 underline-offset-2 hover:text-brand-text hover:underline"
       >
         {resolvedResetLabel}
       </button>

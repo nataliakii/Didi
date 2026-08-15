@@ -34,7 +34,7 @@ export function RingSizeSelector({
 
   return (
     <div>
-      <h3 className="text-sm font-medium tracking-wide text-brand-navy">
+      <h3 className="text-sm font-medium tracking-wide text-brand-text">
         {t("chooseRingSize")}
       </h3>
       <div className="mt-3 flex flex-wrap gap-2">
@@ -47,7 +47,7 @@ export function RingSizeSelector({
               "flex h-10 w-10 items-center justify-center rounded-sm border text-sm transition-colors",
               selectedRingSize === size
                 ? "border-brand-navy bg-brand-navy text-brand-ivory"
-                : "border-brand-gold/35 bg-white text-brand-navy hover:border-brand-gold hover:bg-brand-cream",
+                : "border-brand-gold/35 bg-brand-surface text-brand-text hover:border-brand-gold hover:bg-brand-cream",
             )}
           >
             {size}

@@ -1,4 +1,5 @@
 import { OPS_ROLES } from "@/constants/admin-roles";
+import { revalidateOpsLists } from "@/lib/cache";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { createShipmentForOrder } from "@/services/shipment.service";
 import { NextResponse } from "next/server";
@@ -25,6 +26,7 @@ export async function POST(request: Request, context: RouteContext) {
       return NextResponse.json({ error: result.error }, { status: 400 });
     }
 
+    revalidateOpsLists();
     return NextResponse.json(result);
   } catch (error) {
     console.error("POST /api/admin/orders/[id]/ship error:", error);

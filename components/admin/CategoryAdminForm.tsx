@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
 
 const fieldClass =
@@ -24,7 +24,7 @@ export function CategoryAdminForm({
   initial?: Partial<CategoryFormValues>;
   parentOptions?: Array<{ _id: string; name: string }>;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [values, setValues] = useState<CategoryFormValues>({
     name: initial?.name ?? "",
     slug: initial?.slug ?? "",
@@ -67,8 +67,7 @@ export function CategoryAdminForm({
         setError(data.error ?? "Could not save category.");
         return;
       }
-      router.push(`/admin/categories/${categoryId ?? data.id}`);
-      router.refresh();
+      refetch(`/admin/categories/${categoryId ?? data.id}`);
     } catch {
       setError("Could not save category.");
     } finally {
@@ -87,8 +86,7 @@ export function CategoryAdminForm({
         setError("Could not delete category.");
         return;
       }
-      router.push("/admin/categories");
-      router.refresh();
+      refetch("/admin/categories");
     } catch {
       setError("Could not delete category.");
     } finally {

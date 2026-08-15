@@ -6,6 +6,10 @@ import {
   RING_STYLES,
   STONE_TYPES,
 } from "@/constants/jewellery";
+import {
+  CACHE_TAGS,
+  CATALOG_REVALIDATE_SECONDS,
+} from "@/lib/cache";
 import { safeConnectDB } from "@/lib/db";
 import { getParam, type SearchParamValue } from "@/lib/searchParams";
 import { Category } from "@/models/Category";
@@ -19,6 +23,8 @@ import type {
   ProductSummary,
 } from "@/types";
 import mongoose, { type FilterQuery, type SortOrder } from "mongoose";
+import { unstable_cache } from "next/cache";
+import { cache } from "react";
 
 const DEFAULT_LIMIT = 12;
 const MAX_LIMIT = 48;
@@ -236,7 +242,7 @@ async function buildProductQuery(
   return query;
 }
 
-export async function getProducts(
+async function queryProducts(
   filters: ProductFilters,
 ): Promise<PaginatedResult<ProductSummary>> {
   const page = filters.page ?? 1;
@@ -274,15 +280,27 @@ export async function getProducts(
   }
 }
 
-export async function getProductBySlug(
-  slug: string,
-): Promise<ProductDetail | null> {
+export async function getProducts(
+  filters: ProductFilters,
+): Promise<PaginatedResult<ProductSummary>> {
+  const cacheKey = JSON.stringify(filters);
+  return unstable_cache(
+    () => queryProducts(filters),
+    ["products-list", cacheKey],
+    {
+      tags: [CACHE_TAGS.products],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+}
+
+async function queryProductBySlug(slug: string): Promise<ProductDetail | null> {
   const db = await safeConnectDB();
   if (!db) return null;
 
   try {
     const product = await Product.findOne({
-      slug: slug.toLowerCase().trim(),
+      slug,
       status: "published",
     }).lean();
 
@@ -295,7 +313,19 @@ export async function getProductBySlug(
   }
 }
 
-export async function getProductById(id: string): Promise<ProductDetail | null> {
+export const getProductBySlug = cache(async (slug: string) => {
+  const normalized = slug.toLowerCase().trim();
+  return unstable_cache(
+    () => queryProductBySlug(normalized),
+    ["product-by-slug", normalized],
+    {
+      tags: [CACHE_TAGS.products, CACHE_TAGS.product(normalized)],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+});
+
+async function queryProductById(id: string): Promise<ProductDetail | null> {
   const db = await safeConnectDB();
   if (!db || !mongoose.Types.ObjectId.isValid(id)) return null;
 
@@ -314,57 +344,86 @@ export async function getProductById(id: string): Promise<ProductDetail | null> 
   }
 }
 
+export const getProductById = cache(async (id: string) => {
+  return unstable_cache(
+    () => queryProductById(id),
+    ["product-by-id", id],
+    {
+      tags: [CACHE_TAGS.products, CACHE_TAGS.product(id)],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
+});
+
 export async function getRelatedProducts(
   product: ProductDetail,
   limit = 4,
 ): Promise<ProductSummary[]> {
-  const db = await safeConnectDB();
-  if (!db) return [];
+  return unstable_cache(
+    async () => {
+      const db = await safeConnectDB();
+      if (!db) return [];
 
-  try {
-    const products = await Product.find({
-      status: "published",
-      _id: { $ne: product._id },
-      $or: [
-        { categoryId: product.categoryId },
-        { productType: product.productType },
-      ],
-    })
-      .sort({ isFeatured: -1, createdAt: -1 })
-      .limit(limit)
-      .lean();
+      try {
+        const products = await Product.find({
+          status: "published",
+          _id: { $ne: product._id },
+          $or: [
+            { categoryId: product.categoryId },
+            { productType: product.productType },
+          ],
+        })
+          .sort({ isFeatured: -1, createdAt: -1 })
+          .limit(limit)
+          .lean();
 
-    return products.map((item) =>
-      toProductSummary(item as unknown as Parameters<typeof toProductSummary>[0]),
-    );
-  } catch (error) {
-    console.error("getRelatedProducts error:", error);
-    return [];
-  }
+        return products.map((item) =>
+          toProductSummary(item as unknown as Parameters<typeof toProductSummary>[0]),
+        );
+      } catch (error) {
+        console.error("getRelatedProducts error:", error);
+        return [];
+      }
+    },
+    ["related-products", product._id, String(limit)],
+    {
+      tags: [CACHE_TAGS.products, CACHE_TAGS.product(product.slug)],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
 }
 
 export async function getFeaturedProducts(
   limit = 4,
 ): Promise<ProductSummary[]> {
-  const db = await safeConnectDB();
-  if (!db) return [];
+  return unstable_cache(
+    async () => {
+      const db = await safeConnectDB();
+      if (!db) return [];
 
-  try {
-    const products = await Product.find({
-      status: "published",
-      isFeatured: true,
-    })
-      .sort({ createdAt: -1 })
-      .limit(limit)
-      .lean();
+      try {
+        const products = await Product.find({
+          status: "published",
+          isFeatured: true,
+        })
+          .sort({ createdAt: -1 })
+          .limit(limit)
+          .lean();
 
-    return products.map((product) =>
-      toProductSummary(product as unknown as Parameters<typeof toProductSummary>[0]),
-    );
-  } catch (error) {
-    console.error("getFeaturedProducts error:", error);
-    return [];
-  }
+        return products.map((product) =>
+          toProductSummary(product as unknown as Parameters<typeof toProductSummary>[0]),
+        );
+      } catch (error) {
+        console.error("getFeaturedProducts error:", error);
+        return [];
+      }
+    },
+    ["featured-products", String(limit)],
+    {
+      tags: [CACHE_TAGS.products],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
 }
 
 export async function getProductsCount(): Promise<number> {
@@ -397,25 +456,34 @@ export async function getLowStockProductsCount(
 }
 
 export async function getActiveCategories(): Promise<CategorySummary[]> {
-  const db = await safeConnectDB();
-  if (!db) return [];
+  return unstable_cache(
+    async () => {
+      const db = await safeConnectDB();
+      if (!db) return [];
 
-  try {
-    const categories = await Category.find({ isActive: true })
-      .sort({ name: 1 })
-      .lean();
+      try {
+        const categories = await Category.find({ isActive: true })
+          .sort({ name: 1 })
+          .lean();
 
-    return categories.map((category) => ({
-      _id: String(category._id),
-      name: category.name as string,
-      slug: category.slug as string,
-      description: category.description as string | undefined,
-      image: category.image as string | undefined,
-    }));
-  } catch (error) {
-    console.error("getActiveCategories error:", error);
-    return [];
-  }
+        return categories.map((category) => ({
+          _id: String(category._id),
+          name: category.name as string,
+          slug: category.slug as string,
+          description: category.description as string | undefined,
+          image: category.image as string | undefined,
+        }));
+      } catch (error) {
+        console.error("getActiveCategories error:", error);
+        return [];
+      }
+    },
+    ["active-categories"],
+    {
+      tags: [CACHE_TAGS.categories],
+      revalidate: CATALOG_REVALIDATE_SECONDS,
+    },
+  )();
 }
 
 export async function getPublishedProductSlugs(): Promise<string[]> {

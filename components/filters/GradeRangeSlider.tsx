@@ -50,7 +50,7 @@ export function GradeRangeSlider({
     <div className={className}>
       <div className="mb-3 flex items-center justify-between gap-2">
         <div className="flex items-center gap-1.5">
-          <p className="text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+          <p className="text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
             {label}
           </p>
           {onInfoClick && (
@@ -58,14 +58,14 @@ export function GradeRangeSlider({
               type="button"
               onClick={onInfoClick}
               aria-label={`${label} information`}
-              className="flex h-4 w-4 items-center justify-center rounded-full border border-brand-gold/40 text-[10px] text-brand-navy/55 hover:border-brand-navy hover:text-brand-navy"
+              className="flex h-4 w-4 items-center justify-center rounded-full border border-brand-gold/40 text-[10px] text-brand-text/55 hover:border-brand-navy hover:text-brand-text"
             >
               i
             </button>
           )}
         </div>
         {!isDefault && (
-          <span className="text-[11px] text-brand-navy/55">
+          <span className="text-[11px] text-brand-text/55">
             {grades[minIndex]} – {grades[maxIndex]}
           </span>
         )}
@@ -125,7 +125,7 @@ export function GradeRangeSlider({
               }}
               className={cn(
                 "min-w-0 flex-1 truncate text-center text-[9px] tracking-wide sm:text-[10px]",
-                inRange ? "text-brand-navy" : "text-brand-charcoal/35",
+                inRange ? "text-brand-text" : "text-brand-charcoal/35",
               )}
             >
               {grade}

@@ -100,7 +100,7 @@ export function ProductGallery({
               type="button"
               onClick={() => setMode("video")}
               className={cn(
-                "flex aspect-square items-center justify-center rounded-sm border-2 bg-brand-cream text-xs font-medium tracking-wide text-brand-navy uppercase",
+                "flex aspect-square items-center justify-center rounded-sm border-2 bg-brand-cream text-xs font-medium tracking-wide text-brand-text uppercase",
                 mode === "video"
                   ? "border-brand-navy"
                   : "border-transparent hover:border-brand-gold/40",

@@ -113,7 +113,7 @@ export default async function DiamondDetailPage({
         <p className="text-xs tracking-widest text-brand-charcoal/45 uppercase">
           {formatLabel(diamond.diamondType)} Diamond
         </p>
-        <h1 className="mt-2 font-serif text-3xl text-brand-navy sm:text-4xl">
+        <h1 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">
           {diamond.carat.toFixed(2)} ct {formatLabel(diamond.shape)}
         </h1>
 
@@ -129,34 +129,34 @@ export default async function DiamondDetailPage({
         <dl className="mt-8 grid grid-cols-2 gap-4 rounded-sm border border-brand-gold/20 p-6 text-sm sm:grid-cols-3">
           <div>
             <dt className="text-brand-charcoal/45">Shape</dt>
-            <dd className="mt-1 font-medium text-brand-navy">
+            <dd className="mt-1 font-medium text-brand-text">
               {formatLabel(diamond.shape)}
             </dd>
           </div>
           <div>
             <dt className="text-brand-charcoal/45">Carat</dt>
-            <dd className="mt-1 font-medium text-brand-navy">
+            <dd className="mt-1 font-medium text-brand-text">
               {diamond.carat.toFixed(2)}
             </dd>
           </div>
           <div>
             <dt className="text-brand-charcoal/45">Cut</dt>
-            <dd className="mt-1 font-medium text-brand-navy">{diamond.cut}</dd>
+            <dd className="mt-1 font-medium text-brand-text">{diamond.cut}</dd>
           </div>
           <div>
             <dt className="text-brand-charcoal/45">Color</dt>
-            <dd className="mt-1 font-medium text-brand-navy">{diamond.color}</dd>
+            <dd className="mt-1 font-medium text-brand-text">{diamond.color}</dd>
           </div>
           <div>
             <dt className="text-brand-charcoal/45">Clarity</dt>
-            <dd className="mt-1 font-medium text-brand-navy">
+            <dd className="mt-1 font-medium text-brand-text">
               {diamond.clarity}
             </dd>
           </div>
           {diamond.polish && (
             <div>
               <dt className="text-brand-charcoal/45">Polish</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.polish}
               </dd>
             </div>
@@ -164,7 +164,7 @@ export default async function DiamondDetailPage({
           {diamond.symmetry && (
             <div>
               <dt className="text-brand-charcoal/45">Symmetry</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.symmetry}
               </dd>
             </div>
@@ -172,7 +172,7 @@ export default async function DiamondDetailPage({
           {diamond.fluorescence && (
             <div>
               <dt className="text-brand-charcoal/45">Fluorescence</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.fluorescence}
               </dd>
             </div>
@@ -180,7 +180,7 @@ export default async function DiamondDetailPage({
           {diamond.lengthWidthRatio !== undefined && (
             <div>
               <dt className="text-brand-charcoal/45">L:W Ratio</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.lengthWidthRatio.toFixed(2)}
               </dd>
             </div>
@@ -188,7 +188,7 @@ export default async function DiamondDetailPage({
           {diamond.tablePercent !== undefined && (
             <div>
               <dt className="text-brand-charcoal/45">Table %</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.tablePercent}
               </dd>
             </div>
@@ -196,7 +196,7 @@ export default async function DiamondDetailPage({
           {diamond.depthPercent !== undefined && (
             <div>
               <dt className="text-brand-charcoal/45">Depth %</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.depthPercent}
               </dd>
             </div>
@@ -204,7 +204,7 @@ export default async function DiamondDetailPage({
           {diamond.lengthMm !== undefined && diamond.widthMm !== undefined && (
             <div>
               <dt className="text-brand-charcoal/45">Measurements</dt>
-              <dd className="mt-1 font-medium text-brand-navy">
+              <dd className="mt-1 font-medium text-brand-text">
                 {diamond.lengthMm.toFixed(2)} × {diamond.widthMm.toFixed(2)}
                 {diamond.depthMm !== undefined
                   ? ` × ${diamond.depthMm.toFixed(2)} mm`

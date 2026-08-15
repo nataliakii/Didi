@@ -1,9 +1,11 @@
+"use client";
+
 import { Button } from "@/components/ui/Button";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { getTranslations } from "next-intl/server";
+import { useTranslations } from "next-intl";
 
-export async function CartEmptyState() {
-  const t = await getTranslations("cart");
+export function CartEmptyState() {
+  const t = useTranslations("cart");
 
   return (
     <EmptyState

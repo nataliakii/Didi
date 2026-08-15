@@ -9,7 +9,14 @@ import {
   type PointerEvent,
 } from "react";
 
-type ButtonVariant = "primary" | "secondary" | "outline" | "ghost" | "gold" | "navy";
+type ButtonVariant =
+  | "primary"
+  | "secondary"
+  | "outline"
+  | "ghost"
+  | "gold"
+  | "navy"
+  | "teal";
 type ButtonSize = "sm" | "md" | "lg";
 
 interface ButtonProps extends ComponentPropsWithoutRef<"button"> {
@@ -26,17 +33,19 @@ interface PressEffect {
 
 const variantStyles: Record<ButtonVariant, string> = {
   primary:
-    "bg-brand-navy text-brand-ivory hover:bg-brand-navy-light focus-visible:ring-brand-navy",
+    "bg-brand-gold text-brand-bg-deep hover:bg-brand-gold-soft focus-visible:ring-brand-gold",
   secondary:
-    "bg-brand-cream text-brand-navy hover:bg-brand-gold-soft/40 focus-visible:ring-brand-gold",
+    "bg-brand-teal text-brand-bg-deep hover:bg-brand-teal-soft focus-visible:ring-brand-teal",
   outline:
-    "border border-brand-gold bg-transparent text-brand-navy hover:bg-brand-cream focus-visible:ring-brand-gold",
+    "border border-brand-gold/80 bg-transparent text-brand-text hover:bg-brand-surface-hover focus-visible:ring-brand-gold",
   ghost:
-    "bg-transparent text-brand-navy hover:bg-brand-cream focus-visible:ring-brand-gold",
+    "bg-transparent text-brand-muted hover:bg-brand-surface-hover hover:text-brand-text focus-visible:ring-brand-teal",
   gold:
-    "bg-brand-gold text-brand-navy hover:bg-brand-gold/90 focus-visible:ring-brand-gold",
+    "bg-brand-gold text-brand-bg-deep hover:bg-brand-gold-soft focus-visible:ring-brand-gold",
   navy:
-    "bg-brand-navy text-brand-ivory hover:bg-brand-navy-light focus-visible:ring-brand-navy",
+    "bg-brand-bg-deep text-brand-text hover:bg-brand-surface focus-visible:ring-brand-teal",
+  teal:
+    "border border-brand-teal bg-transparent text-brand-teal hover:bg-brand-teal/10 focus-visible:ring-brand-teal",
 };
 
 const sizeStyles: Record<ButtonSize, string> = {
@@ -113,7 +122,7 @@ export function Button({
   );
 
   const classes = cn(
-    "relative isolate inline-flex items-center justify-center overflow-hidden rounded-sm font-medium tracking-wide transition-[transform,colors] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 active:scale-[0.985] disabled:pointer-events-none disabled:opacity-50",
+    "relative isolate inline-flex items-center justify-center overflow-hidden rounded-sm font-medium tracking-wide transition-[transform,colors] duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-brand-bg active:scale-[0.985] disabled:pointer-events-none disabled:opacity-50",
     variantStyles[variant],
     sizeStyles[size],
     className,

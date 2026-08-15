@@ -182,7 +182,7 @@ export function AppointmentForm({
       <div className="space-y-1.5">
         <label
           htmlFor="preferredTime"
-          className="text-xs font-medium tracking-[0.15em] text-brand-navy/70 uppercase"
+          className="text-xs font-medium tracking-[0.15em] text-brand-text/70 uppercase"
         >
           {t("preferredTime")}
         </label>
@@ -190,7 +190,7 @@ export function AppointmentForm({
           id="preferredTime"
           value={form.preferredTime}
           onChange={(event) => updateField("preferredTime", event.target.value)}
-          className="w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50"
+          className="w-full rounded-sm border border-brand-gold/30 bg-brand-surface px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50"
           required
         >
           <option value="">{t("preferredTimePlaceholder")}</option>
@@ -216,7 +216,7 @@ export function AppointmentForm({
       <div className="space-y-1.5">
         <label
           htmlFor="message"
-          className="text-xs font-medium tracking-[0.15em] text-brand-navy/70 uppercase"
+          className="text-xs font-medium tracking-[0.15em] text-brand-text/70 uppercase"
         >
           {t("message")}
         </label>
@@ -225,7 +225,7 @@ export function AppointmentForm({
           value={form.message ?? ""}
           onChange={(event) => updateField("message", event.target.value)}
           rows={4}
-          className="w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50"
+          className="w-full rounded-sm border border-brand-gold/30 bg-brand-surface px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50"
           placeholder={t("messagePlaceholder")}
         />
         {fieldErrors.message && (

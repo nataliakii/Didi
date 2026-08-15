@@ -38,7 +38,7 @@ export function ShapeFilterRow({
 
   return (
     <div className={className}>
-      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-navy/60 uppercase">
+      <p className="mb-3 text-xs font-medium tracking-[0.2em] text-brand-text/60 uppercase">
         {rowLabel}
       </p>
       <div className="flex flex-wrap gap-2">
@@ -60,7 +60,7 @@ export function ShapeFilterRow({
                 "flex h-11 w-11 items-center justify-center rounded-full border transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold",
                 isActive
                   ? "border-brand-navy bg-brand-navy text-brand-gold"
-                  : "border-brand-gold/25 bg-brand-cream/50 text-brand-navy/60 hover:border-brand-gold/50 hover:text-brand-navy",
+                  : "border-brand-gold/25 bg-brand-cream/50 text-brand-text/60 hover:border-brand-gold/50 hover:text-brand-text",
               )}
             >
               <DiamondShapeIcon shape={shape} className="h-4 w-4" />

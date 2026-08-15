@@ -1,5 +1,6 @@
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
+import { revalidateProductCatalog } from "@/lib/cache";
 import { createAdminProduct } from "@/services/product-admin.service";
 import { productAdminSchema } from "@/validation/admin/product.schema";
 import { NextResponse } from "next/server";
@@ -23,6 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
+    revalidateProductCatalog();
     return NextResponse.json({ id }, { status: 201 });
   } catch (error) {
     console.error("POST /api/admin/products error:", error);

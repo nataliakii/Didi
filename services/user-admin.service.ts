@@ -80,6 +80,7 @@ export async function getAdminUsers(): Promise<AdminUserSummary[]> {
     const users = await User.find()
       .select("-passwordHash")
       .sort({ name: 1 })
+      .limit(500)
       .lean();
     return users.map((user) =>
       toAdminUserSummary(

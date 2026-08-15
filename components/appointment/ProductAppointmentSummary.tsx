@@ -41,7 +41,7 @@ export function ProductAppointmentSummary({
         <div>
           <Link
             href={`/products/${product.slug}`}
-            className="font-serif text-brand-navy hover:text-brand-gold"
+            className="font-serif text-brand-text hover:text-brand-gold"
           >
             {product.name}
           </Link>

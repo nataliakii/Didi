@@ -20,7 +20,7 @@ export function CartIconButton({ className, onNavigate }: CartIconButtonProps) {
       href="/cart"
       onClick={onNavigate}
       className={cn(
-        "relative inline-flex items-center text-sm text-brand-navy/70 transition-colors hover:text-brand-navy",
+        "relative inline-flex items-center text-sm text-brand-text/70 transition-colors hover:text-brand-text",
         className,
       )}
       aria-label={count > 0 ? t("cartWithCount", { count }) : t("cart")}
@@ -40,7 +40,7 @@ export function CartIconButton({ className, onNavigate }: CartIconButtonProps) {
         />
       </svg>
       {count > 0 && (
-        <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-gold px-1 text-[10px] font-medium text-brand-navy">
+        <span className="absolute -right-2 -top-2 flex h-4 min-w-4 items-center justify-center rounded-full bg-brand-gold px-1 text-[10px] font-medium text-brand-text">
           {count > 99 ? "99+" : count}
         </span>
       )}

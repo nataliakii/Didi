@@ -73,7 +73,7 @@ export default async function AppointmentPage({
       <div className="grid gap-12 lg:grid-cols-[1fr_320px] lg:items-start">
         <div>
           <div className="max-w-2xl">
-            <h1 className="font-serif text-3xl text-brand-navy sm:text-4xl">
+            <h1 className="font-serif text-3xl text-brand-text sm:text-4xl">
               {t("pageTitle")}
             </h1>
             <p className="mt-4 leading-relaxed text-brand-charcoal/70">
@@ -105,28 +105,28 @@ export default async function AppointmentPage({
           </h2>
           <ul className="mt-4 space-y-4 leading-relaxed">
             <li>
-              <strong className="font-medium text-brand-navy">
+              <strong className="font-medium text-brand-text">
                 {tSidebar("inStoreTitle")}
               </strong>
               <br />
               {tSidebar("inStoreDescription")}
             </li>
             <li>
-              <strong className="font-medium text-brand-navy">
+              <strong className="font-medium text-brand-text">
                 {tSidebar("virtualTitle")}
               </strong>
               <br />
               {tSidebar("virtualDescription")}
             </li>
             <li>
-              <strong className="font-medium text-brand-navy">
+              <strong className="font-medium text-brand-text">
                 {tSidebar("customRingTitle")}
               </strong>
               <br />
               {tSidebar("customRingDescription")}
             </li>
             <li>
-              <strong className="font-medium text-brand-navy">
+              <strong className="font-medium text-brand-text">
                 {tSidebar("diamondTitle")}
               </strong>
               <br />

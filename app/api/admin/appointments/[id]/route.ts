@@ -1,5 +1,6 @@
 import { OPS_ROLES } from "@/constants/admin-roles";
 import { APPOINTMENT_STATUSES } from "@/constants/order-status";
+import { revalidateOpsLists } from "@/lib/cache";
 import { requireAdminApi } from "@/lib/admin-auth";
 import { updateAdminAppointment } from "@/services/appointment-admin.service";
 import { z } from "zod";
@@ -37,6 +38,7 @@ export async function PATCH(request: Request, context: RouteContext) {
       );
     }
 
+    revalidateOpsLists();
     return NextResponse.json({ appointment });
   } catch (error) {
     console.error("PATCH /api/admin/appointments/[id] error:", error);

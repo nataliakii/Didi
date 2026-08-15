@@ -126,7 +126,7 @@ function FilterFields({
             onBlur={(event) =>
               onUpdate("minPrice", event.target.value || null)
             }
-            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-teal"
           />
         </div>
         <div className="space-y-1.5">
@@ -144,7 +144,7 @@ function FilterFields({
             onBlur={(event) =>
               onUpdate("maxPrice", event.target.value || null)
             }
-            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-navy"
+            className="w-full rounded-sm border border-brand-gold/30 px-3 py-2 text-sm focus:border-brand-navy focus:outline-none focus:ring-1 focus:ring-brand-teal"
           />
         </div>
       </div>
@@ -289,13 +289,13 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
       <div className={cn("hidden lg:block", className)}>
         <div className="sticky top-36 space-y-6">
           <div className="flex items-center justify-between">
-            <h2 className="text-xs font-medium tracking-[0.2em] text-brand-navy uppercase">
+            <h2 className="text-xs font-medium tracking-[0.2em] text-brand-text uppercase">
               {tf("filters")}
             </h2>
             <button
               type="button"
               onClick={handleClear}
-              className="text-xs text-brand-navy/50 hover:text-brand-navy"
+              className="text-xs text-brand-text/50 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>
@@ -308,7 +308,7 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
         <button
           type="button"
           onClick={() => setDrawerOpen(true)}
-          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-navy hover:bg-brand-cream/50"
+          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-text hover:bg-brand-cream/50"
         >
           {tf("filters")}
         </button>
@@ -321,7 +321,7 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
             <button
               type="button"
               onClick={handleClear}
-              className="text-xs text-brand-navy/50 hover:text-brand-navy"
+              className="text-xs text-brand-text/50 hover:text-brand-text"
             >
               {tf("resetAll")}
             </button>

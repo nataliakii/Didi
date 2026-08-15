@@ -10,13 +10,13 @@ export function Input({ id, label, className, ...props }: InputProps) {
     <div className={cn("space-y-1.5", className)}>
       <label
         htmlFor={id}
-        className="text-xs font-medium tracking-[0.15em] text-brand-navy/70 uppercase"
+        className="text-xs font-medium tracking-[0.15em] text-brand-muted uppercase"
       >
         {label}
       </label>
       <input
         id={id}
-        className="w-full rounded-sm border border-brand-gold/30 bg-white px-3 py-2.5 text-sm text-brand-charcoal focus:border-brand-gold focus:outline-none focus:ring-1 focus:ring-brand-gold/50"
+        className="w-full rounded-sm border border-brand-border bg-brand-surface px-3 py-2.5 text-sm text-brand-text placeholder:text-brand-muted/70 focus:border-brand-teal focus:outline-none focus:ring-1 focus:ring-brand-teal/40"
         {...props}
       />
     </div>

@@ -1,6 +1,6 @@
 "use client";
 
-import { useRouter } from "next/navigation";
+import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState } from "react";
 
 export function CreateShipmentButton({
@@ -12,7 +12,7 @@ export function CreateShipmentButton({
   label?: string;
   force?: boolean;
 }) {
-  const router = useRouter();
+  const refetch = useAdminRefetch();
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [message, setMessage] = useState<string | null>(null);
@@ -47,7 +47,7 @@ export function CreateShipmentButton({
       } else {
         setMessage("Done.");
       }
-      router.refresh();
+      refetch();
     } catch {
       setError("Could not create shipment.");
     } finally {

@@ -79,8 +79,8 @@ export async function RingBuilderSteps({
                   className={cn(
                     "flex items-center gap-2 text-xs sm:text-sm",
                     isComplete
-                      ? "text-brand-navy"
-                      : "text-brand-charcoal/45 hover:text-brand-navy",
+                      ? "text-brand-text"
+                      : "text-brand-charcoal/45 hover:text-brand-text",
                   )}
                 >
                   <span
@@ -88,7 +88,7 @@ export async function RingBuilderSteps({
                       "flex h-7 w-7 items-center justify-center rounded-full text-xs font-medium",
                       isComplete
                         ? "bg-brand-navy text-brand-gold"
-                        : "border border-brand-gold/40 bg-white text-brand-navy",
+                        : "border border-brand-gold/40 bg-brand-surface text-brand-text",
                     )}
                   >
                     {index + 1}
@@ -100,7 +100,7 @@ export async function RingBuilderSteps({
                   className={cn(
                     "flex items-center gap-2 text-xs sm:text-sm",
                     isActive
-                      ? "font-medium text-brand-navy"
+                      ? "font-medium text-brand-text"
                       : "text-brand-charcoal/45",
                   )}
                 >

@@ -27,12 +27,12 @@ export function Breadcrumb({
     <nav
       aria-label={navLabel}
       className={cn(
-        "border-b border-brand-gold/10 bg-brand-ivory/80",
+        "border-b border-brand-gold/10 bg-brand-bg/80",
         className,
       )}
     >
       <Container className="py-2">
-        <ol className="flex flex-wrap items-center gap-1 text-[11px] tracking-wide text-brand-navy/50">
+        <ol className="flex flex-wrap items-center gap-1 text-[11px] tracking-wide text-brand-text/50">
           {items.map((item, index) => {
             const isLast = index === items.length - 1;
             const label = item.label?.trim() || "…";
@@ -47,7 +47,7 @@ export function Breadcrumb({
                 )}
                 {isLast || !item.href ? (
                   <span
-                    className="font-medium text-brand-navy/75"
+                    className="font-medium text-brand-text/75"
                     aria-current={isLast ? "page" : undefined}
                   >
                     {label}

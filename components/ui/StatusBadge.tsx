@@ -10,11 +10,12 @@ interface StatusBadgeProps {
 }
 
 const variantStyles: Record<StatusVariant, string> = {
-  default: "bg-brand-cream text-brand-navy",
-  success: "bg-brand-navy/10 text-brand-navy",
-  warning: "bg-brand-gold-soft/50 text-brand-navy",
-  danger: "bg-red-50 text-red-700",
-  info: "bg-brand-cream text-brand-navy-light",
+  default: "bg-brand-surface text-brand-muted border border-brand-border",
+  success: "bg-brand-teal/15 text-brand-teal-soft border border-brand-teal/30",
+  warning: "bg-brand-gold/15 text-brand-gold-soft border border-brand-gold/30",
+  danger:
+    "bg-brand-crimson/20 text-brand-crimson-soft border border-brand-crimson/35",
+  info: "bg-brand-surface-hover text-brand-muted border border-brand-border",
 };
 
 const statusVariantMap: Record<string, StatusVariant> = {

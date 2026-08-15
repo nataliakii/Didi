@@ -1,3 +1,4 @@
+import { revalidateDiamondCatalog } from "@/lib/cache";
 import { CATALOG_ROLES } from "@/constants/admin-roles";
 import { requireAdminApi } from "@/lib/admin-auth";
 import {
@@ -28,6 +29,7 @@ export async function PUT(request: Request, context: RouteContext) {
       return NextResponse.json({ error: "Diamond not found." }, { status: 404 });
     }
 
+    revalidateDiamondCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("PUT /api/admin/diamonds/[id] error:", error);
@@ -48,6 +50,7 @@ export async function DELETE(_request: Request, context: RouteContext) {
     if (!ok) {
       return NextResponse.json({ error: "Diamond not found." }, { status: 404 });
     }
+    revalidateDiamondCatalog();
     return NextResponse.json({ ok: true });
   } catch (error) {
     console.error("DELETE /api/admin/diamonds/[id] error:", error);

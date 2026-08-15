@@ -42,13 +42,13 @@ export function FilterDrawer({
         aria-label="Close filters"
         onClick={onClose}
       />
-      <div className="absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-white shadow-xl">
+      <div className="absolute inset-y-0 left-0 flex w-full max-w-sm flex-col bg-brand-surface shadow-xl">
         <div className="flex items-center justify-between border-b border-brand-gold/20 px-4 py-4">
-          <h2 className="text-sm font-medium text-brand-navy">{title}</h2>
+          <h2 className="text-sm font-medium text-brand-text">{title}</h2>
           <button
             type="button"
             onClick={onClose}
-            className="rounded-sm p-1 text-brand-charcoal/55 hover:bg-brand-cream hover:text-brand-navy"
+            className="rounded-sm p-1 text-brand-charcoal/55 hover:bg-brand-cream hover:text-brand-text"
             aria-label="Close"
           >
             &times;

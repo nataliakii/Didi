@@ -50,7 +50,7 @@ export function BrandLogo({
       <span
         className={cn(
           "font-serif font-semibold uppercase",
-          isLight ? "text-brand-ivory" : "text-brand-navy",
+          isLight ? "text-brand-on-deep" : "text-brand-text",
           styles.primary,
         )}
       >
@@ -60,7 +60,8 @@ export function BrandLogo({
         <span
           className={cn(
             "font-serif font-medium uppercase",
-            isLight ? "text-brand-gold" : "text-brand-gold",
+            // Light surfaces need navy; gold only reads on deep/navy backgrounds.
+            isLight ? "text-brand-gold" : "text-brand-text",
             styles.secondary,
             styles.gap,
           )}

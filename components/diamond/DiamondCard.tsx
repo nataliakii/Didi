@@ -4,6 +4,7 @@ import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getDiamondShapeImage } from "@/constants/demo-images";
 import { getReportHrefForCertification } from "@/lib/certification";
+import { buildRingSettingHref } from "@/lib/ring-builder";
 import { formatLabel } from "@/lib/utils";
 import type { DiamondSummary } from "@/types";
 import { Link } from "@/i18n/routing";
@@ -19,6 +20,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
   const imageAlt =
     primaryImage?.alt ??
     `${diamond.carat.toFixed(2)} ct ${formatLabel(diamond.shape)} diamond`;
+  const ringBuilderHref = buildRingSettingHref({ diamondId: diamond._id });
 
   return (
     <article className="card-luxury flex flex-col overflow-hidden transition-shadow hover:shadow-sm">
@@ -33,7 +35,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
           sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
         />
         {diamond.certification?.lab && (
-          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/25 bg-white/95 px-2 py-0.5 text-[9px] font-medium tracking-[0.12em] text-brand-navy/80 uppercase">
+          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/25 bg-brand-surface/95 px-2 py-0.5 text-[9px] font-medium tracking-[0.12em] text-brand-text/80 uppercase">
             {diamond.certification.lab}
           </span>
         )}
@@ -45,7 +47,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
             <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
               {formatLabel(diamond.diamondType)} &middot; {formatLabel(diamond.shape)}
             </p>
-            <h3 className="mt-1 font-serif text-xl text-brand-navy">
+            <h3 className="mt-1 font-serif text-xl text-brand-text">
               {diamond.carat.toFixed(2)} ct
             </h3>
           </div>
@@ -61,19 +63,19 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
             <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
               Cut
             </dt>
-            <dd className="mt-0.5 font-medium text-brand-navy">{diamond.cut}</dd>
+            <dd className="mt-0.5 font-medium text-brand-text">{diamond.cut}</dd>
           </div>
           <div>
             <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
               Color
             </dt>
-            <dd className="mt-0.5 font-medium text-brand-navy">{diamond.color}</dd>
+            <dd className="mt-0.5 font-medium text-brand-text">{diamond.color}</dd>
           </div>
           <div>
             <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
               Clarity
             </dt>
-            <dd className="mt-0.5 font-medium text-brand-navy">
+            <dd className="mt-0.5 font-medium text-brand-text">
               {diamond.clarity}
             </dd>
           </div>
@@ -81,7 +83,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
             <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
               Lab
             </dt>
-            <dd className="mt-0.5 font-medium text-brand-navy">
+            <dd className="mt-0.5 font-medium text-brand-text">
               {diamond.certification?.lab ?? "—"}
             </dd>
           </div>
@@ -90,7 +92,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
               <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
                 Report No.
               </dt>
-              <dd className="mt-0.5 font-medium text-brand-navy">
+              <dd className="mt-0.5 font-medium text-brand-text">
                 {diamond.certification.reportNumber}
               </dd>
             </div>
@@ -102,7 +104,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
             href={reportHref}
             target="_blank"
             rel="noopener noreferrer"
-            className="mt-3 text-xs font-medium text-brand-gold underline underline-offset-4 hover:text-brand-navy"
+            className="mt-3 text-xs font-medium text-brand-gold underline underline-offset-4 hover:text-brand-text"
           >
             Check official report
           </a>
@@ -113,12 +115,16 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
         </div>
 
         <div className="mt-auto flex flex-col gap-2 pt-5 sm:flex-row">
-          <Button variant="secondary" className="flex-1" disabled>
+          <Button
+            href={ringBuilderHref}
+            variant="secondary"
+            className="flex-1"
+          >
             Choose for ring builder
           </Button>
           <Link
             href={`/diamonds/${diamond._id}`}
-            className="inline-flex flex-1 items-center justify-center rounded-sm border border-brand-gold/40 px-4 py-2.5 text-sm text-brand-navy transition-colors hover:bg-brand-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
+            className="inline-flex flex-1 items-center justify-center rounded-sm border border-brand-gold/40 px-4 py-2.5 text-sm text-brand-text transition-colors hover:bg-brand-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
           >
             View details
           </Link>
