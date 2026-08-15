@@ -83,7 +83,8 @@ export function Header() {
     },
     { label: t("diamondRings"), href: "/products" as const },
     { label: t("looseDiamonds"), href: "/diamonds" as const },
-    { label: t("ringSettings"), href: "/create-ring/setting" as const },
+    // Hidden for now — same flow as Create Your Ring (step 1 only).
+    // { label: t("ringSettings"), href: "/create-ring/setting" as const },
     { label: t("createYourRing"), href: "/create-ring" as const },
     { label: t("consultations"), href: "/appointment" as const },
     { label: t("aboutUs"), href: "/about" as const },

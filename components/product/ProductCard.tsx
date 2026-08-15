@@ -65,8 +65,11 @@ export function ProductCard({ product }: ProductCardProps) {
 
   const primaryImage =
     product.images.find((img) => img.isPrimary) ?? product.images[0];
-  const displaySrc = matchedVariant?.image ?? primaryImage?.url;
-  const imageFallback = primaryImage?.url ?? DEMO_PLACEHOLDER_IMAGES.ring;
+  const primaryUrl = primaryImage?.url?.trim();
+  // Catalogue cards show the product photo. Metal swatches change price/label only
+  // until we have true per-metal lifestyle shots for each style.
+  const displaySrc = primaryUrl ?? matchedVariant?.image;
+  const imageFallback = primaryUrl ?? DEMO_PLACEHOLDER_IMAGES.ring;
   const imageAlt = primaryImage?.alt ?? product.name;
 
   const displayPrice = matchedVariant?.price ?? product.basePrice;

@@ -14,7 +14,8 @@ export async function Footer() {
       { label: t("looseDiamonds"), href: "/diamonds" as const },
       { label: tNav("engagementRings"), href: "/products?type=engagement-ring" as const },
       { label: t("diamondRings"), href: "/products" as const },
-      { label: tNav("ringSettings"), href: "/create-ring/setting" as const },
+      // Hidden for now — overlaps Create Your Ring (builder step 1).
+      // { label: tNav("ringSettings"), href: "/create-ring/setting" as const },
     ],
     services: [
       { label: tNav("createYourRing"), href: "/create-ring" as const },
