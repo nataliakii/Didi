@@ -1,4 +1,5 @@
 import { getVivaCurrency, isVivaConfigured } from "@/constants/viva";
+import { revalidateDiamondCatalog } from "@/lib/cache";
 import { connectDB } from "@/lib/db";
 import { generateOrderNumber } from "@/lib/utils";
 import {
@@ -6,6 +7,7 @@ import {
   isSuccessfulVivaStatus,
   retrieveVivaTransaction,
 } from "@/lib/viva";
+import { Diamond } from "@/models/Diamond";
 import { Order } from "@/models/Order";
 import { getDiamondById } from "@/services/diamond.service";
 import { getProductById } from "@/services/product.service";
@@ -16,7 +18,7 @@ import type { CheckoutRequestInput } from "@/validation/checkout.schema";
 import mongoose from "mongoose";
 
 type BuiltOrderItem = {
-  itemType: "product" | "custom-ring";
+  itemType: "product" | "custom-ring" | "diamond";
   productId?: mongoose.Types.ObjectId;
   diamondId?: mongoose.Types.ObjectId;
   quantity: number;
@@ -47,11 +49,41 @@ type BuiltOrderItem = {
   };
 };
 
+function isDiamondUnavailable(diamond: {
+  availabilityStatus?: string;
+}): boolean {
+  return diamond.availabilityStatus === "out-of-stock";
+}
+
+function diamondDetailsSnapshot(diamond: {
+  shape: string;
+  carat: number;
+  cut?: string;
+  color?: string;
+  clarity?: string;
+  certification?: { lab?: string; reportNumber?: string };
+}) {
+  return {
+    shape: diamond.shape,
+    carat: diamond.carat,
+    cut: diamond.cut,
+    color: diamond.color,
+    clarity: diamond.clarity,
+    gradingReport: diamond.certification
+      ? {
+          lab: diamond.certification.lab,
+          reportNumber: diamond.certification.reportNumber,
+        }
+      : undefined,
+  };
+}
+
 async function buildOrderItems(
   items: CheckoutRequestInput["items"],
 ): Promise<{ orderItems: BuiltOrderItem[]; subtotal: number } | { error: string }> {
   const orderItems: BuiltOrderItem[] = [];
   let subtotal = 0;
+  const seenDiamondIds = new Set<string>();
 
   for (const item of items) {
     if (item.type === "product") {
@@ -118,12 +150,49 @@ async function buildOrderItems(
       continue;
     }
 
+    if (item.type === "diamond") {
+      if (seenDiamondIds.has(item.diamondId)) {
+        return { error: "The same diamond appears more than once in your bag." };
+      }
+      seenDiamondIds.add(item.diamondId);
+
+      const diamond = await getDiamondById(item.diamondId);
+      if (!diamond || isDiamondUnavailable(diamond)) {
+        return {
+          error: "One of the diamonds in your bag is no longer available.",
+        };
+      }
+
+      const unitPrice = diamond.salePrice ?? diamond.price;
+      subtotal += unitPrice;
+
+      orderItems.push({
+        itemType: "diamond",
+        diamondId: new mongoose.Types.ObjectId(diamond._id),
+        quantity: 1,
+        unitPrice,
+        totalPrice: unitPrice,
+        snapshot: {
+          name: `${diamond.carat}ct ${diamond.shape} diamond`,
+          price: unitPrice,
+          images: diamond.images ?? [],
+          diamondDetails: diamondDetailsSnapshot(diamond),
+        },
+      });
+      continue;
+    }
+
+    if (seenDiamondIds.has(item.diamondId)) {
+      return { error: "The same diamond appears more than once in your bag." };
+    }
+    seenDiamondIds.add(item.diamondId);
+
     const [setting, diamond] = await Promise.all([
       getRingSettingById(item.settingId),
       getDiamondById(item.diamondId),
     ]);
 
-    if (!setting || !diamond) {
+    if (!setting || !diamond || isDiamondUnavailable(diamond)) {
       return {
         error: "One of the custom ring selections is no longer available.",
       };
@@ -152,24 +221,29 @@ async function buildOrderItems(
           metal: item.selectedMetal,
           ringSize: item.ringSize,
         },
-        diamondDetails: {
-          shape: diamond.shape,
-          carat: diamond.carat,
-          cut: diamond.cut,
-          color: diamond.color,
-          clarity: diamond.clarity,
-          gradingReport: diamond.certification
-            ? {
-                lab: diamond.certification.lab,
-                reportNumber: diamond.certification.reportNumber,
-              }
-            : undefined,
-        },
+        diamondDetails: diamondDetailsSnapshot(diamond),
       },
     });
   }
 
   return { orderItems, subtotal };
+}
+
+async function markDiamondsSoldFromOrder(order: {
+  items?: Array<{ diamondId?: mongoose.Types.ObjectId | string | null }>;
+}): Promise<void> {
+  const ids = (order.items ?? [])
+    .map((item) => item.diamondId)
+    .filter(Boolean)
+    .map((id) => String(id));
+
+  if (ids.length === 0) return;
+
+  await Diamond.updateMany(
+    { _id: { $in: ids } },
+    { $set: { availabilityStatus: "out-of-stock", isActive: false } },
+  );
+  revalidateDiamondCatalog();
 }
 
 export async function startCheckout(input: CheckoutRequestInput): Promise<
@@ -342,6 +416,8 @@ export async function markOrderPaidFromViva(input: {
   order.status = "paid";
   order.vivaTransactionId = transaction.transactionId;
   await order.save();
+
+  await markDiamondsSoldFromOrder(order);
 
   // Create DHL label/AWB after payment (best-effort; admin can retry).
   await tryCreateShipmentAfterPayment(order.orderNumber);

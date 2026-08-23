@@ -70,7 +70,9 @@ export function ProductCard({ product }: ProductCardProps) {
   // until we have true per-metal lifestyle shots for each style.
   const displaySrc = primaryUrl ?? matchedVariant?.image;
   const imageFallback = primaryUrl ?? DEMO_PLACEHOLDER_IMAGES.ring;
-  const imageAlt = primaryImage?.alt ?? product.name;
+  const imageAlt =
+    primaryImage?.alt?.trim() ||
+    `${product.name}${product.attributes?.diamondColor ? ` — ${product.attributes.diamondColor}` : ""} lab-grown diamond jewelry`;
 
   const displayPrice = matchedVariant?.price ?? product.basePrice;
   const displaySalePrice = matchedVariant?.salePrice ?? product.salePrice;

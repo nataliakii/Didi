@@ -41,6 +41,7 @@ export interface CartDiamondSnapshot {
   color?: string;
   clarity?: string;
   price: number;
+  salePrice?: number;
   certification?: CartCustomRingCertificationSnapshot;
 }
 
@@ -59,7 +60,20 @@ export interface CartCustomRingItem {
   diamondSnapshot: CartDiamondSnapshot;
 }
 
-export type CartItem = CartProductItem | CartCustomRingItem;
+/** Standalone loose diamond — quantity always 1 (unique stone). */
+export interface CartDiamondItem {
+  id: string;
+  type: "diamond";
+  diamondId: string;
+  name: string;
+  image?: string;
+  price: number;
+  salePrice?: number;
+  quantity: 1;
+  diamondSnapshot: CartDiamondSnapshot;
+}
+
+export type CartItem = CartProductItem | CartCustomRingItem | CartDiamondItem;
 
 export interface AddProductCartInput {
   productId: string;
@@ -81,5 +95,14 @@ export interface AddCustomRingCartInput {
   image?: string;
   price: number;
   settingSnapshot: CartSettingSnapshot;
+  diamondSnapshot: CartDiamondSnapshot;
+}
+
+export interface AddDiamondCartInput {
+  diamondId: string;
+  name: string;
+  image?: string;
+  price: number;
+  salePrice?: number;
   diamondSnapshot: CartDiamondSnapshot;
 }

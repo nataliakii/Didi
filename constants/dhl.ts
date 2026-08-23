@@ -26,7 +26,7 @@ export function getDhlAccountNumber(): string {
 export function getDhlOrigin() {
   return {
     countryCode: (process.env.DHL_ORIGIN_COUNTRY || "GR").trim().toUpperCase(),
-    cityName: (process.env.DHL_ORIGIN_CITY || "Athens").trim(),
+    cityName: (process.env.DHL_ORIGIN_CITY || "Thessaloniki").trim(),
     postalCode: (process.env.DHL_ORIGIN_POSTAL_CODE || "10563").trim(),
     addressLine1: (
       process.env.DHL_SHIPPER_ADDRESS_LINE1 || "Asteria Diamond House"

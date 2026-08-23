@@ -2,6 +2,7 @@
 
 import {
   addCustomRingToCart,
+  addDiamondToCart,
   addProductToCart,
   clearCartStorage,
   getCartServerSnapshot,
@@ -13,6 +14,7 @@ import {
 import { getCartItemCount, getCartSubtotal } from "@/lib/cart";
 import type {
   AddCustomRingCartInput,
+  AddDiamondCartInput,
   AddProductCartInput,
   CartItem,
 } from "@/types/cart";
@@ -42,6 +44,7 @@ interface CartContextValue {
   isHydrated: boolean;
   addProductItem: (input: AddProductCartInput) => void;
   addCustomRingItem: (input: AddCustomRingCartInput) => void;
+  addDiamondItem: (input: AddDiamondCartInput) => boolean;
   removeItem: (id: string) => void;
   updateQuantity: (id: string, quantity: number) => void;
   clearCart: () => void;
@@ -73,6 +76,10 @@ export function CartProvider({ children }: { children: ReactNode }) {
     addCustomRingToCart(input);
   }, []);
 
+  const addDiamondItem = useCallback((input: AddDiamondCartInput) => {
+    return addDiamondToCart(input);
+  }, []);
+
   const removeItem = useCallback((id: string) => {
     removeCartItem(id);
   }, []);
@@ -95,6 +102,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       isHydrated,
       addProductItem,
       addCustomRingItem,
+      addDiamondItem,
       removeItem,
       updateQuantity,
       clearCart,
@@ -107,6 +115,7 @@ export function CartProvider({ children }: { children: ReactNode }) {
       isHydrated,
       addProductItem,
       addCustomRingItem,
+      addDiamondItem,
       removeItem,
       updateQuantity,
       clearCart,

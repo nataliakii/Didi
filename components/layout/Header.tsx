@@ -77,17 +77,19 @@ export function Header() {
   const [searchOpen, setSearchOpen] = useState(false);
 
   const categoryLinks = [
+    { label: t("rings"), href: "/rings" as const },
+    { label: t("necklaces"), href: "/necklaces" as const },
+    { label: t("earrings"), href: "/earrings" as const },
+    { label: t("bracelets"), href: "/bracelets" as const },
     {
-      label: t("engagementRings"),
-      href: "/products?type=engagement-ring" as const,
+      label: t("coloredDiamonds"),
+      href: "/colored-lab-grown-diamonds" as const,
     },
-    { label: t("diamondRings"), href: "/products" as const },
     { label: t("looseDiamonds"), href: "/diamonds" as const },
-    // Hidden for now — same flow as Create Your Ring (step 1 only).
-    // { label: t("ringSettings"), href: "/create-ring/setting" as const },
     { label: t("createYourRing"), href: "/create-ring" as const },
-    { label: t("consultations"), href: "/appointment" as const },
     { label: t("aboutUs"), href: "/about" as const },
+    { label: t("guides"), href: "/guides" as const },
+    { label: t("contact"), href: "/contact" as const },
   ];
 
   const closeMobile = useCallback(() => setMobileOpen(false), []);

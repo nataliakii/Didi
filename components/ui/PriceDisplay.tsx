@@ -18,7 +18,7 @@ const sizeStyles = {
 export function PriceDisplay({
   price,
   salePrice,
-  currency = "USD",
+  currency = "EUR",
   className,
   size = "md",
 }: PriceDisplayProps) {

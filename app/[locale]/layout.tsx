@@ -1,9 +1,11 @@
 import { DocumentLang } from "@/components/layout/DocumentLang";
 import { StorefrontChrome } from "@/components/layout/StorefrontChrome";
 import { ComingSoonPage } from "@/components/coming-soon/ComingSoonPage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { SUPPORTED_LOCALES, type Locale } from "@/constants/i18n";
 import { COMING_SOON } from "@/constants/site";
 import { routing } from "@/i18n/routing";
+import { buildOrganizationJsonLd } from "@/lib/schema";
 import { buildSiteMetadata } from "@/lib/seo";
 import { hasLocale, NextIntlClientProvider } from "next-intl";
 import { getMessages, getTranslations, setRequestLocale } from "next-intl/server";
@@ -54,6 +56,7 @@ export default async function LocaleLayout({
   return (
     <NextIntlClientProvider locale={locale} messages={messages}>
       <DocumentLang locale={locale} />
+      {!COMING_SOON && <JsonLd data={buildOrganizationJsonLd()} />}
       {COMING_SOON ? (
         <ComingSoonPage />
       ) : (

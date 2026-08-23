@@ -28,13 +28,13 @@ const HOME_CATEGORY_CARDS = [
   {
     key: "looseDiamonds",
     image: DEMO_DIAMOND_IMAGES.roundBrilliant,
-    href: "/diamonds" as const,
+    href: "/colored-lab-grown-diamonds" as const,
     placeholderKind: "diamond" as const,
   },
   {
     key: "engagementRings",
     image: DEMO_RING_IMAGES.ovalSolitaire,
-    href: "/products?category=engagement-rings" as const,
+    href: "/rings" as const,
     placeholderKind: "ring" as const,
   },
   {
@@ -139,6 +139,23 @@ export async function HomePageContent() {
   return (
     <>
       <PoemHero />
+
+      <section className="border-b border-brand-gold/15 bg-brand-bg py-12 sm:py-16">
+        <Container>
+          <div className="mx-auto max-w-3xl text-center">
+            <p className="section-eyebrow">{t("brandIntroEyebrow")}</p>
+            <h2 className="mt-3 font-serif text-2xl text-brand-text sm:text-3xl">
+              {t("brandIntroTitle")}
+            </h2>
+            <p className="mt-5 text-base leading-relaxed text-brand-charcoal/70 sm:text-lg">
+              {t("brandPositioning")}
+            </p>
+            <p className="mt-4 text-base leading-relaxed text-brand-charcoal/65 sm:text-lg">
+              {t("brandPositioningExtra")}
+            </p>
+          </div>
+        </Container>
+      </section>
 
       <section className="border-b border-brand-gold/15 bg-brand-bg py-6">
         <Container>

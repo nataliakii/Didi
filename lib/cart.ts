@@ -1,5 +1,6 @@
 import type {
   CartCustomRingItem,
+  CartDiamondItem,
   CartItem,
   CartProductItem,
   CartProductSelectedOptions,
@@ -13,7 +14,7 @@ export const EMPTY_CART: CartItem[] = [];
 
 /**
  * Client-side cart prices are for display only.
- * Future checkout must recalculate all prices on the server from DB.
+ * Checkout recalculates all prices on the server from DB.
  */
 
 export function generateCartItemId(): string {
@@ -39,9 +40,22 @@ export function getProductUnitPrice(
   return item.price;
 }
 
+export function getDiamondUnitPrice(
+  item: Pick<CartDiamondItem, "price" | "salePrice">,
+): number {
+  if (item.salePrice !== undefined && item.salePrice < item.price) {
+    return item.salePrice;
+  }
+  return item.price;
+}
+
 export function getCartItemLineTotal(item: CartItem): number {
   const unitPrice =
-    item.type === "product" ? getProductUnitPrice(item) : item.price;
+    item.type === "product"
+      ? getProductUnitPrice(item)
+      : item.type === "diamond"
+        ? getDiamondUnitPrice(item)
+        : item.price;
   return unitPrice * item.quantity;
 }
 
@@ -86,6 +100,28 @@ export function findMatchingProductItem(
     (item): item is CartProductItem =>
       item.type === "product" &&
       buildProductCartKey(item.productId, item.selectedOptions) === key,
+  );
+}
+
+/** True if this diamondId is already in the cart as loose stone or custom ring. */
+export function cartUsesDiamondId(
+  items: CartItem[],
+  diamondId: string,
+): boolean {
+  return items.some(
+    (item) =>
+      (item.type === "diamond" || item.type === "custom-ring") &&
+      item.diamondId === diamondId,
+  );
+}
+
+export function findDiamondCartItem(
+  items: CartItem[],
+  diamondId: string,
+): CartDiamondItem | undefined {
+  return items.find(
+    (item): item is CartDiamondItem =>
+      item.type === "diamond" && item.diamondId === diamondId,
   );
 }
 
@@ -136,6 +172,18 @@ function isValidCartItem(value: unknown): value is CartItem {
     );
   }
 
+  if (item.type === "diamond") {
+    return (
+      typeof item.id === "string" &&
+      typeof item.diamondId === "string" &&
+      typeof item.name === "string" &&
+      typeof item.price === "number" &&
+      item.quantity === 1 &&
+      typeof item.diamondSnapshot === "object" &&
+      item.diamondSnapshot !== null
+    );
+  }
+
   return false;
 }
 
@@ -160,6 +208,17 @@ export function createProductCartItem(
   return {
     id: generateCartItemId(),
     type: "product",
+    ...input,
+  };
+}
+
+export function createDiamondCartItem(
+  input: Omit<CartDiamondItem, "id" | "type" | "quantity">,
+): CartDiamondItem {
+  return {
+    id: generateCartItemId(),
+    type: "diamond",
+    quantity: 1,
     ...input,
   };
 }

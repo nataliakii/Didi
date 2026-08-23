@@ -1,6 +1,8 @@
 import {
   CART_STORAGE_KEY,
+  cartUsesDiamondId,
   createCustomRingCartItem,
+  createDiamondCartItem,
   createProductCartItem,
   EMPTY_CART,
   findMatchingProductItem,
@@ -9,6 +11,7 @@ import {
 } from "@/lib/cart";
 import type {
   AddCustomRingCartInput,
+  AddDiamondCartInput,
   AddProductCartInput,
   CartItem,
 } from "@/types/cart";
@@ -116,20 +119,52 @@ export function addProductToCart(input: AddProductCartInput) {
 }
 
 export function addCustomRingToCart(input: AddCustomRingCartInput) {
-  updateCart((current) => [
-    ...current,
-    createCustomRingCartItem({
-      settingId: input.settingId,
-      diamondId: input.diamondId,
-      selectedMetal: input.selectedMetal,
-      ringSize: input.ringSize,
-      name: input.name,
-      image: input.image,
-      price: input.price,
-      settingSnapshot: input.settingSnapshot,
-      diamondSnapshot: input.diamondSnapshot,
-    }),
-  ]);
+  updateCart((current) => {
+    if (cartUsesDiamondId(current, input.diamondId)) {
+      return current;
+    }
+
+    return [
+      ...current,
+      createCustomRingCartItem({
+        settingId: input.settingId,
+        diamondId: input.diamondId,
+        selectedMetal: input.selectedMetal,
+        ringSize: input.ringSize,
+        name: input.name,
+        image: input.image,
+        price: input.price,
+        settingSnapshot: input.settingSnapshot,
+        diamondSnapshot: input.diamondSnapshot,
+      }),
+    ];
+  });
+}
+
+/** Returns false if the diamond is already in the cart (loose or custom-ring). */
+export function addDiamondToCart(input: AddDiamondCartInput): boolean {
+  let added = false;
+
+  updateCart((current) => {
+    if (cartUsesDiamondId(current, input.diamondId)) {
+      return current;
+    }
+
+    added = true;
+    return [
+      ...current,
+      createDiamondCartItem({
+        diamondId: input.diamondId,
+        name: input.name,
+        image: input.image,
+        price: input.price,
+        salePrice: input.salePrice,
+        diamondSnapshot: input.diamondSnapshot,
+      }),
+    ];
+  });
+
+  return added;
 }
 
 export function removeCartItem(id: string) {
@@ -142,7 +177,7 @@ export function updateCartItemQuantity(id: string, quantity: number) {
   updateCart((current) =>
     current.map((item) => {
       if (item.id !== id) return item;
-      if (item.type === "custom-ring") return item;
+      if (item.type === "custom-ring" || item.type === "diamond") return item;
       return { ...item, quantity };
     }),
   );

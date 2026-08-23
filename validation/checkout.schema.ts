@@ -24,6 +24,12 @@ const customRingCartItemSchema = z.object({
   quantity: z.literal(1).optional().default(1),
 });
 
+const diamondCartItemSchema = z.object({
+  type: z.literal("diamond"),
+  diamondId: z.string().trim().min(1),
+  quantity: z.literal(1).optional().default(1),
+});
+
 export const checkoutRequestSchema = z.object({
   customer: z.object({
     name: z.string().trim().min(2, "Name must be at least 2 characters."),
@@ -43,7 +49,13 @@ export const checkoutRequestSchema = z.object({
       .transform((value) => value.toUpperCase()),
   }),
   items: z
-    .array(z.discriminatedUnion("type", [productCartItemSchema, customRingCartItemSchema]))
+    .array(
+      z.discriminatedUnion("type", [
+        productCartItemSchema,
+        customRingCartItemSchema,
+        diamondCartItemSchema,
+      ]),
+    )
     .min(1, "Your bag is empty."),
   shipping: z.object({
     productCode: z.string().trim().min(1, "Please select a shipping method."),

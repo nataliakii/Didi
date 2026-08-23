@@ -1,3 +1,4 @@
+import { GUIDE_SLUGS } from "@/constants/seo-pages";
 import { SUPPORTED_LOCALES } from "@/constants/i18n";
 import { localizePath } from "@/lib/i18n";
 import { getBaseUrl } from "@/lib/seo";
@@ -11,6 +12,19 @@ const STATIC_PATHS = [
   "/diamonds",
   "/create-ring",
   "/about",
+  "/rings",
+  "/necklaces",
+  "/earrings",
+  "/bracelets",
+  "/colored-lab-grown-diamonds",
+  "/blue-lab-grown-diamonds",
+  "/yellow-lab-grown-diamonds",
+  "/pink-lab-grown-diamonds",
+  "/certification",
+  "/delivery-returns",
+  "/contact",
+  "/guides",
+  ...GUIDE_SLUGS.map((slug) => `/guides/${slug}`),
 ] as const;
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
@@ -25,7 +39,12 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
         url: `${baseUrl}${localizePath(locale, path || "/")}`,
         lastModified: now,
         changeFrequency: path === "" ? "weekly" : "daily",
-        priority: path === "" ? 1 : 0.8,
+        priority:
+          path === ""
+            ? 1
+            : path.includes("colored") || path === "/rings"
+              ? 0.9
+              : 0.8,
       });
     }
   }

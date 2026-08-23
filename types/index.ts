@@ -5,10 +5,14 @@ import type {
   DiamondCut,
   DiamondShape,
   DiamondType,
+  FancyDiamondColor,
+  GoldPurity,
   Metal,
+  ProductShipRegion,
   ProductStatus,
   ProductType,
   RingStyle,
+  StoneType,
 } from "@/constants/jewellery";
 import type { CertificationLab } from "@/constants/certification";
 import type {
@@ -37,10 +41,22 @@ export interface ProductVariant {
 
 export interface ProductAttributes {
   metal?: Metal[];
-  stoneType?: string;
+  goldPurity?: GoldPurity;
+  stoneType?: StoneType | string;
+  isLabGrown?: boolean;
   diamondShape?: DiamondShape;
+  diamondColor?: FancyDiamondColor;
+  diamondCarat?: number;
   style?: RingStyle;
   ringSizes?: string[];
+  customSizeAvailable?: boolean;
+  customStoneAvailable?: boolean;
+  shipsTo?: ProductShipRegion;
+  certification?: {
+    lab?: CertificationLab;
+    reportNumber?: string;
+    reportUrl?: string;
+  };
 }
 
 export interface OrderItemSnapshot {
@@ -134,6 +150,7 @@ export interface ProductSummary {
   _id: string;
   name: string;
   slug: string;
+  sku?: string;
   shortDescription?: string;
   basePrice: number;
   salePrice?: number;
@@ -161,6 +178,7 @@ export interface DiamondSummary {
   carat: number;
   cut: DiamondCut;
   color: DiamondColor;
+  fancyColor?: FancyDiamondColor;
   clarity: DiamondClarity;
   price: number;
   salePrice?: number;
@@ -247,11 +265,15 @@ export interface ProductFilters {
   search?: string;
   category?: string;
   productType?: ProductType;
+  /** Match any of these product types (e.g. ring + engagement-ring). */
+  productTypes?: ProductType[];
   minPrice?: number;
   maxPrice?: number;
   metal?: Metal;
   stoneType?: string;
   diamondShape?: DiamondShape;
+  diamondColor?: FancyDiamondColor;
+  isLabGrown?: boolean;
   style?: RingStyle;
   availabilityStatus?: AvailabilityStatus;
   isReadyToShip?: boolean;
@@ -297,6 +319,7 @@ export interface DiamondFilters {
   collectionTrulyBrilliant?: boolean;
   preset?: string;
   certificationLab?: CertificationLab;
+  fancyColor?: FancyDiamondColor;
   availabilityStatus?: AvailabilityStatus;
   sort?: DiamondSortOption;
   page?: number;

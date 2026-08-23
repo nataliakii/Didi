@@ -382,6 +382,10 @@ details summary::-webkit-details-marker {
   color: var(--text-primary);
 }
 
+.hero-positioning {
+  color: var(--text-primary);
+}
+
 .hero-description {
   color: var(--text-secondary);
 }

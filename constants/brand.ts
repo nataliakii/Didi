@@ -35,7 +35,9 @@ export const DARK_THEME = {
 
 export const BRAND_NAME = "Asteria Diamond House";
 export const BRAND_SHORT_NAME = "Asteria";
-export const BRAND_TAGLINE = "Timeless diamonds, personal stories.";
+export const BRAND_TAGLINE = "Follow Your Star";
+export const BRAND_POSITIONING =
+  "ASTERIA DIAMOND HOUSE — Colored Lab-Grown Diamond Jewelry in Greece";
 
 /** Default (light) semantic exports for non-CSS contexts. */
 export const BRAND_BG = LIGHT_THEME.bg;

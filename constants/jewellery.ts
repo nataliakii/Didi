@@ -196,12 +196,25 @@ export const RING_SIZES = [
 
 export const STONE_TYPES = [
   "diamond",
+  "lab-grown-diamond",
   "sapphire",
   "ruby",
   "emerald",
   "moissanite",
   "none",
 ] as const;
+
+export const GOLD_PURITIES = ["14k", "18k", "22k"] as const;
+
+/** Fancy / colored diamond hues for jewelry & loose stones (separate from D–M scale). */
+export const FANCY_DIAMOND_COLORS = [
+  "colorless",
+  "blue",
+  "yellow",
+  "pink",
+] as const;
+
+export const PRODUCT_SHIP_REGIONS = ["greece", "eu", "greece-eu"] as const;
 
 export type Metal = (typeof METALS)[number];
 export type DiamondShape = (typeof DIAMOND_SHAPES)[number];
@@ -217,3 +230,7 @@ export type RingStyle = (typeof RING_STYLES)[number];
 export type ProductType = (typeof PRODUCT_TYPES)[number];
 export type AvailabilityStatus = (typeof AVAILABILITY_STATUSES)[number];
 export type ProductStatus = (typeof PRODUCT_STATUSES)[number];
+export type GoldPurity = (typeof GOLD_PURITIES)[number];
+export type FancyDiamondColor = (typeof FANCY_DIAMOND_COLORS)[number];
+export type ProductShipRegion = (typeof PRODUCT_SHIP_REGIONS)[number];
+export type StoneType = (typeof STONE_TYPES)[number];

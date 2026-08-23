@@ -13,6 +13,7 @@ import {
   DIAMOND_FILTER_PRESETS,
   DIAMOND_SHAPES,
   DIAMOND_TYPES,
+  FANCY_DIAMOND_COLORS,
   FINISH_GRADES,
   FLUORESCENCE_SLIDER_GRADES,
 } from "@/constants/jewellery";
@@ -101,6 +102,7 @@ function toDiamondSummary(diamond: {
   carat: number;
   cut: string;
   color: string;
+  fancyColor?: string;
   clarity: string;
   price: number;
   salePrice?: number;
@@ -115,6 +117,7 @@ function toDiamondSummary(diamond: {
     carat: diamond.carat,
     cut: diamond.cut as DiamondSummary["cut"],
     color: diamond.color as DiamondSummary["color"],
+    fancyColor: diamond.fancyColor as DiamondSummary["fancyColor"],
     clarity: diamond.clarity as DiamondSummary["clarity"],
     price: diamond.price,
     salePrice: diamond.salePrice,
@@ -187,6 +190,7 @@ export function parseDiamondFilters(
   const shapeRaw = getParam(raw, "shape");
   const cutRaw = getParam(raw, "cut");
   const colorRaw = getParam(raw, "color");
+  const fancyColorRaw = getParam(raw, "fancyColor");
   const clarityRaw = getParam(raw, "clarity");
   const polishRaw = getParam(raw, "polish");
   const symmetryRaw = getParam(raw, "symmetry");
@@ -222,6 +226,9 @@ export function parseDiamondFilters(
     maxPrice: parseNumber(getParam(raw, "maxPrice")),
     cut: isEnumValue(cutRaw, DIAMOND_CUTS) ? cutRaw : undefined,
     color: isEnumValue(colorRaw, DIAMOND_COLORS) ? colorRaw : undefined,
+    fancyColor: isEnumValue(fancyColorRaw, FANCY_DIAMOND_COLORS)
+      ? fancyColorRaw
+      : undefined,
     clarity: isEnumValue(clarityRaw, DIAMOND_CLARITY) ? clarityRaw : undefined,
     minCut: isInScale(minCut, CUT_SLIDER_GRADES) ? minCut : undefined,
     maxCut: isInScale(maxCut, CUT_SLIDER_GRADES) ? maxCut : undefined,
@@ -310,6 +317,10 @@ function buildDiamondQuery(filters: DiamondFilters): FilterQuery<typeof Diamond>
     query.color = filters.color;
   }
 
+  if (filters.fancyColor) {
+    query.fancyColor = filters.fancyColor;
+  }
+
   if (filters.minClarity || filters.maxClarity) {
     query.clarity = {
       $in: gradesInRange(
@@ -340,6 +351,9 @@ function buildDiamondQuery(filters: DiamondFilters): FilterQuery<typeof Diamond>
   }
   if (filters.availabilityStatus) {
     query.availabilityStatus = filters.availabilityStatus;
+  } else {
+    // Sold stones are marked out-of-stock + inactive; also hide any leftover out-of-stock actives.
+    query.availabilityStatus = { $ne: "out-of-stock" };
   }
 
   if (filters.minCarat !== undefined || filters.maxCarat !== undefined) {
@@ -479,7 +493,10 @@ export async function getFeaturedDiamonds(
       if (!db) return [];
 
       try {
-        const diamonds = await Diamond.find({ isActive: true })
+        const diamonds = await Diamond.find({
+          isActive: true,
+          availabilityStatus: { $ne: "out-of-stock" },
+        })
           .sort({ createdAt: -1 })
           .limit(limit)
           .lean();
@@ -505,7 +522,10 @@ export async function getDiamondsCount(): Promise<number> {
   if (!db) return 0;
 
   try {
-    return await Diamond.countDocuments({ isActive: true });
+    return await Diamond.countDocuments({
+      isActive: true,
+      availabilityStatus: { $ne: "out-of-stock" },
+    });
   } catch (error) {
     console.error("getDiamondsCount error:", error);
     return 0;
@@ -517,7 +537,12 @@ export async function getActiveDiamondIds(): Promise<string[]> {
   if (!db) return [];
 
   try {
-    const diamonds = await Diamond.find({ isActive: true }).select("_id").lean();
+    const diamonds = await Diamond.find({
+      isActive: true,
+      availabilityStatus: { $ne: "out-of-stock" },
+    })
+      .select("_id")
+      .lean();
     return diamonds.map((diamond) => String(diamond._id));
   } catch (error) {
     console.error("getActiveDiamondIds error:", error);

@@ -1,10 +1,15 @@
+import { CERTIFICATION_LABS } from "@/constants/certification";
 import {
   AVAILABILITY_STATUSES,
   DIAMOND_SHAPES,
+  FANCY_DIAMOND_COLORS,
+  GOLD_PURITIES,
   METALS,
+  PRODUCT_SHIP_REGIONS,
   PRODUCT_STATUSES,
   PRODUCT_TYPES,
   RING_STYLES,
+  STONE_TYPES,
 } from "@/constants/jewellery";
 import { Schema, model, models, type InferSchemaType } from "mongoose";
 
@@ -30,13 +35,30 @@ const productVariantSchema = new Schema(
   { _id: false },
 );
 
+const productCertificationSchema = new Schema(
+  {
+    lab: { type: String, enum: CERTIFICATION_LABS },
+    reportNumber: { type: String, trim: true },
+    reportUrl: { type: String, trim: true },
+  },
+  { _id: false },
+);
+
 const productAttributesSchema = new Schema(
   {
     metal: [{ type: String, enum: METALS }],
-    stoneType: { type: String },
+    goldPurity: { type: String, enum: GOLD_PURITIES },
+    stoneType: { type: String, enum: STONE_TYPES },
+    isLabGrown: { type: Boolean, default: true },
     diamondShape: { type: String, enum: DIAMOND_SHAPES },
+    diamondColor: { type: String, enum: FANCY_DIAMOND_COLORS },
+    diamondCarat: { type: Number, min: 0 },
     style: { type: String, enum: RING_STYLES },
     ringSizes: [{ type: String }],
+    customSizeAvailable: { type: Boolean, default: true },
+    customStoneAvailable: { type: Boolean, default: false },
+    shipsTo: { type: String, enum: PRODUCT_SHIP_REGIONS, default: "greece-eu" },
+    certification: { type: productCertificationSchema },
   },
   { _id: false },
 );
@@ -80,7 +102,9 @@ productSchema.index({ status: 1 });
 productSchema.index({ basePrice: 1 });
 productSchema.index({ "attributes.metal": 1 });
 productSchema.index({ "attributes.diamondShape": 1 });
+productSchema.index({ "attributes.diamondColor": 1 });
 productSchema.index({ "attributes.style": 1 });
+productSchema.index({ "attributes.isLabGrown": 1 });
 productSchema.index({ isFeatured: 1 });
 productSchema.index({ isBestSeller: 1 });
 

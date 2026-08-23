@@ -66,9 +66,35 @@ export default async function AdminProductDetailPage({
             availabilityStatus: product.availabilityStatus,
             status: product.status,
             isFeatured: product.isFeatured,
-            imageUrl: product.imageUrl ?? "",
+            productionTime: product.productionTime ?? "",
+            images: product.images?.length
+              ? product.images.map((img) => ({
+                  url: img.url,
+                  alt: img.alt ?? "",
+                }))
+              : product.imageUrl
+                ? [{ url: product.imageUrl, alt: product.imageAlt ?? "" }]
+                : [{ url: "", alt: "" }],
             videoUrl: product.videoUrl ?? "",
+            seoTitle: product.seoTitle ?? "",
+            seoDescription: product.seoDescription ?? "",
             style: product.style ?? "",
+            metal: product.metal ?? [],
+            goldPurity: product.goldPurity ?? "",
+            stoneType: product.stoneType ?? "lab-grown-diamond",
+            isLabGrown: product.isLabGrown ?? true,
+            diamondShape: product.diamondShape ?? "",
+            diamondColor: product.diamondColor ?? "",
+            diamondCarat:
+              product.diamondCarat != null ? String(product.diamondCarat) : "",
+            ringSizes: product.ringSizes?.join(", ") ?? "",
+            customSizeAvailable: product.customSizeAvailable ?? true,
+            customStoneAvailable: product.customStoneAvailable ?? false,
+            shipsTo: product.shipsTo ?? "greece-eu",
+            certificationLab: product.certificationLab ?? "",
+            certificationReportNumber:
+              product.certificationReportNumber ?? "",
+            certificationReportUrl: product.certificationReportUrl ?? "",
           }}
         />
       </div>

@@ -48,31 +48,45 @@ export function PoemHero() {
         </h1>
 
         <p
-          className={`hero-description mx-auto mt-7 max-w-md text-base leading-relaxed sm:text-lg poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "980ms" }}
+          className={`mt-5 font-serif text-lg tracking-[0.12em] text-brand-gold uppercase poem-reveal ${ready ? "is-visible" : ""}`}
+          style={{ transitionDelay: "820ms" }}
+        >
+          {t("heroSlogan")}
+        </p>
+
+        <p
+          className={`hero-positioning mx-auto mt-6 max-w-2xl font-serif text-xl leading-snug sm:text-2xl poem-reveal ${ready ? "is-visible" : ""}`}
+          style={{ transitionDelay: "920ms" }}
+        >
+          {t("heroPositioning")}
+        </p>
+
+        <p
+          className={`hero-description mx-auto mt-5 max-w-xl text-base leading-relaxed sm:text-lg poem-reveal ${ready ? "is-visible" : ""}`}
+          style={{ transitionDelay: "1050ms" }}
         >
           {t("heroDescription")}
         </p>
 
         <div
           className={`hero-cta-group mt-10 flex flex-col items-stretch justify-center gap-3 px-4 sm:flex-row sm:items-center sm:px-0 poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "1180ms" }}
+          style={{ transitionDelay: "1200ms" }}
         >
           <Button
-            href="/create-ring"
+            href="/colored-lab-grown-diamonds"
             variant="gold"
             size="lg"
             className="hero-cta-primary w-full sm:w-auto sm:min-w-[200px]"
           >
-            {t("createYourRing")}
+            {t("exploreColored")}
           </Button>
           <Button
-            href="/diamonds"
+            href="/rings"
             variant="outline"
             size="lg"
             className="hero-cta-secondary w-full sm:w-auto sm:min-w-[200px]"
           >
-            {t("shopDiamonds")}
+            {t("exploreRings")}
           </Button>
         </div>
       </Container>

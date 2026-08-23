@@ -2,6 +2,7 @@ import { AboutJourney } from "@/components/about/AboutJourney";
 import { Container } from "@/components/ui/Container";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { DEMO_ABOUT_IMAGES } from "@/constants/demo-images";
+import { BRAND_TEAM } from "@/constants/contact";
 import { getTranslations } from "next-intl/server";
 
 export async function AboutPageContent() {
@@ -20,7 +21,7 @@ export async function AboutPageContent() {
             <div className="relative mx-auto aspect-[2/3] w-full max-w-sm overflow-hidden rounded-sm border border-brand-gold/20 bg-brand-cream lg:mx-0 lg:max-w-none">
               <DemoImage
                 src={DEMO_ABOUT_IMAGES.founder}
-                alt={`${t("founderName")}, ${t("founderTitle")}`}
+                alt={`${t("founderName")}, ${t("dianaTitle")}`}
                 placeholderKind="diamond"
                 fill
                 priority
@@ -29,18 +30,54 @@ export async function AboutPageContent() {
               />
             </div>
 
-            <div className="lg:pt-6">
-              <p className="font-serif text-2xl text-brand-text sm:text-3xl">
-                {t("founderName")}
-              </p>
-              <p className="mt-2 text-xs tracking-[0.14em] text-brand-gold uppercase">
-                {t("founderTitle")}
-              </p>
-              <p className="mt-6 max-w-md leading-relaxed text-brand-charcoal/75">
-                {t("founderBio")}
-              </p>
+            <div className="lg:pt-6 space-y-10">
+              {BRAND_TEAM.map((person, index) => (
+                <div
+                  key={person.name}
+                  className={
+                    index > 0
+                      ? "border-t border-brand-gold/20 pt-8"
+                      : undefined
+                  }
+                >
+                  <p className="font-serif text-2xl text-brand-text sm:text-3xl">
+                    {person.name}
+                  </p>
+                  <p className="mt-2 text-xs tracking-[0.14em] text-brand-gold uppercase">
+                    {t(person.titleKey)}
+                  </p>
+                  {index === 0 && (
+                    <p className="mt-6 max-w-md leading-relaxed text-brand-charcoal/75">
+                      {t("founderBio")}
+                    </p>
+                  )}
+                  {index === 1 && (
+                    <p className="mt-6 max-w-md leading-relaxed text-brand-charcoal/75">
+                      {t("coFounderBio")}
+                    </p>
+                  )}
+                  <div className="mt-6 space-y-1 text-sm text-brand-charcoal/70">
+                    <p>
+                      <a
+                        href={person.phoneHref}
+                        className="text-brand-teal underline-offset-2 hover:underline"
+                      >
+                        {person.phone}
+                      </a>
+                    </p>
+                    <p>
+                      <a
+                        href={`mailto:${person.email}`}
+                        className="text-brand-teal underline-offset-2 hover:underline"
+                      >
+                        {person.email}
+                      </a>
+                    </p>
+                  </div>
+                </div>
+              ))}
 
-              <div className="mt-12 border-t border-brand-gold/20 pt-10">
+              <div className="border-t border-brand-gold/20 pt-10">
                 <h2 className="font-serif text-xl text-brand-text">
                   {t("houseTitle")}
                 </h2>

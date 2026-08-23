@@ -7,7 +7,11 @@ import {
 import { useCart } from "@/components/cart/CartProvider";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { getCertificationLabLabel } from "@/lib/certification";
-import { getCartItemLineTotal, getProductUnitPrice } from "@/lib/cart";
+import {
+  getCartItemLineTotal,
+  getDiamondUnitPrice,
+  getProductUnitPrice,
+} from "@/lib/cart";
 import { buildAppointmentHref, buildRingReviewHref } from "@/lib/ring-builder";
 import { formatLabel, formatPrice } from "@/lib/utils";
 import type { CertificationLab } from "@/constants/certification";
@@ -20,14 +24,26 @@ interface CartItemCardProps {
   item: CartItem;
 }
 
-function CartItemImage({ src, alt }: { src?: string; alt: string }) {
+function CartItemImage({
+  src,
+  alt,
+  placeholderKind = "ring",
+}: {
+  src?: string;
+  alt: string;
+  placeholderKind?: "ring" | "diamond";
+}) {
   return (
     <div className="relative h-24 w-24 shrink-0 overflow-hidden rounded-sm bg-brand-cream">
       <DemoImage
         src={src}
-        fallback={DEMO_PLACEHOLDER_IMAGES.ring}
+        fallback={
+          placeholderKind === "diamond"
+            ? DEMO_PLACEHOLDER_IMAGES.diamond
+            : DEMO_PLACEHOLDER_IMAGES.ring
+        }
         alt={alt}
-        placeholderKind="ring"
+        placeholderKind={placeholderKind}
         fill
         className="object-cover"
         sizes="96px"
@@ -40,6 +56,7 @@ export function CartItemCard({ item }: CartItemCardProps) {
   const { removeItem, updateQuantity } = useCart();
   const locale = useLocale() as Locale;
   const tAppointment = useTranslations("appointment");
+  const tDiamonds = useTranslations("diamonds");
 
   if (item.type === "product") {
     const unitPrice = getProductUnitPrice(item);
@@ -104,6 +121,67 @@ export function CartItemCard({ item }: CartItemCardProps) {
             <p className="text-xs text-brand-charcoal/45">
               {formatPrice(unitPrice)} each
             </p>
+            <button
+              type="button"
+              onClick={() => removeItem(item.id)}
+              className="text-sm text-brand-charcoal/60 underline underline-offset-4 hover:text-brand-text"
+            >
+              Remove
+            </button>
+          </div>
+        </div>
+      </article>
+    );
+  }
+
+  if (item.type === "diamond") {
+    const { diamondSnapshot } = item;
+    const unitPrice = getDiamondUnitPrice(item);
+
+    return (
+      <article className="flex gap-4 border-b border-brand-gold/20 py-6 last:border-b-0">
+        <CartItemImage
+          src={item.image}
+          alt={item.name}
+          placeholderKind="diamond"
+        />
+
+        <div className="min-w-0 flex-1">
+          <div className="flex flex-wrap items-start justify-between gap-4">
+            <div>
+              <Link
+                href={`/diamonds/${item.diamondId}`}
+                className="font-medium text-brand-text hover:underline"
+              >
+                {item.name}
+              </Link>
+              <p className="mt-1 text-sm text-brand-charcoal/60">
+                {tDiamonds("looseDiamondLabel")}
+              </p>
+              <p className="mt-1 text-sm text-brand-charcoal/60">
+                {diamondSnapshot.carat.toFixed(2)} ct{" "}
+                {formatLabel(diamondSnapshot.shape)}
+                {diamondSnapshot.color && diamondSnapshot.clarity
+                  ? ` · ${diamondSnapshot.color} / ${diamondSnapshot.clarity}`
+                  : ""}
+                {diamondSnapshot.cut ? ` · ${diamondSnapshot.cut}` : ""}
+              </p>
+              {diamondSnapshot.certification?.lab && (
+                <p className="mt-2 text-xs text-brand-charcoal/60">
+                  {getCertificationLabLabel(
+                    diamondSnapshot.certification.lab as CertificationLab,
+                  )}
+                  {diamondSnapshot.certification.reportNumber
+                    ? ` · Report No. ${diamondSnapshot.certification.reportNumber}`
+                    : ""}
+                </p>
+              )}
+            </div>
+            <PriceDisplay price={unitPrice} size="sm" />
+          </div>
+
+          <div className="mt-4 flex flex-wrap items-center gap-4">
+            <p className="text-xs text-brand-charcoal/45">Qty: 1</p>
             <button
               type="button"
               onClick={() => removeItem(item.id)}

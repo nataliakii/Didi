@@ -1,9 +1,15 @@
 import type {
   AvailabilityStatus,
+  FancyDiamondColor,
+  GoldPurity,
+  Metal,
+  ProductShipRegion,
   ProductStatus,
   ProductType,
   RingStyle,
+  StoneType,
 } from "@/constants/jewellery";
+import type { CertificationLab } from "@/constants/certification";
 import { safeConnectDB } from "@/lib/db";
 import { slugify } from "@/lib/slug";
 import { Product } from "@/models/Product";
@@ -26,9 +32,28 @@ export type AdminProductSummary = {
   availabilityStatus: AvailabilityStatus;
   status: ProductStatus;
   isFeatured: boolean;
+  productionTime?: string;
   imageUrl?: string;
+  imageAlt?: string;
+  images?: Array<{ url: string; alt?: string; isPrimary?: boolean }>;
   videoUrl?: string;
+  seoTitle?: string;
+  seoDescription?: string;
   style?: RingStyle;
+  metal?: Metal[];
+  goldPurity?: GoldPurity;
+  stoneType?: StoneType;
+  isLabGrown?: boolean;
+  diamondShape?: string;
+  diamondColor?: FancyDiamondColor;
+  diamondCarat?: number;
+  ringSizes?: string[];
+  customSizeAvailable?: boolean;
+  customStoneAvailable?: boolean;
+  shipsTo?: ProductShipRegion;
+  certificationLab?: CertificationLab;
+  certificationReportNumber?: string;
+  certificationReportUrl?: string;
   createdAt: string;
   updatedAt: string;
 };
@@ -53,15 +78,36 @@ function toAdminProductSummary(product: {
   availabilityStatus: string;
   status: string;
   isFeatured: boolean;
-  images?: Array<{ url: string; isPrimary?: boolean }>;
+  productionTime?: string;
+  images?: Array<{ url: string; alt?: string; isPrimary?: boolean }>;
   videoUrl?: string;
-  attributes?: { style?: string };
+  seoTitle?: string;
+  seoDescription?: string;
+  attributes?: {
+    style?: string;
+    metal?: Metal[];
+    goldPurity?: string;
+    stoneType?: string;
+    isLabGrown?: boolean;
+    diamondShape?: string;
+    diamondColor?: string;
+    diamondCarat?: number;
+    ringSizes?: string[];
+    customSizeAvailable?: boolean;
+    customStoneAvailable?: boolean;
+    shipsTo?: string;
+    certification?: {
+      lab?: string;
+      reportNumber?: string;
+      reportUrl?: string;
+    };
+  };
   createdAt: Date;
   updatedAt: Date;
   categoryName?: string;
 }): AdminProductSummary {
-  const primaryImage =
-    product.images?.find((img) => img.isPrimary)?.url ?? product.images?.[0]?.url;
+  const primary =
+    product.images?.find((img) => img.isPrimary) ?? product.images?.[0];
 
   return {
     _id: product._id.toString(),
@@ -82,23 +128,99 @@ function toAdminProductSummary(product: {
     availabilityStatus: product.availabilityStatus as AvailabilityStatus,
     status: product.status as ProductStatus,
     isFeatured: product.isFeatured,
-    imageUrl: primaryImage,
+    productionTime: product.productionTime,
+    imageUrl: primary?.url,
+    imageAlt: primary?.alt,
+    images: product.images,
     videoUrl: product.videoUrl,
+    seoTitle: product.seoTitle,
+    seoDescription: product.seoDescription,
     style: product.attributes?.style as RingStyle | undefined,
+    metal: product.attributes?.metal,
+    goldPurity: product.attributes?.goldPurity as GoldPurity | undefined,
+    stoneType: product.attributes?.stoneType as StoneType | undefined,
+    isLabGrown: product.attributes?.isLabGrown,
+    diamondShape: product.attributes?.diamondShape,
+    diamondColor: product.attributes?.diamondColor as
+      | FancyDiamondColor
+      | undefined,
+    diamondCarat: product.attributes?.diamondCarat,
+    ringSizes: product.attributes?.ringSizes,
+    customSizeAvailable: product.attributes?.customSizeAvailable,
+    customStoneAvailable: product.attributes?.customStoneAvailable,
+    shipsTo: product.attributes?.shipsTo as ProductShipRegion | undefined,
+    certificationLab: product.attributes?.certification?.lab as
+      | CertificationLab
+      | undefined,
+    certificationReportNumber: product.attributes?.certification?.reportNumber,
+    certificationReportUrl: product.attributes?.certification?.reportUrl,
     createdAt: product.createdAt.toISOString(),
     updatedAt: product.updatedAt.toISOString(),
   };
 }
 
 function toProductFields(input: ProductAdminInput) {
-  const images = input.imageUrl?.trim()
-    ? [{ url: input.imageUrl.trim(), isPrimary: true }]
-    : [];
+  let images =
+    input.images
+      ?.filter((img) => img.url.trim())
+      .map((img, index) => ({
+        url: img.url.trim(),
+        alt: img.alt?.trim() || undefined,
+        isPrimary: img.isPrimary ?? index === 0,
+      })) ?? [];
 
-  const attributes =
-    input.attributes?.style != null
-      ? { style: input.attributes.style }
+  if (images.length === 0 && input.imageUrl?.trim()) {
+    images = [
+      {
+        url: input.imageUrl.trim(),
+        alt: input.imageAlt?.trim() || undefined,
+        isPrimary: true,
+      },
+    ];
+  }
+
+  const attrs = input.attributes;
+  const certification =
+    attrs?.certification &&
+    (attrs.certification.lab ||
+      attrs.certification.reportNumber ||
+      attrs.certification.reportUrl)
+      ? {
+          lab: attrs.certification.lab ?? undefined,
+          reportNumber: attrs.certification.reportNumber?.trim() || undefined,
+          reportUrl: attrs.certification.reportUrl?.trim() || undefined,
+        }
       : undefined;
+
+  const attributes = attrs
+    ? {
+        ...(attrs.metal?.length ? { metal: attrs.metal } : {}),
+        ...(attrs.goldPurity != null ? { goldPurity: attrs.goldPurity } : {}),
+        ...(attrs.stoneType != null ? { stoneType: attrs.stoneType } : {}),
+        ...(attrs.isLabGrown !== undefined
+          ? { isLabGrown: attrs.isLabGrown }
+          : {}),
+        ...(attrs.diamondShape != null
+          ? { diamondShape: attrs.diamondShape }
+          : {}),
+        ...(attrs.diamondColor != null
+          ? { diamondColor: attrs.diamondColor }
+          : {}),
+        ...(attrs.diamondCarat != null
+          ? { diamondCarat: attrs.diamondCarat }
+          : {}),
+        ...(attrs.style != null ? { style: attrs.style } : {}),
+        ...(attrs.ringSizes?.length ? { ringSizes: attrs.ringSizes } : {}),
+        ...(attrs.customSizeAvailable !== undefined
+          ? { customSizeAvailable: attrs.customSizeAvailable }
+          : {}),
+        ...(attrs.customStoneAvailable !== undefined
+          ? { customStoneAvailable: attrs.customStoneAvailable }
+          : {}),
+        ...(attrs.shipsTo != null ? { shipsTo: attrs.shipsTo } : {}),
+        ...(certification ? { certification } : {}),
+      }
+    : undefined;
 
   return {
     name: input.name.trim(),
@@ -114,9 +236,14 @@ function toProductFields(input: ProductAdminInput) {
     availabilityStatus: input.availabilityStatus,
     status: input.status,
     isFeatured: input.isFeatured,
+    productionTime: input.productionTime?.trim() || undefined,
     videoUrl: input.videoUrl?.trim() || undefined,
-    ...(images.length ? { images } : {}),
-    ...(attributes ? { attributes } : {}),
+    seoTitle: input.seoTitle?.trim() || undefined,
+    seoDescription: input.seoDescription?.trim() || undefined,
+    images,
+    ...(attributes && Object.keys(attributes).length
+      ? { attributes }
+      : {}),
   };
 }
 

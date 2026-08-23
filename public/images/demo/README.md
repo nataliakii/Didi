@@ -6,17 +6,27 @@ Keep **filenames stable** so seed data and components do not need code changes.
 
 ## Brand direction
 
-Asteria Diamond House is a **diamond-focused** luxury website — not a general jewellery store.
+Asteria Diamond House is a **diamond-focused** luxury website with growing jewelry categories (rings, necklaces, earrings, bracelets) and a strong SEO emphasis on **colored lab-grown diamonds in Greece**.
 
 Recommended photography style:
 
 - Minimalist diamond macro photography
-- Solitaire and custom diamond rings
+- Solitaire and custom diamond rings; colored lab-grown stones (blue, yellow, pink)
 - Soft ivory, navy, and gold tones
 - Quiet luxury — calm, refined, premium
 - No busy jewellery trays or crowded displays
-- No earrings, necklaces, bracelets, or fashion accessories
 - No overly flashy or aggressive stock photos
+
+## File naming (SEO)
+
+Prefer descriptive kebab-case names, not `IMG12345.jpg`:
+
+```
+asteria-blue-lab-grown-diamond-star-ring.jpg
+asteria-yellow-lab-grown-diamond-necklace.jpg
+```
+
+Each image needs a **unique ALT** in admin (e.g. “ASTERIA blue lab-grown diamond star ring in yellow gold”).
 
 ## Folder structure
 

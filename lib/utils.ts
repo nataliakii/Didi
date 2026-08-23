@@ -4,7 +4,7 @@ export function cn(...classes: Array<string | false | null | undefined>): string
 
 export function formatPrice(
   amount: number,
-  currency = "USD",
+  currency = "EUR",
   locale = "en-US",
 ): string {
   return new Intl.NumberFormat(locale, {

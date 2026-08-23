@@ -1,13 +1,13 @@
 import { PageBreadcrumb } from "@/components/ui/PageBreadcrumb";
-import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DiamondGradingReport } from "@/components/diamond/DiamondGradingReport";
+import { DiamondPurchaseActions } from "@/components/diamond/DiamondPurchaseActions";
 import { MediaVideo } from "@/components/ui/MediaVideo";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { DEMO_PLACEHOLDER_IMAGES } from "@/constants/demo-images";
-import { buildRingSettingHref } from "@/lib/ring-builder";
+import type { Locale } from "@/constants/i18n";
 import { getLocaleFromParamsAsync } from "@/lib/i18n";
 import { createLocalizedMetadata } from "@/lib/seo";
 import { formatLabel } from "@/lib/utils";
@@ -219,17 +219,10 @@ export default async function DiamondDetailPage({
           className="mt-8"
         />
 
-        <div className="mt-8 flex flex-col gap-3 sm:flex-row">
-          <Button
-            href={buildRingSettingHref({ diamondId: id }, locale)}
-            className="flex-1"
-          >
-            Choose for ring builder
-          </Button>
-          <Button href="/diamonds" variant="outline" className="flex-1">
-            {t("backToDiamonds")}
-          </Button>
-        </div>
+        <DiamondPurchaseActions
+          diamond={diamond}
+          locale={locale as Locale}
+        />
       </div>
       </div>
     </Container>

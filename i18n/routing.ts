@@ -27,7 +27,26 @@ export type AppPathname =
   | "/checkout/failure"
   | "/appointment"
   | "/appointment/success"
-  | "/about";
+  | "/about"
+  | "/rings"
+  | "/necklaces"
+  | "/earrings"
+  | "/bracelets"
+  | "/colored-lab-grown-diamonds"
+  | "/blue-lab-grown-diamonds"
+  | "/yellow-lab-grown-diamonds"
+  | "/pink-lab-grown-diamonds"
+  | "/certification"
+  | "/delivery-returns"
+  | "/contact"
+  | "/guides"
+  | "/guides/what-are-lab-grown-diamonds"
+  | "/guides/colored-lab-grown-diamonds"
+  | "/guides/lab-grown-vs-natural-diamonds"
+  | "/guides/how-colored-lab-grown-diamonds-are-created"
+  | "/guides/igi-certification"
+  | "/guides/how-to-read-a-diamond-certificate"
+  | "/guides/diamond-cuts-and-shapes";
 
 export const { Link, redirect, usePathname, useRouter, getPathname } =
   createNavigation(routing);

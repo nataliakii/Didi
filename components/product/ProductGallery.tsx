@@ -13,20 +13,27 @@ interface ProductGalleryProps {
   images: ProductImage[];
   productName: string;
   videoUrl?: string;
+  priority?: boolean;
 }
 
 export function ProductGallery({
   images,
   productName,
   videoUrl,
+  priority = false,
 }: ProductGalleryProps) {
   const galleryImages =
     images.length > 0
-      ? images
+      ? images.map((image, index) => ({
+          ...image,
+          alt:
+            image.alt?.trim() ||
+            `${productName} — view ${index + 1}`,
+        }))
       : [
           {
             url: DEMO_PLACEHOLDER_IMAGES.ring,
-            alt: productName,
+            alt: `${productName} — primary view`,
             isPrimary: true,
           },
         ];
@@ -58,9 +65,10 @@ export function ProductGallery({
             key={activeIndex}
             src={activeImage.url}
             fallback={DEMO_PLACEHOLDER_IMAGES.ring}
-            alt={activeImage.alt ?? productName}
+            alt={activeImage.alt ?? `${productName} — view ${activeIndex + 1}`}
             placeholderKind="ring"
             fill
+            priority={priority}
             className="object-cover"
             sizes="(max-width: 1024px) 100vw, 50vw"
           />

@@ -5,6 +5,7 @@ import {
   DIAMOND_CUTS,
   DIAMOND_SHAPES,
   DIAMOND_TYPES,
+  FANCY_DIAMOND_COLORS,
   FINISH_GRADES,
   FLUORESCENCE_GRADES,
 } from "@/constants/jewellery";
@@ -46,6 +47,8 @@ const diamondSchema = new Schema(
     carat: { type: Number, required: true, min: 0 },
     cut: { type: String, enum: DIAMOND_CUTS, required: true },
     color: { type: String, enum: DIAMOND_COLORS, required: true },
+    /** Fancy hue when applicable; omit or "colorless" for white diamonds. */
+    fancyColor: { type: String, enum: FANCY_DIAMOND_COLORS },
     clarity: { type: String, enum: DIAMOND_CLARITY, required: true },
     polish: { type: String, enum: FINISH_GRADES },
     symmetry: { type: String, enum: FINISH_GRADES },
@@ -77,8 +80,8 @@ diamondSchema.index({ shape: 1 });
 diamondSchema.index({ carat: 1 });
 diamondSchema.index({ price: 1 });
 diamondSchema.index({ color: 1 });
-diamondSchema.index({ clarity: 1 });
-diamondSchema.index({ cut: 1 });
+diamondSchema.index({ fancyColor: 1 });
+diamondSchema.index({ clarity: 1 });diamondSchema.index({ cut: 1 });
 diamondSchema.index({ fluorescence: 1 });
 diamondSchema.index({ lengthWidthRatio: 1 });
 diamondSchema.index({ tablePercent: 1 });

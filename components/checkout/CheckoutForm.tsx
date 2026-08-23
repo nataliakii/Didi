@@ -192,6 +192,13 @@ export function CheckoutForm() {
               selectedOptions: item.selectedOptions,
             };
           }
+          if (item.type === "diamond") {
+            return {
+              type: "diamond" as const,
+              diamondId: item.diamondId,
+              quantity: 1 as const,
+            };
+          }
           return {
             type: "custom-ring" as const,
             settingId: item.settingId,

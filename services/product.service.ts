@@ -1,6 +1,7 @@
 import {
   AVAILABILITY_STATUSES,
   DIAMOND_SHAPES,
+  FANCY_DIAMOND_COLORS,
   METALS,
   PRODUCT_TYPES,
   RING_STYLES,
@@ -64,6 +65,7 @@ function toProductSummary(product: {
   _id: { toString(): string };
   name: string;
   slug: string;
+  sku?: string;
   shortDescription?: string;
   basePrice: number;
   salePrice?: number;
@@ -80,6 +82,7 @@ function toProductSummary(product: {
     _id: product._id.toString(),
     name: product.name,
     slug: product.slug,
+    sku: product.sku,
     shortDescription: product.shortDescription,
     basePrice: product.basePrice,
     salePrice: product.salePrice,
@@ -99,6 +102,7 @@ function toProductDetail(product: {
   _id: { toString(): string };
   name: string;
   slug: string;
+  sku?: string;
   shortDescription?: string;
   description?: string;
   basePrice: number;
@@ -143,6 +147,7 @@ export function parseProductFilters(
   const stoneTypeRaw = getParam(raw, "stoneType");
   const diamondShapeRaw = getParam(raw, "diamondShape");
   const styleRaw = getParam(raw, "style");
+  const diamondColorRaw = getParam(raw, "diamondColor");
   const availabilityRaw = getParam(raw, "availabilityStatus");
   const sortRaw = getParam(raw, "sort");
 
@@ -165,6 +170,10 @@ export function parseProductFilters(
     diamondShape: isEnumValue(diamondShapeRaw, DIAMOND_SHAPES)
       ? diamondShapeRaw
       : undefined,
+    diamondColor: isEnumValue(diamondColorRaw, FANCY_DIAMOND_COLORS)
+      ? diamondColorRaw
+      : undefined,
+    isLabGrown: parseBoolean(getParam(raw, "isLabGrown")),
     style: isEnumValue(styleRaw, RING_STYLES) ? styleRaw : undefined,
     availabilityStatus: isEnumValue(availabilityRaw, AVAILABILITY_STATUSES)
       ? availabilityRaw
@@ -217,6 +226,9 @@ async function buildProductQuery(
   }
 
   if (filters.productType) query.productType = filters.productType;
+  if (filters.productTypes?.length) {
+    query.productType = { $in: filters.productTypes };
+  }
 
   if (filters.minPrice !== undefined || filters.maxPrice !== undefined) {
     query.basePrice = {};
@@ -231,6 +243,8 @@ async function buildProductQuery(
   if (filters.metal) query["attributes.metal"] = filters.metal;
   if (filters.stoneType) query["attributes.stoneType"] = filters.stoneType;
   if (filters.diamondShape) query["attributes.diamondShape"] = filters.diamondShape;
+  if (filters.diamondColor) query["attributes.diamondColor"] = filters.diamondColor;
+  if (filters.isLabGrown === true) query["attributes.isLabGrown"] = true;
   if (filters.style) query["attributes.style"] = filters.style;
   if (filters.availabilityStatus) {
     query.availabilityStatus = filters.availabilityStatus;
