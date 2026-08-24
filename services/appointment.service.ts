@@ -394,9 +394,19 @@ export async function createAppointment(
       customRingSnapshot: snapshots.customRingSnapshot,
     });
 
+    const appointmentId = appointment._id.toString();
+
+    // Do not fail the booking if mail fails — request is already saved.
+    try {
+      const { sendAppointmentEmails } = await import("@/lib/appointment-emails");
+      await sendAppointmentEmails(input, appointmentId);
+    } catch (error) {
+      console.error("sendAppointmentEmails error:", error);
+    }
+
     return {
       success: true,
-      data: { appointmentId: appointment._id.toString() },
+      data: { appointmentId },
     };
   } catch (error) {
     console.error("createAppointment error:", error);
