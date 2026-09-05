@@ -106,17 +106,57 @@ export const DEMO_PRODUCT_VARIANT_IMAGES = {
   platinum: "/images/demo/products/product-solitaire-platinum.jpg",
 } as const;
 
-/** Category cards in seed — mapped to diamond/ring demo assets */
+/** Category cards — gold contour line-art (replace later with photography). */
 export const DEMO_CATEGORY_IMAGES = {
-  looseDiamonds: DEMO_DIAMOND_IMAGES.roundBrilliant,
-  engagementRings: DEMO_RING_IMAGES.ovalSolitaire,
-  diamondRings: DEMO_RING_IMAGES.roundSolitaire,
-  signatureSolitaires: DEMO_RING_IMAGES.roundSolitaire,
-  ovalCut: DEMO_DIAMOND_IMAGES.oval,
-  roundBrilliant: DEMO_DIAMOND_IMAGES.roundBrilliant,
-  emeraldCut: DEMO_DIAMOND_IMAGES.emeraldCut,
-  ringSettings: DEMO_SETTING_IMAGES.classicSolitaire,
+  looseDiamonds: "/images/demo/contours/contour-diamond.svg",
+  engagementRings: "/images/demo/contours/contour-ring.svg",
+  diamondRings: "/images/demo/contours/contour-ring.svg",
+  signatureSolitaires: "/images/demo/contours/contour-ring.svg",
+  ovalCut: "/images/demo/contours/contour-diamond-oval.svg",
+  roundBrilliant: "/images/demo/contours/contour-diamond-round.svg",
+  emeraldCut: "/images/demo/contours/contour-diamond-emerald.svg",
+  pearCut: "/images/demo/contours/contour-diamond-pear.svg",
+  marquiseCut: "/images/demo/contours/contour-diamond-marquise.svg",
+  princessCut: "/images/demo/contours/contour-diamond-princess.svg",
+  cushionCut: "/images/demo/contours/contour-diamond-cushion.svg",
+  elongatedCushionCut: "/images/demo/contours/contour-diamond-elongated-cushion.svg",
+  radiantCut: "/images/demo/contours/contour-diamond-radiant.svg",
+  asscherCut: "/images/demo/contours/contour-diamond-asscher.svg",
+  heartCut: "/images/demo/contours/contour-diamond-heart.svg",
+  ringSettings: "/images/demo/contours/contour-setting.svg",
+  necklaces: "/images/demo/contours/contour-necklace.svg",
+  earrings: "/images/demo/contours/contour-earrings.svg",
+  bracelets: "/images/demo/contours/contour-bracelet.svg",
+  coloredLabGrownDiamonds: "/images/demo/contours/contour-colored.svg",
+  halo: "/images/demo/contours/contour-ring-halo.svg",
+  threeStone: "/images/demo/contours/contour-ring-three-stone.svg",
+  vintage: "/images/demo/contours/contour-ring-vintage.svg",
+  pave: "/images/demo/contours/contour-ring-pave.svg",
+  bezel: "/images/demo/contours/contour-ring-bezel.svg",
+  channel: "/images/demo/contours/contour-ring-channel.svg",
+  tension: "/images/demo/contours/contour-ring-tension.svg",
+  createRing: "/images/demo/contours/contour-ring-create.svg",
 } as const;
+
+/** Map ring style → gold contour for category / filter cards. */
+export const RING_STYLE_CONTOUR_MAP: Record<string, string> = {
+  solitaire: DEMO_CATEGORY_IMAGES.signatureSolitaires,
+  halo: DEMO_CATEGORY_IMAGES.halo,
+  "three-stone": DEMO_CATEGORY_IMAGES.threeStone,
+  pave: DEMO_CATEGORY_IMAGES.pave,
+  vintage: DEMO_CATEGORY_IMAGES.vintage,
+  bezel: DEMO_CATEGORY_IMAGES.bezel,
+  channel: DEMO_CATEGORY_IMAGES.channel,
+  tension: DEMO_CATEGORY_IMAGES.tension,
+};
+
+export function getRingStyleContour(style?: string | null): string {
+  const key = style?.trim().toLowerCase();
+  if (key && key in RING_STYLE_CONTOUR_MAP) {
+    return RING_STYLE_CONTOUR_MAP[key];
+  }
+  return DEMO_CATEGORY_IMAGES.diamondRings;
+}
 
 /** Convenience map for components that used the previous DEMO_IMAGES shape */
 export const DEMO_IMAGES = {
@@ -231,6 +271,20 @@ const DIAMOND_SHAPE_IMAGE_MAP: Record<string, string> = {
   heart: DEMO_DIAMOND_IMAGES.heart,
 };
 
+const DIAMOND_SHAPE_CONTOUR_MAP: Record<string, string> = {
+  round: DEMO_CATEGORY_IMAGES.roundBrilliant,
+  oval: DEMO_CATEGORY_IMAGES.ovalCut,
+  emerald: DEMO_CATEGORY_IMAGES.emeraldCut,
+  pear: DEMO_CATEGORY_IMAGES.pearCut,
+  marquise: DEMO_CATEGORY_IMAGES.marquiseCut,
+  princess: DEMO_CATEGORY_IMAGES.princessCut,
+  cushion: DEMO_CATEGORY_IMAGES.cushionCut,
+  "elongated-cushion": DEMO_CATEGORY_IMAGES.elongatedCushionCut,
+  radiant: DEMO_CATEGORY_IMAGES.radiantCut,
+  asscher: DEMO_CATEGORY_IMAGES.asscherCut,
+  heart: DEMO_CATEGORY_IMAGES.heartCut,
+};
+
 /** Map a diamond shape to its demo image path. */
 export function getDiamondShapeImage(shape?: string | null): string {
   const key = shape?.trim().toLowerCase();
@@ -238,4 +292,13 @@ export function getDiamondShapeImage(shape?: string | null): string {
     return DIAMOND_SHAPE_IMAGE_MAP[key];
   }
   return DEMO_DIAMOND_IMAGES.roundBrilliant;
+}
+
+/** Map a diamond shape to its gold contour outline (homepage / filters). */
+export function getDiamondShapeContour(shape?: string | null): string {
+  const key = shape?.trim().toLowerCase();
+  if (key && key in DIAMOND_SHAPE_CONTOUR_MAP) {
+    return DIAMOND_SHAPE_CONTOUR_MAP[key];
+  }
+  return DEMO_CATEGORY_IMAGES.roundBrilliant;
 }

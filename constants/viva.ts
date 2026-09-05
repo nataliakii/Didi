@@ -4,12 +4,25 @@ export function getVivaEnvironment(): VivaEnvironment {
   return process.env.VIVA_ENVIRONMENT === "live" ? "live" : "demo";
 }
 
+/** Local end-to-end checkout without calling Viva.com APIs. */
+export function isVivaMock(): boolean {
+  return (
+    process.env.NEXT_PUBLIC_VIVA_MOCK === "true" ||
+    process.env.VIVA_MOCK === "true"
+  );
+}
+
 export function isVivaConfigured(): boolean {
+  if (isVivaMock()) return true;
   return Boolean(
     process.env.VIVA_CLIENT_ID?.trim() &&
       process.env.VIVA_CLIENT_SECRET?.trim() &&
       process.env.VIVA_SOURCE_CODE?.trim(),
   );
+}
+
+export function isMockVivaOrderCode(orderCode: string): boolean {
+  return orderCode.trim().toUpperCase().startsWith("MOCK");
 }
 
 export function getVivaCurrency(): string {

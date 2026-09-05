@@ -23,6 +23,7 @@ export type AppPathname =
   | "/create-ring/review"
   | "/cart"
   | "/checkout"
+  | "/checkout/mock"
   | "/checkout/success"
   | "/checkout/failure"
   | "/appointment"

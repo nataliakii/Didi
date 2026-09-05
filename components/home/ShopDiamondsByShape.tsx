@@ -1,6 +1,8 @@
 import { DemoImage } from "@/components/ui/DemoImage";
-import { DiamondShapeIcon } from "@/components/ui/icons";
-import { DEMO_RING_IMAGES } from "@/constants/demo-images";
+import {
+  DEMO_CATEGORY_IMAGES,
+  getDiamondShapeContour,
+} from "@/constants/demo-images";
 import { HOME_DIAMOND_SHAPES } from "@/constants/jewellery";
 import { Link } from "@/i18n/routing";
 import { formatLabel } from "@/lib/utils";
@@ -16,14 +18,14 @@ export async function ShopDiamondsByShape() {
           <h2 className="font-serif text-3xl text-brand-text sm:text-4xl">
             {t("shopByShapeTitle")}
           </h2>
-          <div className="relative mx-auto mt-8 aspect-[4/5] max-w-[280px] overflow-hidden bg-brand-cream lg:mx-0">
+          <div className="relative mx-auto mt-8 aspect-[4/5] max-w-[280px] overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream lg:mx-0">
             <DemoImage
-              src={DEMO_RING_IMAGES.ovalSolitaire}
-              fallback={DEMO_RING_IMAGES.roundSolitaire}
+              src={DEMO_CATEGORY_IMAGES.ovalCut}
+              fallback={DEMO_CATEGORY_IMAGES.roundBrilliant}
               alt={t("shopByShapeImageAlt")}
-              placeholderKind="ring"
+              placeholderKind="diamond"
               fill
-              className="object-cover object-center"
+              className="object-contain p-10"
               sizes="(max-width: 1024px) 280px, 320px"
             />
           </div>
@@ -37,10 +39,14 @@ export async function ShopDiamondsByShape() {
                   href={`/diamonds?shape=${shape}`}
                   className="group flex flex-col items-center gap-3 text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
                 >
-                  <span className="flex h-16 w-16 items-center justify-center text-brand-text/80 transition-colors group-hover:text-brand-text sm:h-20 sm:w-20">
-                    <DiamondShapeIcon
-                      shape={shape}
-                      className="h-12 w-12 sm:h-14 sm:w-14"
+                  <span className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream sm:h-20 sm:w-20">
+                    <DemoImage
+                      src={getDiamondShapeContour(shape)}
+                      alt={formatLabel(shape)}
+                      placeholderKind="diamond"
+                      fill
+                      className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.06]"
+                      sizes="80px"
                     />
                   </span>
                   <span className="text-sm text-brand-charcoal/75 transition-colors group-hover:text-brand-text">

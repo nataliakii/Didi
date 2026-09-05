@@ -4,14 +4,12 @@ import { DemoImage } from "@/components/ui/DemoImage";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { PoemHero } from "@/components/home/PoemHero";
 import { ShopDiamondsByShape } from "@/components/home/ShopDiamondsByShape";
+import { ShopJewelryByCategory } from "@/components/home/ShopJewelryByCategory";
 import { ShopRingsByCategory } from "@/components/home/ShopRingsByCategory";
 import { ProductCard } from "@/components/product/ProductCard";
 import {
+  DEMO_CATEGORY_IMAGES,
   DEMO_CONSULTATION_IMAGES,
-  DEMO_CREATE_RING_IMAGES,
-  DEMO_DIAMOND_IMAGES,
-  DEMO_RING_IMAGES,
-  DEMO_SETTING_IMAGES,
 } from "@/constants/demo-images";
 import { Link } from "@/i18n/routing";
 import { getFeaturedProducts } from "@/services/product.service";
@@ -21,25 +19,25 @@ import { getTranslations } from "next-intl/server";
 const HOME_CATEGORY_CARDS = [
   {
     key: "createRing",
-    image: DEMO_CREATE_RING_IMAGES.review,
+    image: DEMO_CATEGORY_IMAGES.createRing,
     href: "/create-ring" as const,
     placeholderKind: "ring" as const,
   },
   {
     key: "looseDiamonds",
-    image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+    image: DEMO_CATEGORY_IMAGES.coloredLabGrownDiamonds,
     href: "/colored-lab-grown-diamonds" as const,
     placeholderKind: "diamond" as const,
   },
   {
     key: "engagementRings",
-    image: DEMO_RING_IMAGES.ovalSolitaire,
+    image: DEMO_CATEGORY_IMAGES.diamondRings,
     href: "/rings" as const,
     placeholderKind: "ring" as const,
   },
   {
     key: "ringSettings",
-    image: DEMO_SETTING_IMAGES.classicSolitaire,
+    image: DEMO_CATEGORY_IMAGES.ringSettings,
     href: "/create-ring/setting" as const,
     placeholderKind: "setting" as const,
   },
@@ -84,7 +82,7 @@ function VisualCategoryCard({
         alt={title}
         placeholderKind={placeholderKind}
         fill
-        className="object-cover transition-transform duration-700 group-hover:scale-[1.02]"
+        className="object-contain p-8 transition-transform duration-700 group-hover:scale-[1.03]"
         sizes="(max-width: 768px) 50vw, 25vw"
       />
       <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/85 via-brand-navy/20 to-transparent" />
@@ -166,6 +164,8 @@ export async function HomePageContent() {
           </div>
         </Container>
       </section>
+
+      <ShopJewelryByCategory />
 
       <ShopDiamondsByShape />
 

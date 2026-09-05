@@ -196,7 +196,11 @@
       "vintage": "Vintage Rings",
       "createRing": "Create Your Ring",
       "settings": "Ring Settings",
-      "diamondRings": "All Diamond Rings"
+      "diamondRings": "All Diamond Rings",
+      "pave": "Pavé Rings",
+      "bezel": "Bezel Rings",
+      "channel": "Channel-Set Rings",
+      "tension": "Tension Rings"
     },
     "poemLine1": "Een diamant",
     "poemLine2": "is een verhaal",
@@ -206,7 +210,9 @@
     "exploreColored": "Colored Lab-Grown Diamonds",
     "exploreRings": "Shop Rings",
     "heroPositioning": "Colored Lab-Grown Diamond Jewelry, designed in Greece",
-    "brandPositioningExtra": "From lab-grown diamond jewelry to blue, yellow, and pink stones, every piece is designed with quiet precision in Greece."
+    "brandPositioningExtra": "From lab-grown diamond jewelry to blue, yellow, and pink stones, every piece is designed with quiet precision in Greece.",
+    "shopJewelryTitle": "Shop by Category",
+    "shopJewelryDescription": "Rings, necklaces, earrings, bracelets, and colored lab-grown diamonds — each collection begins with a clear silhouette."
   },
   "about": {
     "pageTitle": "Over ons",
@@ -630,7 +636,17 @@
     "shippingRequired": "Please select a shipping method.",
     "shippingEta": "Est. delivery {date}",
     "shippingFallbackNote": "Showing estimated rates. Live DHL pricing will apply once API credentials are configured.",
-    "shippingLine": "Shipping"
+    "shippingLine": "Shipping",
+    "vivaMockNote": "Viva mock mode is on — you will complete payment on a local test page (no real charge).",
+    "mockEyebrow": "Viva mock",
+    "mockTitle": "Simulate Viva payment",
+    "mockDescription": "Local test checkout. Choose success or failure — nothing is charged.",
+    "mockOrderCode": "Mock order code",
+    "mockAmount": "Amount",
+    "mockPaySuccess": "Simulate successful payment",
+    "mockPayFail": "Simulate failed payment",
+    "mockPaying": "Confirming payment…",
+    "mockMissingRef": "Missing mock payment reference."
   },
   "categoryPages": {
     "rings": {

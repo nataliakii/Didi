@@ -456,7 +456,9 @@ export function CheckoutForm() {
           </div>
         </div>
         <p className="mt-3 text-xs leading-relaxed text-brand-charcoal/55">
-          {t("vivaNote")}
+          {process.env.NEXT_PUBLIC_VIVA_MOCK === "true"
+            ? t("vivaMockNote")
+            : t("vivaNote")}
         </p>
 
         {error && (

@@ -4,7 +4,9 @@ import {
   getVivaApiBaseUrl,
   getVivaLegacyApiBaseUrl,
   getVivaSourceCode,
+  isMockVivaOrderCode,
   isVivaConfigured,
+  isVivaMock,
   toVivaAmountCents,
   toVivaRequestLang,
 } from "@/constants/viva";
@@ -97,9 +99,35 @@ async function getAccessToken(): Promise<string> {
   return data.access_token;
 }
 
+function createMockVivaPaymentOrder(
+  input: CreateVivaPaymentOrderInput,
+): CreateVivaPaymentOrderResult {
+  const amount = toVivaAmountCents(input.amountMajor);
+  if (amount < 30) {
+    throw new Error("Payment amount is below the Viva.com minimum.");
+  }
+
+  const orderCode = `MOCK${Date.now()}${Math.floor(Math.random() * 900 + 100)}`;
+  const locale = (input.locale || "en").trim() || "en";
+  const params = new URLSearchParams({
+    ref: orderCode,
+    order: input.orderNumber,
+    amount: String(amount),
+  });
+
+  return {
+    orderCode,
+    checkoutUrl: `/${locale}/checkout/mock?${params.toString()}`,
+  };
+}
+
 export async function createVivaPaymentOrder(
   input: CreateVivaPaymentOrderInput,
 ): Promise<CreateVivaPaymentOrderResult> {
+  if (isVivaMock()) {
+    return createMockVivaPaymentOrder(input);
+  }
+
   const accessToken = await getAccessToken();
   const amount = toVivaAmountCents(input.amountMajor);
 
@@ -169,10 +197,43 @@ function pickNumber(obj: Record<string, unknown>, keys: string[]): number | unde
 /**
  * Retrieve Transaction (Checkout v2). Amount is in minor units (cents).
  * Docs: GET /checkout/v2/transactions/{transactionId}
+ *
+ * Mock transaction id format: `MOCKTX:{orderCode}:{amountCents}`
+ * Used by the local checkout mock so success can verify amount without Viva APIs.
  */
+export function buildMockVivaTransactionId(
+  orderCode: string,
+  amountCents: number,
+): string {
+  return `MOCKTX:${orderCode}:${amountCents}`;
+}
+
+function parseMockVivaTransactionId(transactionId: string): VivaTransaction | null {
+  if (!transactionId.startsWith("MOCKTX:")) return null;
+  const parts = transactionId.split(":");
+  if (parts.length !== 3) return null;
+  const orderCode = parts[1];
+  const amountCents = Number(parts[2]);
+  if (!orderCode || !Number.isFinite(amountCents)) return null;
+  return {
+    transactionId,
+    orderCode,
+    statusId: "F",
+    amountCents,
+  };
+}
+
 export async function retrieveVivaTransaction(
   transactionId: string,
 ): Promise<VivaTransaction> {
+  const mock = parseMockVivaTransactionId(transactionId);
+  if (mock) {
+    if (!isVivaMock() && !isMockVivaOrderCode(mock.orderCode)) {
+      throw new Error("Mock Viva transactions are disabled.");
+    }
+    return mock;
+  }
+
   const accessToken = await getAccessToken();
 
   const response = await fetch(

@@ -39,8 +39,32 @@ public/images/demo/
 ├── create-ring/    Ring builder step card images
 ├── products/       Per-metal product variant images
 ├── consultation/   Consultation / trust section
+├── contours/       Line-art outlines for jewelry categories
 └── placeholders/   Fallback when specific assets are missing
 ```
+
+### Contours (`contours/`)
+
+Gold line-art used on homepage and catalog category cards until photography is ready:
+
+| File | Category |
+|------|----------|
+| `contour-ring.svg` | Rings / engagement / solitaire |
+| `contour-ring-halo.svg` | Halo |
+| `contour-ring-three-stone.svg` | Three-stone |
+| `contour-ring-vintage.svg` | Vintage |
+| `contour-ring-pave.svg` | Pavé |
+| `contour-ring-bezel.svg` | Bezel |
+| `contour-ring-channel.svg` | Channel-set |
+| `contour-ring-tension.svg` | Tension |
+| `contour-ring-create.svg` | Create your ring |
+| `contour-setting.svg` | Ring settings |
+| `contour-necklace.svg` | Necklaces |
+| `contour-earrings.svg` | Earrings |
+| `contour-bracelet.svg` | Bracelets |
+| `contour-diamond.svg` | Loose diamonds |
+| `contour-colored.svg` | Colored lab-grown |
+| `contour-diamond-*.svg` | Individual diamond shapes (oval, round, emerald, pear, marquise, princess, cushion, elongated-cushion, radiant, asscher, heart) |
 
 ## Planned filenames
 
@@ -131,6 +155,30 @@ Per-metal variant images for product swatches:
 | `product-solitaire-white-gold.jpg` | White gold solitaire variant |
 | `product-solitaire-rose-gold.jpg` | Rose gold solitaire variant |
 | `product-solitaire-platinum.jpg` | Platinum solitaire variant |
+
+### Contours (`contours/`)
+
+Gold line-art used as temporary category (and jewelry-type) images until real photos exist.
+
+| File | Usage |
+|------|--------|
+| `contour-ring.svg` | Rings / engagement / solitaires |
+| `contour-necklace.svg` | Necklaces |
+| `contour-earrings.svg` | Earrings |
+| `contour-bracelet.svg` | Bracelets |
+| `contour-setting.svg` | Ring settings |
+| `contour-colored.svg` | Colored lab-grown diamonds |
+| `contour-diamond.svg` | Loose diamonds (generic) |
+| `contour-diamond-round.svg` | Round brilliant category |
+| `contour-diamond-oval.svg` | Oval category |
+| `contour-diamond-emerald.svg` | Emerald category |
+| `contour-diamond-pear.svg` | Pear |
+| `contour-diamond-marquise.svg` | Marquise |
+| `contour-diamond-princess.svg` | Princess |
+| `contour-diamond-cushion.svg` | Cushion |
+| `contour-diamond-radiant.svg` | Radiant |
+| `contour-diamond-asscher.svg` | Asscher |
+| `contour-diamond-heart.svg` | Heart |
 
 If placeholder JPGs are also missing, the UI shows a soft ivory panel with a diamond mark — no broken image icon.
 

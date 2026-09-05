@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 32 32" role="img" aria-label="Asteria Diamond House">
+  <rect width="32" height="32" fill="#06182B"/>
+  <!-- Test brand mark: gold diamond silhouette on navy -->
+  <g fill="none" stroke="#D4AA45" stroke-linejoin="round" stroke-linecap="round">
+    <path stroke-width="1.6" d="M8.5 12.2 L16 7.2 L23.5 12.2 L16 25.2 Z"/>
+    <path stroke-width="1.2" d="M8.5 12.2 H23.5"/>
+    <path stroke-width="1.1" opacity="0.9" d="M11.2 12.2 L16 7.2 L20.8 12.2"/>
+    <path stroke-width="1.1" opacity="0.75" d="M16 12.2 V25.2"/>
+    <path stroke-width="1" opacity="0.55" d="M11.2 12.2 L16 25.2 L20.8 12.2"/>
+  </g>
+</svg>

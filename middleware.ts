@@ -7,6 +7,6 @@ export const config = {
   matcher: [
     "/",
     "/(en|fr|de|es|it|nl|pt|pl|el|uk)/:path*",
-    "/((?!api|admin|_next|_vercel|.*\\..*).*)",
+    "/((?!api|admin|_next|_vercel|icon|apple-icon|favicon|.*\\..*).*)",
   ],
 };

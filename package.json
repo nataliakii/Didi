@@ -7,7 +7,9 @@
     "build": "next build",
     "start": "next start",
     "lint": "eslint",
-    "seed": "tsx scripts/seed.ts"
+    "seed": "tsx scripts/seed.ts",
+    "seed:mock-catalog": "tsx scripts/seed-mock-catalog.ts",
+    "update:category-images": "tsx scripts/update-category-contours.ts"
   },
   "dependencies": {
     "bcryptjs": "^3.0.3",

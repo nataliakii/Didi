@@ -1,11 +1,7 @@
 "use client";
 
 import { DemoImage } from "@/components/ui/DemoImage";
-import {
-  DEMO_CREATE_RING_IMAGES,
-  DEMO_RING_IMAGES,
-  DEMO_SETTING_IMAGES,
-} from "@/constants/demo-images";
+import { DEMO_CATEGORY_IMAGES } from "@/constants/demo-images";
 import { Link } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
@@ -14,42 +10,62 @@ import { useRef } from "react";
 const RING_CATEGORIES = [
   {
     key: "engagement",
-    image: DEMO_RING_IMAGES.ovalSolitaire,
+    image: DEMO_CATEGORY_IMAGES.engagementRings,
     href: "/products?productType=engagement-ring" as const,
   },
   {
     key: "solitaire",
-    image: DEMO_RING_IMAGES.roundSolitaire,
+    image: DEMO_CATEGORY_IMAGES.signatureSolitaires,
     href: "/products?style=solitaire" as const,
   },
   {
     key: "halo",
-    image: DEMO_RING_IMAGES.hiddenHalo,
+    image: DEMO_CATEGORY_IMAGES.halo,
     href: "/products?style=halo" as const,
   },
   {
     key: "threeStone",
-    image: DEMO_RING_IMAGES.emeraldCut,
+    image: DEMO_CATEGORY_IMAGES.threeStone,
     href: "/products?style=three-stone" as const,
   },
   {
     key: "vintage",
-    image: DEMO_SETTING_IMAGES.cathedral,
+    image: DEMO_CATEGORY_IMAGES.vintage,
     href: "/products?style=vintage" as const,
   },
   {
+    key: "pave",
+    image: DEMO_CATEGORY_IMAGES.pave,
+    href: "/products?style=pave" as const,
+  },
+  {
+    key: "bezel",
+    image: DEMO_CATEGORY_IMAGES.bezel,
+    href: "/products?style=bezel" as const,
+  },
+  {
+    key: "channel",
+    image: DEMO_CATEGORY_IMAGES.channel,
+    href: "/products?style=channel" as const,
+  },
+  {
+    key: "tension",
+    image: DEMO_CATEGORY_IMAGES.tension,
+    href: "/products?style=tension" as const,
+  },
+  {
     key: "createRing",
-    image: DEMO_CREATE_RING_IMAGES.review,
+    image: DEMO_CATEGORY_IMAGES.createRing,
     href: "/create-ring" as const,
   },
   {
     key: "settings",
-    image: DEMO_SETTING_IMAGES.classicSolitaire,
+    image: DEMO_CATEGORY_IMAGES.ringSettings,
     href: "/create-ring/setting" as const,
   },
   {
     key: "diamondRings",
-    image: DEMO_RING_IMAGES.roundSolitaire,
+    image: DEMO_CATEGORY_IMAGES.diamondRings,
     href: "/products" as const,
   },
 ] as const;
@@ -109,13 +125,13 @@ export function ShopRingsByCategory() {
                 href={category.href}
                 className="group w-[46%] shrink-0 snap-start sm:w-[30%] lg:w-[22%] xl:w-[18%]"
               >
-                <div className="relative aspect-square overflow-hidden rounded-sm bg-brand-cream">
+                <div className="relative aspect-square overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream">
                   <DemoImage
                     src={category.image}
                     alt={t(`shopByCategoryCards.${category.key}`)}
                     placeholderKind="ring"
                     fill
-                    className="object-cover transition-transform duration-700 group-hover:scale-[1.03]"
+                    className="object-contain p-6 transition-transform duration-700 group-hover:scale-[1.03]"
                     sizes="(max-width: 640px) 46vw, (max-width: 1024px) 30vw, 18vw"
                   />
                 </div>

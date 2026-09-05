@@ -104,28 +104,28 @@ async function seed() {
       name: "Necklaces",
       slug: "necklaces",
       description: "Lab-grown diamond necklaces from Asteria Diamond House.",
-      image: DEMO_RING_IMAGES.pearFiligree,
+      image: DEMO_CATEGORY_IMAGES.necklaces,
       isActive: true,
     },
     {
       name: "Earrings",
       slug: "earrings",
       description: "Lab-grown diamond earrings crafted in Thessaloniki.",
-      image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+      image: DEMO_CATEGORY_IMAGES.earrings,
       isActive: true,
     },
     {
       name: "Bracelets",
       slug: "bracelets",
       description: "Lab-grown diamond bracelets and tennis styles.",
-      image: DEMO_RING_IMAGES.hiddenHalo,
+      image: DEMO_CATEGORY_IMAGES.bracelets,
       isActive: true,
     },
     {
       name: "Colored Lab-Grown Diamonds",
       slug: "colored-lab-grown-diamonds",
       description: "Blue, yellow, and pink lab-grown diamond jewelry.",
-      image: DEMO_DIAMOND_IMAGES.cushion,
+      image: DEMO_CATEGORY_IMAGES.coloredLabGrownDiamonds,
       isActive: true,
     },
   ]);
@@ -736,7 +736,7 @@ async function seed() {
         "Lab-grown diamond necklace from Asteria Diamond House — light at the collarbone, crafted in Greece.",
       basePrice: 980,
       images: [
-        demoImage(DEMO_DIAMOND_IMAGES.roundBrilliant, "Lab-Grown Diamond Pendant Necklace"),
+        demoImage(DEMO_CATEGORY_IMAGES.necklaces, "Lab-Grown Diamond Pendant Necklace"),
       ],
       variants: [
         {
@@ -744,14 +744,14 @@ async function seed() {
           metal: "white-gold",
           price: 980,
           stockQuantity: 3,
-          image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+          image: DEMO_CATEGORY_IMAGES.necklaces,
         },
         {
           sku: "NK-001-YG",
           metal: "yellow-gold",
           price: 960,
           stockQuantity: 2,
-          image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+          image: DEMO_CATEGORY_IMAGES.necklaces,
         },
       ],
       attributes: {
@@ -785,7 +785,7 @@ async function seed() {
         "Colored lab-grown diamond necklace with a blue pear stone — designed in Thessaloniki for Greece and EU delivery.",
       basePrice: 1680,
       images: [
-        demoImage(DEMO_DIAMOND_IMAGES.pear, "Blue Lab-Grown Pear Pendant"),
+        demoImage(DEMO_CATEGORY_IMAGES.necklaces, "Blue Lab-Grown Pear Pendant"),
       ],
       variants: [
         {
@@ -793,7 +793,7 @@ async function seed() {
           metal: "white-gold",
           price: 1680,
           stockQuantity: 2,
-          image: DEMO_DIAMOND_IMAGES.pear,
+          image: DEMO_CATEGORY_IMAGES.necklaces,
         },
       ],
       attributes: {
@@ -827,7 +827,7 @@ async function seed() {
         "Lab-grown diamond earrings from Asteria — quiet brilliance, clear specifications, made in Greece.",
       basePrice: 720,
       images: [
-        demoImage(DEMO_DIAMOND_IMAGES.roundBrilliant, "Lab-Grown Diamond Stud Earrings"),
+        demoImage(DEMO_CATEGORY_IMAGES.earrings, "Lab-Grown Diamond Stud Earrings"),
       ],
       variants: [
         {
@@ -835,14 +835,14 @@ async function seed() {
           metal: "white-gold",
           price: 720,
           stockQuantity: 4,
-          image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+          image: DEMO_CATEGORY_IMAGES.earrings,
         },
         {
           sku: "ER-001-PT",
           metal: "platinum",
           price: 820,
           stockQuantity: 2,
-          image: DEMO_DIAMOND_IMAGES.roundBrilliant,
+          image: DEMO_CATEGORY_IMAGES.earrings,
         },
       ],
       attributes: {
@@ -876,7 +876,7 @@ async function seed() {
         "Yellow lab-grown diamond earrings — color with clarity, from Asteria Diamond House in Thessaloniki.",
       basePrice: 1420,
       images: [
-        demoImage(DEMO_DIAMOND_IMAGES.oval, "Yellow Lab-Grown Drop Earrings"),
+        demoImage(DEMO_CATEGORY_IMAGES.earrings, "Yellow Lab-Grown Drop Earrings"),
       ],
       variants: [
         {
@@ -884,7 +884,7 @@ async function seed() {
           metal: "yellow-gold",
           price: 1420,
           stockQuantity: 2,
-          image: DEMO_DIAMOND_IMAGES.oval,
+          image: DEMO_CATEGORY_IMAGES.earrings,
         },
       ],
       attributes: {
@@ -918,7 +918,7 @@ async function seed() {
         "Lab-grown diamond bracelet from Asteria Diamond House — refined for Greece and EU delivery.",
       basePrice: 3200,
       images: [
-        demoImage(DEMO_RING_IMAGES.hiddenHalo, "Lab-Grown Tennis Bracelet"),
+        demoImage(DEMO_CATEGORY_IMAGES.bracelets, "Lab-Grown Tennis Bracelet"),
       ],
       variants: [
         {
@@ -926,14 +926,14 @@ async function seed() {
           metal: "white-gold",
           price: 3200,
           stockQuantity: 2,
-          image: DEMO_RING_IMAGES.hiddenHalo,
+          image: DEMO_CATEGORY_IMAGES.bracelets,
         },
         {
           sku: "BR-001-YG",
           metal: "yellow-gold",
           price: 3150,
           stockQuantity: 1,
-          image: DEMO_RING_IMAGES.hiddenHalo,
+          image: DEMO_CATEGORY_IMAGES.bracelets,
         },
       ],
       attributes: {
@@ -968,7 +968,7 @@ async function seed() {
         "Pink lab-grown diamond bracelet — soft color, precise craft, from Thessaloniki.",
       basePrice: 2100,
       images: [
-        demoImage(DEMO_DIAMOND_IMAGES.cushion, "Pink Lab-Grown Station Bracelet"),
+        demoImage(DEMO_CATEGORY_IMAGES.bracelets, "Pink Lab-Grown Station Bracelet"),
       ],
       variants: [
         {
@@ -976,7 +976,7 @@ async function seed() {
           metal: "rose-gold",
           price: 2100,
           stockQuantity: 1,
-          image: DEMO_DIAMOND_IMAGES.cushion,
+          image: DEMO_CATEGORY_IMAGES.bracelets,
         },
       ],
       attributes: {
@@ -998,6 +998,232 @@ async function seed() {
       isFeatured: false,
       isBestSeller: false,
       isReadyToShip: false,
+      status: "published",
+    },
+    {
+      name: "Classic Lab-Grown Wedding Band",
+      slug: "classic-lab-grown-wedding-band",
+      sku: "WR-001",
+      productType: "wedding-ring",
+      categoryId: diamondRingsCategory._id,
+      shortDescription: "A refined plain wedding band for everyday wear.",
+      description:
+        "Lab-grown diamond house wedding band — quiet, precise, made for Greece and EU delivery.",
+      basePrice: 680,
+      images: [
+        demoImage(DEMO_CATEGORY_IMAGES.diamondRings, "Classic Lab-Grown Wedding Band"),
+      ],
+      variants: [
+        {
+          sku: "WR-001-WG",
+          metal: "white-gold",
+          price: 680,
+          stockQuantity: 5,
+          image: DEMO_CATEGORY_IMAGES.diamondRings,
+        },
+        {
+          sku: "WR-001-YG",
+          metal: "yellow-gold",
+          price: 660,
+          stockQuantity: 4,
+          image: DEMO_CATEGORY_IMAGES.diamondRings,
+        },
+        {
+          sku: "WR-001-PT",
+          metal: "platinum",
+          price: 890,
+          stockQuantity: 2,
+          image: DEMO_CATEGORY_IMAGES.diamondRings,
+        },
+      ],
+      attributes: {
+        metal: ["white-gold", "yellow-gold", "platinum"],
+        goldPurity: "18k",
+        stoneType: "none",
+        isLabGrown: false,
+        style: "solitaire",
+        ringSizes: ["5", "5.5", "6", "6.5", "7", "7.5", "8"],
+        customSizeAvailable: true,
+        shipsTo: "greece-eu",
+      },
+      stockQuantity: 11,
+      availabilityStatus: "in-stock",
+      productionTime: "1–2 weeks",
+      isFeatured: true,
+      isBestSeller: true,
+      isReadyToShip: true,
+      status: "published",
+    },
+    {
+      name: "Pavé Lab-Grown Wedding Band",
+      slug: "pave-lab-grown-wedding-band",
+      sku: "WR-002",
+      productType: "wedding-ring",
+      categoryId: diamondRingsCategory._id,
+      shortDescription: "A slender pavé wedding band with lab-grown diamonds.",
+      description:
+        "Wedding ring with a continuous pavé of lab-grown diamonds — designed in Thessaloniki.",
+      basePrice: 1180,
+      images: [
+        demoImage(DEMO_CATEGORY_IMAGES.pave, "Pavé Lab-Grown Wedding Band"),
+      ],
+      variants: [
+        {
+          sku: "WR-002-WG",
+          metal: "white-gold",
+          price: 1180,
+          stockQuantity: 3,
+          image: DEMO_CATEGORY_IMAGES.pave,
+        },
+        {
+          sku: "WR-002-RG",
+          metal: "rose-gold",
+          price: 1180,
+          stockQuantity: 2,
+          image: DEMO_CATEGORY_IMAGES.pave,
+        },
+      ],
+      attributes: {
+        metal: ["white-gold", "rose-gold"],
+        goldPurity: "18k",
+        stoneType: "lab-grown-diamond",
+        isLabGrown: true,
+        diamondShape: "round",
+        diamondColor: "colorless",
+        diamondCarat: 0.35,
+        style: "pave",
+        ringSizes: ["5", "5.5", "6", "6.5", "7"],
+        customSizeAvailable: true,
+        shipsTo: "greece-eu",
+        certification: { lab: "IGI", reportNumber: "LG12345040" },
+      },
+      stockQuantity: 5,
+      availabilityStatus: "made-to-order",
+      productionTime: "2–3 weeks",
+      isFeatured: false,
+      isBestSeller: false,
+      isReadyToShip: false,
+      status: "published",
+    },
+    {
+      name: "Custom Lab-Grown Pendant Study",
+      slug: "custom-lab-grown-pendant-study",
+      sku: "CJ-001",
+      productType: "custom-jewellery",
+      categoryId: necklacesCategory._id,
+      shortDescription: "A starting point for bespoke lab-grown diamond jewellery.",
+      description:
+        "Custom jewellery concept with a lab-grown diamond — book a consultation to refine metal, shape, and proportions.",
+      basePrice: 1500,
+      images: [
+        demoImage(DEMO_CATEGORY_IMAGES.necklaces, "Custom Lab-Grown Pendant Study"),
+      ],
+      variants: [
+        {
+          sku: "CJ-001-WG",
+          metal: "white-gold",
+          price: 1500,
+          stockQuantity: 1,
+          image: DEMO_CATEGORY_IMAGES.necklaces,
+        },
+      ],
+      attributes: {
+        metal: ["white-gold", "yellow-gold", "rose-gold", "platinum"],
+        goldPurity: "18k",
+        stoneType: "lab-grown-diamond",
+        isLabGrown: true,
+        diamondShape: "oval",
+        diamondColor: "colorless",
+        diamondCarat: 0.7,
+        customStoneAvailable: true,
+        shipsTo: "greece-eu",
+      },
+      stockQuantity: 1,
+      availabilityStatus: "made-to-order",
+      productionTime: "4–6 weeks",
+      isFeatured: false,
+      isBestSeller: false,
+      isReadyToShip: false,
+      status: "published",
+    },
+    {
+      name: "Viva Checkout Test Pendant",
+      slug: "viva-checkout-test-pendant",
+      sku: "TEST-VIVA-01",
+      productType: "necklace",
+      categoryId: necklacesCategory._id,
+      shortDescription: "€1 mock item for end-to-end Viva / checkout testing.",
+      description:
+        "Internal test product for simulating checkout and Viva payment flows. Safe low amount above the Viva minimum.",
+      basePrice: 1,
+      images: [
+        demoImage(DEMO_CATEGORY_IMAGES.necklaces, "Viva Checkout Test Pendant"),
+      ],
+      variants: [
+        {
+          sku: "TEST-VIVA-01-WG",
+          metal: "white-gold",
+          price: 1,
+          stockQuantity: 99,
+          image: DEMO_CATEGORY_IMAGES.necklaces,
+        },
+      ],
+      attributes: {
+        metal: ["white-gold"],
+        goldPurity: "18k",
+        stoneType: "lab-grown-diamond",
+        isLabGrown: true,
+        diamondShape: "round",
+        diamondColor: "colorless",
+        diamondCarat: 0.01,
+        shipsTo: "greece-eu",
+      },
+      stockQuantity: 99,
+      availabilityStatus: "in-stock",
+      productionTime: "Ready",
+      isFeatured: false,
+      isBestSeller: false,
+      isReadyToShip: true,
+      status: "published",
+    },
+    {
+      name: "Viva Checkout Test Studs",
+      slug: "viva-checkout-test-studs",
+      sku: "TEST-VIVA-02",
+      productType: "earrings",
+      categoryId: earringsCategory._id,
+      shortDescription: "€1 mock earrings for checkout / Viva payment testing.",
+      description:
+        "Internal test product for cart, shipping, and payment simulation across jewellery types.",
+      basePrice: 1,
+      images: [
+        demoImage(DEMO_CATEGORY_IMAGES.earrings, "Viva Checkout Test Studs"),
+      ],
+      variants: [
+        {
+          sku: "TEST-VIVA-02-WG",
+          metal: "white-gold",
+          price: 1,
+          stockQuantity: 99,
+          image: DEMO_CATEGORY_IMAGES.earrings,
+        },
+      ],
+      attributes: {
+        metal: ["white-gold"],
+        goldPurity: "18k",
+        stoneType: "lab-grown-diamond",
+        isLabGrown: true,
+        diamondShape: "round",
+        diamondColor: "colorless",
+        diamondCarat: 0.02,
+        shipsTo: "greece-eu",
+      },
+      stockQuantity: 99,
+      availabilityStatus: "in-stock",
+      productionTime: "Ready",
+      isFeatured: false,
+      isBestSeller: false,
+      isReadyToShip: true,
       status: "published",
     },
   ]);
