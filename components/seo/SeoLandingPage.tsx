@@ -45,21 +45,6 @@ export function SeoLandingPage({
           </p>
         </header>
 
-        {sections && sections.length > 0 && (
-          <div className="mx-auto mt-12 max-w-3xl space-y-10">
-            {sections.map((section) => (
-              <section key={section.heading}>
-                <h2 className="font-serif text-2xl text-brand-text">
-                  {section.heading}
-                </h2>
-                <p className="mt-3 whitespace-pre-line leading-relaxed text-brand-charcoal/65">
-                  {section.body}
-                </p>
-              </section>
-            ))}
-          </div>
-        )}
-
         {relatedLinks && relatedLinks.length > 0 && (
           <nav className="mx-auto mt-10 flex max-w-3xl flex-wrap justify-center gap-3">
             {relatedLinks.map((link) => (
@@ -74,13 +59,28 @@ export function SeoLandingPage({
           </nav>
         )}
 
-        <section className="mt-16">
+        <section className="mt-12">
           {products.length > 0 ? (
             <ProductGrid products={products} />
           ) : (
             <EmptyState title={emptyTitle} description={emptyDescription} />
           )}
         </section>
+
+        {sections && sections.length > 0 && (
+          <div className="mx-auto mt-16 max-w-3xl space-y-10">
+            {sections.map((section) => (
+              <section key={section.heading}>
+                <h2 className="font-serif text-2xl text-brand-text">
+                  {section.heading}
+                </h2>
+                <p className="mt-3 whitespace-pre-line leading-relaxed text-brand-charcoal/65">
+                  {section.body}
+                </p>
+              </section>
+            ))}
+          </div>
+        )}
       </Container>
     </>
   );
