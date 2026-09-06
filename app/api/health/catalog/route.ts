@@ -77,7 +77,7 @@ export async function GET() {
         siblingDatabases = [];
         for (const entry of databases) {
           if (entry.name === "admin" || entry.name === "local") continue;
-          const sibling = db.connection.client.db(entry.name);
+          const sibling = db.connection.getClient().db(entry.name);
           const published = await sibling
             .collection("products")
             .countDocuments({ status: "published" })
