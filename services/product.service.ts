@@ -264,7 +264,8 @@ async function queryProducts(
 
   const db = await safeConnectDB();
   if (!db) {
-    return { items: [], total: 0, page, totalPages: 0 };
+    // Throw so unstable_cache does not persist an empty catalog.
+    throw new Error("Database unavailable while loading products.");
   }
 
   try {
@@ -290,22 +291,30 @@ async function queryProducts(
     };
   } catch (error) {
     console.error("getProducts error:", error);
-    return { items: [], total: 0, page, totalPages: 0 };
+    throw error;
   }
 }
 
 export async function getProducts(
   filters: ProductFilters,
 ): Promise<PaginatedResult<ProductSummary>> {
+  const page = filters.page ?? 1;
+  const limit = filters.limit ?? DEFAULT_LIMIT;
   const cacheKey = JSON.stringify(filters);
-  return unstable_cache(
-    () => queryProducts(filters),
-    ["products-list", cacheKey],
-    {
-      tags: [CACHE_TAGS.products],
-      revalidate: CATALOG_REVALIDATE_SECONDS,
-    },
-  )();
+
+  try {
+    return await unstable_cache(
+      () => queryProducts(filters),
+      ["products-list", cacheKey],
+      {
+        tags: [CACHE_TAGS.products],
+        revalidate: CATALOG_REVALIDATE_SECONDS,
+      },
+    )();
+  } catch (error) {
+    console.error("getProducts cache/query failed:", error);
+    return { items: [], total: 0, page, totalPages: 0 };
+  }
 }
 
 async function queryProductBySlug(slug: string): Promise<ProductDetail | null> {

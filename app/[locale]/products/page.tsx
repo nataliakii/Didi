@@ -23,6 +23,7 @@ import { getTranslations, setRequestLocale } from "next-intl/server";
 import { Suspense } from "react";
 
 /** Catalog list must refresh after seed / admin publishes. */
+export const dynamic = "force-dynamic";
 export const revalidate = 60;
 
 export async function generateMetadata({
