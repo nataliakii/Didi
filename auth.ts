@@ -1,6 +1,7 @@
 import type { UserRole } from "@/constants/order-status";
 import { canAccessAdmin } from "@/constants/admin-roles";
 import { connectDB } from "@/lib/db";
+import { ensureSuperAdminFromEnv } from "@/lib/ensure-super-admin";
 import { verifyPassword } from "@/lib/password";
 import { User } from "@/models/User";
 import NextAuth from "next-auth";
@@ -25,6 +26,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         if (!email || !password) return null;
 
         await connectDB();
+        await ensureSuperAdminFromEnv();
+
         const user = await User.findOne({ email }).lean<{
           _id: { toString(): string };
           name: string;

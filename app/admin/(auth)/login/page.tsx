@@ -5,12 +5,14 @@ import { SessionProvider, signIn } from "next-auth/react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState, type FormEvent } from "react";
 
+const isLocalDev = process.env.NODE_ENV === "development";
+
 function LoginForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const callbackUrl = searchParams.get("callbackUrl") || "/admin";
 
-  const [email, setEmail] = useState("admin@didi.com");
+  const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
@@ -51,6 +53,7 @@ function LoginForm() {
           autoComplete="username"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
+          placeholder=""
           className="mt-1.5 w-full rounded-sm border border-stone-300 bg-white px-3 py-2.5 text-sm text-stone-900 focus:border-stone-500 focus:outline-none"
         />
       </label>
@@ -62,6 +65,7 @@ function LoginForm() {
           autoComplete="current-password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
+          placeholder=""
           className="mt-1.5 w-full rounded-sm border border-stone-300 bg-white px-3 py-2.5 text-sm text-stone-900 focus:border-stone-500 focus:outline-none"
         />
       </label>
@@ -79,6 +83,14 @@ function LoginForm() {
       >
         {loading ? "Signing in…" : "Sign in"}
       </button>
+
+      {isLocalDev && (
+        <p className="text-center text-xs text-stone-400">
+          Local seed user (if seeded):{" "}
+          <span className="font-mono text-stone-500">admin@didi.com</span> /{" "}
+          <span className="font-mono text-stone-500">admin123</span>
+        </p>
+      )}
     </form>
   );
 }

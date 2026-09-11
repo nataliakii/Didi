@@ -676,3 +676,28 @@ details summary::-webkit-details-marker {
   height: 6px;
   background: transparent;
 }
+
+/* Soft content protection on the public storefront only (admin unchanged). */
+.storefront-protect {
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+.storefront-protect input,
+.storefront-protect textarea,
+.storefront-protect select,
+.storefront-protect [contenteditable="true"],
+.storefront-protect [data-allow-copy] {
+  -webkit-user-select: text;
+  user-select: text;
+}
+
+.storefront-protect img,
+.storefront-protect picture,
+.storefront-protect video,
+.storefront-protect canvas,
+.storefront-protect svg {
+  -webkit-user-drag: none;
+  user-drag: none;
+  -webkit-touch-callout: none;
+}

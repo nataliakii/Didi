@@ -5,6 +5,7 @@ import {
   CATALOG_ROLES,
   hasRole,
   OPS_ROLES,
+  SUPER_ADMIN_ROLES,
   USER_MGMT_ROLES,
 } from "@/constants/admin-roles";
 import type { UserRole } from "@/constants/order-status";
@@ -23,6 +24,12 @@ type NavItem = {
 
 const adminNavItems: NavItem[] = [
   { label: "Dashboard", href: "/admin", icon: "◻", roles: OPS_ROLES },
+  {
+    label: "Analytics",
+    href: "/admin/analytics",
+    icon: "◈",
+    roles: SUPER_ADMIN_ROLES,
+  },
   { label: "Products", href: "/admin/products", icon: "◇", roles: CATALOG_ROLES },
   { label: "Diamonds", href: "/admin/diamonds", icon: "◆", roles: CATALOG_ROLES },
   {

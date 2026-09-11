@@ -1,4 +1,6 @@
 import { CartProvider } from "@/components/cart/CartProvider";
+import { VisitTracker } from "@/components/analytics/VisitTracker";
+import { ContentProtection } from "@/components/security/ContentProtection";
 import { Footer } from "@/components/layout/Footer";
 import { Header } from "@/components/layout/Header";
 
@@ -6,7 +8,9 @@ import { Header } from "@/components/layout/Header";
 export function StorefrontChrome({ children }: { children: React.ReactNode }) {
   return (
     <CartProvider>
-      <div className="flex min-h-full flex-col">
+      <VisitTracker />
+      <ContentProtection />
+      <div className="storefront-protect flex min-h-full flex-col">
         <Header />
         <main className="flex-1">{children}</main>
         <Footer />

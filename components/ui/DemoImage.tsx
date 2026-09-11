@@ -88,16 +88,22 @@ function DemoImageInner({
       fill={fill}
       width={fill ? undefined : width}
       height={fill ? undefined : height}
-      className={className}
+      className={cn(className, "pointer-events-none select-none")}
       sizes={sizes}
       priority={priority}
+      draggable={false}
+      onContextMenu={(event) => event.preventDefault()}
       onError={handleError}
     />
   );
 
   if (fill) {
     return (
-      <div className={cn("relative h-full w-full", containerClassName)}>
+      <div
+        className={cn("relative h-full w-full", containerClassName)}
+        data-protect-media
+        onContextMenu={(event) => event.preventDefault()}
+      >
         {image}
       </div>
     );
