@@ -4,121 +4,234 @@ import { DemoImage } from "@/components/ui/DemoImage";
 import { MediaVideo } from "@/components/ui/MediaVideo";
 import {
   DEMO_PLACEHOLDER_IMAGES,
+  DEMO_PRODUCT_VARIANT_IMAGES,
 } from "@/constants/demo-images";
-import { cn } from "@/lib/utils";
-import type { ProductImage } from "@/types";
-import { useState } from "react";
+import { cn, formatLabel } from "@/lib/utils";
+import type { ProductImage, ProductVariant } from "@/types";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface ProductGalleryProps {
   images: ProductImage[];
   productName: string;
   videoUrl?: string;
+  variants?: ProductVariant[];
+  metals?: string[];
   priority?: boolean;
+}
+
+type GallerySlide =
+  | { kind: "image"; url: string; alt: string; key: string }
+  | { kind: "video"; url: string; key: string };
+
+function buildGalleryImages(input: {
+  images: ProductImage[];
+  productName: string;
+  variants?: ProductVariant[];
+  metals?: string[];
+}): ProductImage[] {
+  const seen = new Set<string>();
+  const result: ProductImage[] = [];
+
+  function push(url: string | undefined, alt: string, isPrimary = false) {
+    if (!url?.trim()) return;
+    const normalized = url.trim();
+    if (seen.has(normalized)) return;
+    seen.add(normalized);
+    result.push({ url: normalized, alt, isPrimary });
+  }
+
+  if (input.images.length > 0) {
+    input.images.forEach((image, index) => {
+      push(
+        image.url,
+        image.alt?.trim() || `${input.productName} — view ${index + 1}`,
+        Boolean(image.isPrimary) || index === 0,
+      );
+    });
+  } else {
+    push(
+      DEMO_PLACEHOLDER_IMAGES.ring,
+      `${input.productName} — primary view`,
+      true,
+    );
+  }
+
+  for (const variant of input.variants ?? []) {
+    const metalLabel = variant.metal ? formatLabel(variant.metal) : "variant";
+    push(variant.image, `${input.productName} — ${metalLabel}`);
+  }
+
+  const metals =
+    input.metals?.length
+      ? input.metals
+      : (input.variants ?? [])
+          .map((variant) => variant.metal)
+          .filter((metal): metal is NonNullable<typeof metal> => Boolean(metal));
+
+  for (const metal of metals) {
+    const demo =
+      DEMO_PRODUCT_VARIANT_IMAGES[
+        metal as keyof typeof DEMO_PRODUCT_VARIANT_IMAGES
+      ];
+    if (demo) {
+      push(demo, `${input.productName} — ${formatLabel(metal)}`);
+    }
+  }
+
+  return result;
 }
 
 export function ProductGallery({
   images,
   productName,
   videoUrl,
+  variants,
+  metals,
   priority = false,
 }: ProductGalleryProps) {
-  const galleryImages =
-    images.length > 0
-      ? images.map((image, index) => ({
-          ...image,
-          alt:
-            image.alt?.trim() ||
-            `${productName} — view ${index + 1}`,
-        }))
-      : [
-          {
-            url: DEMO_PLACEHOLDER_IMAGES.ring,
-            alt: `${productName} — primary view`,
-            isPrimary: true,
-          },
-        ];
-
-  const hasVideo = Boolean(videoUrl?.trim());
-  const [mode, setMode] = useState<"image" | "video">(
-    hasVideo && galleryImages.length === 0 ? "video" : "image",
-  );
-  const [activeIndex, setActiveIndex] = useState(
-    Math.max(
-      0,
-      galleryImages.findIndex((image) => image.isPrimary),
-    ),
+  const galleryImages = useMemo(
+    () => buildGalleryImages({ images, productName, variants, metals }),
+    [images, productName, variants, metals],
   );
 
-  const activeImage = galleryImages[activeIndex] ?? galleryImages[0];
+  const slides: GallerySlide[] = useMemo(
+    () => [
+      ...galleryImages.map((image, index) => ({
+        kind: "image" as const,
+        url: image.url,
+        alt: image.alt ?? `${productName} — view ${index + 1}`,
+        key: `image-${image.url}-${index}`,
+      })),
+      ...(videoUrl?.trim()
+        ? [{ kind: "video" as const, url: videoUrl.trim(), key: "video" }]
+        : []),
+    ],
+    [galleryImages, productName, videoUrl],
+  );
+
+  const mobileTrackRef = useRef<HTMLDivElement>(null);
+  const [activeIndex, setActiveIndex] = useState(0);
+
+  useEffect(() => {
+    const track = mobileTrackRef.current;
+    if (!track) return;
+
+    function updateActive() {
+      if (!track) return;
+      const width = track.clientWidth;
+      if (width <= 0) return;
+      const next = Math.round(track.scrollLeft / width);
+      setActiveIndex(Math.min(Math.max(next, 0), slides.length - 1));
+    }
+
+    track.addEventListener("scroll", updateActive, { passive: true });
+    updateActive();
+    return () => track.removeEventListener("scroll", updateActive);
+  }, [slides.length]);
+
+  function goToSlide(index: number) {
+    const track = mobileTrackRef.current;
+    if (!track) return;
+    track.scrollTo({
+      left: index * track.clientWidth,
+      behavior: "smooth",
+    });
+    setActiveIndex(index);
+  }
 
   return (
-    <div className="space-y-4">
-      <div className="relative aspect-square overflow-hidden rounded-sm bg-brand-cream">
-        {mode === "video" && videoUrl ? (
-          <MediaVideo
-            url={videoUrl}
-            title={`${productName} video`}
-            className="absolute inset-0 h-full w-full"
-          />
-        ) : (
-          <DemoImage
-            key={activeIndex}
-            src={activeImage.url}
-            fallback={DEMO_PLACEHOLDER_IMAGES.ring}
-            alt={activeImage.alt ?? `${productName} — view ${activeIndex + 1}`}
-            placeholderKind="ring"
-            fill
-            priority={priority}
-            className="object-cover"
-            sizes="(max-width: 1024px) 100vw, 50vw"
-          />
+    <div className="w-full">
+      {/* Mobile / tablet: full-bleed horizontal snap carousel */}
+      <div className="lg:hidden">
+        <div className="relative -mx-4 sm:-mx-6">
+          <div
+            ref={mobileTrackRef}
+            className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            aria-label={`${productName} gallery`}
+          >
+            {slides.map((slide, index) => (
+              <div
+                key={slide.key}
+                className="relative aspect-square w-full shrink-0 snap-center snap-always bg-brand-cream"
+              >
+                {slide.kind === "video" ? (
+                  <MediaVideo
+                    url={slide.url}
+                    title={`${productName} video`}
+                    className="absolute inset-0 h-full w-full"
+                  />
+                ) : (
+                  <DemoImage
+                    src={slide.url}
+                    fallback={DEMO_PLACEHOLDER_IMAGES.ring}
+                    alt={slide.alt}
+                    placeholderKind="ring"
+                    fill
+                    priority={priority && index === 0}
+                    className="object-cover"
+                    sizes="100vw"
+                  />
+                )}
+              </div>
+            ))}
+          </div>
+
+          {slides.length > 1 && (
+            <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center gap-1.5">
+              {slides.map((slide, index) => (
+                <button
+                  key={`dot-${slide.key}`}
+                  type="button"
+                  aria-label={`Show image ${index + 1}`}
+                  aria-current={index === activeIndex}
+                  onClick={() => goToSlide(index)}
+                  className={cn(
+                    "pointer-events-auto h-1.5 rounded-full transition-all",
+                    index === activeIndex
+                      ? "w-5 bg-brand-text"
+                      : "w-1.5 bg-brand-text/30",
+                  )}
+                />
+              ))}
+            </div>
+          )}
+        </div>
+
+        {slides.length > 1 && (
+          <p className="mt-3 text-center text-xs tracking-widest text-brand-muted tabular-nums uppercase">
+            {activeIndex + 1} / {slides.length}
+          </p>
         )}
       </div>
 
-      {(galleryImages.length > 1 || hasVideo) && (
-        <div className="grid grid-cols-4 gap-3">
-          {galleryImages.map((image, index) => (
-            <button
-              key={`${image.url}-${index}`}
-              type="button"
-              onClick={() => {
-                setMode("image");
-                setActiveIndex(index);
-              }}
-              className={cn(
-                "relative aspect-square overflow-hidden rounded-sm border-2 bg-brand-cream",
-                mode === "image" && index === activeIndex
-                  ? "border-brand-navy"
-                  : "border-transparent hover:border-brand-gold/40",
-              )}
-            >
+      {/* Desktop: stacked full images that scroll with the page */}
+      <div className="hidden space-y-3 lg:block">
+        {slides.map((slide, index) => (
+          <div
+            key={slide.key}
+            className="relative aspect-square overflow-hidden bg-brand-cream"
+          >
+            {slide.kind === "video" ? (
+              <MediaVideo
+                url={slide.url}
+                title={`${productName} video`}
+                className="absolute inset-0 h-full w-full"
+              />
+            ) : (
               <DemoImage
-                src={image.url}
+                src={slide.url}
                 fallback={DEMO_PLACEHOLDER_IMAGES.ring}
-                alt={image.alt ?? `${productName} view ${index + 1}`}
+                alt={slide.alt}
                 placeholderKind="ring"
                 fill
+                priority={priority && index === 0}
                 className="object-cover"
-                sizes="120px"
+                sizes="(max-width: 1280px) 50vw, 640px"
               />
-            </button>
-          ))}
-          {hasVideo && (
-            <button
-              type="button"
-              onClick={() => setMode("video")}
-              className={cn(
-                "flex aspect-square items-center justify-center rounded-sm border-2 bg-brand-cream text-xs font-medium tracking-wide text-brand-text uppercase",
-                mode === "video"
-                  ? "border-brand-navy"
-                  : "border-transparent hover:border-brand-gold/40",
-              )}
-            >
-              Video
-            </button>
-          )}
-        </div>
-      )}
+            )}
+          </div>
+        ))}
+      </div>
     </div>
   );
 }

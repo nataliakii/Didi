@@ -123,16 +123,18 @@ export default async function ProductDetailPage({
           { label: product.name },
         ]}
       />
-      <Container className="py-12 lg:py-16">
-        <div className="grid gap-12 lg:grid-cols-2">
+      <Container className="py-8 lg:py-12">
+        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
           <ProductGallery
             images={product.images}
             productName={product.name}
             videoUrl={product.videoUrl}
+            variants={product.variants}
+            metals={attrs?.metal}
             priority
           />
 
-          <div className="space-y-6">
+          <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
             <div>
               <p className="text-xs tracking-widest text-brand-charcoal/45 uppercase">
                 {formatLabel(product.productType)}
