@@ -16,6 +16,7 @@ import { getParam, type SearchParamValue } from "@/lib/searchParams";
 import { Category } from "@/models/Category";
 import { Product } from "@/models/Product";
 import type {
+  AvailabilityStatus,
   CategorySummary,
   PaginatedResult,
   ProductDetail,
@@ -522,6 +523,66 @@ export async function getPublishedProductSlugs(): Promise<string[]> {
       .filter(Boolean);
   } catch (error) {
     console.error("getPublishedProductSlugs error:", error);
+    return [];
+  }
+}
+
+/** Full published catalog rows for OpenAI / merchant product feeds. */
+export async function getPublishedProductsForFeed(): Promise<
+  Array<{
+    _id: string;
+    name: string;
+    slug: string;
+    sku?: string;
+    shortDescription?: string;
+    description?: string;
+    basePrice: number;
+    salePrice?: number;
+    images: Array<{ url: string; alt?: string; isPrimary?: boolean }>;
+    productType: string;
+    availabilityStatus: AvailabilityStatus;
+    stockQuantity: number;
+    attributes?: ProductDetail["attributes"];
+    variants?: ProductDetail["variants"];
+    updatedAt?: Date;
+  }>
+> {
+  const db = await safeConnectDB();
+  if (!db) return [];
+
+  try {
+    const products = await Product.find({ status: "published" })
+      .select(
+        "name slug sku shortDescription description basePrice salePrice images productType availabilityStatus stockQuantity attributes variants updatedAt",
+      )
+      .sort({ updatedAt: -1 })
+      .lean();
+
+    return products.map((product) => ({
+      _id: String(product._id),
+      name: product.name as string,
+      slug: product.slug as string,
+      sku: product.sku as string | undefined,
+      shortDescription: product.shortDescription as string | undefined,
+      description: product.description as string | undefined,
+      basePrice: product.basePrice as number,
+      salePrice: product.salePrice as number | undefined,
+      images:
+        (product.images as Array<{
+          url: string;
+          alt?: string;
+          isPrimary?: boolean;
+        }>) ?? [],
+      productType: product.productType as string,
+      availabilityStatus:
+        product.availabilityStatus as AvailabilityStatus,
+      stockQuantity: (product.stockQuantity as number) ?? 0,
+      attributes: product.attributes as ProductDetail["attributes"],
+      variants: product.variants as ProductDetail["variants"],
+      updatedAt: product.updatedAt as Date | undefined,
+    }));
+  } catch (error) {
+    console.error("getPublishedProductsForFeed error:", error);
     return [];
   }
 }

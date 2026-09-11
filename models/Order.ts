@@ -119,6 +119,12 @@ const orderSchema = new Schema(
         },
       ],
     },
+    /** Admin-managed customer-facing delivery promise (date only). */
+    promisedDeliveryDate: { type: Date },
+    /** Target date for atelier / production readiness. */
+    productionEta: { type: Date },
+    /** Short note shown to the customer about timing (e.g. resizing, custom work). */
+    timelineNotes: { type: String, trim: true },
     internalNotes: { type: String },
     trackingNumber: { type: String },
   },

@@ -8,8 +8,11 @@ import { ProductGallery } from "@/components/product/ProductGallery";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getLocaleFromParamsAsync } from "@/lib/i18n";
-import { createLocalizedMetadata, getLocalizedCanonical } from "@/lib/seo";
-import { buildProductJsonLd } from "@/lib/schema";
+import { createLocalizedMetadata, getBaseUrl, getLocalizedCanonical } from "@/lib/seo";
+import {
+  buildJewelryAdditionalProperties,
+  buildProductJsonLd,
+} from "@/lib/schema";
 import { formatLabel } from "@/lib/utils";
 import {
   getProductBySlug,
@@ -79,11 +82,17 @@ export default async function ProductDetailPage({
   const relatedProducts = await getRelatedProducts(product);
   const attrs = product.attributes;
   const productUrl = getLocalizedCanonical(locale, `/products/${slug}`);
+  const baseUrl = getBaseUrl();
 
   const hasSale =
     product.salePrice !== undefined && product.salePrice < product.basePrice;
 
   const shipLabel = shipsToLabel(attrs?.shipsTo);
+  const absoluteImages = product.images.map((img) =>
+    /^https?:\/\//i.test(img.url)
+      ? img.url
+      : `${baseUrl}${img.url.startsWith("/") ? img.url : `/${img.url}`}`,
+  );
 
   return (
     <>
@@ -92,11 +101,19 @@ export default async function ProductDetailPage({
           name: product.name,
           description:
             product.shortDescription ?? product.description ?? product.name,
-          images: product.images.map((img) => img.url),
+          images: absoluteImages,
           sku: product.sku ?? product.slug,
           url: productUrl,
           price: product.salePrice ?? product.basePrice,
           availabilityStatus: product.availabilityStatus,
+          material: attrs?.metal?.length
+            ? attrs.metal.map(formatLabel).join(", ")
+            : undefined,
+          color: attrs?.diamondColor
+            ? formatLabel(attrs.diamondColor)
+            : undefined,
+          shipsTo: attrs?.shipsTo,
+          additionalProperties: buildJewelryAdditionalProperties(attrs),
         })}
       />
       <PageBreadcrumb

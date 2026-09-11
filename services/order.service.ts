@@ -1,4 +1,5 @@
 import { safeConnectDB } from "@/lib/db";
+import { sendOrderUpdateEmail } from "@/lib/order-emails";
 import { Order } from "@/models/Order";
 import type { DashboardStats, OrderSummary } from "@/types";
 import { getPendingAppointmentsCount } from "@/services/appointment.service";
@@ -129,6 +130,9 @@ export type AdminOrderDetail = {
   paymentStatus: string;
   trackingNumber?: string;
   internalNotes?: string;
+  promisedDeliveryDate?: Date | string | null;
+  productionEta?: Date | string | null;
+  timelineNotes?: string | null;
   shippingAddress?: {
     line1: string;
     line2?: string;
@@ -172,7 +176,24 @@ export type UpdateOrderAdminInput = {
   paymentStatus?: string;
   trackingNumber?: string;
   internalNotes?: string;
+  promisedDeliveryDate?: Date | null;
+  productionEta?: Date | null;
+  timelineNotes?: string | null;
+  notifyCustomer?: boolean;
+  customerMessage?: string;
 };
+
+function sameDay(
+  left?: Date | string | null,
+  right?: Date | string | null,
+): boolean {
+  if (!left && !right) return true;
+  if (!left || !right) return false;
+  const a = left instanceof Date ? left : new Date(left);
+  const b = right instanceof Date ? right : new Date(right);
+  if (Number.isNaN(a.getTime()) || Number.isNaN(b.getTime())) return false;
+  return a.toISOString().slice(0, 10) === b.toISOString().slice(0, 10);
+}
 
 export async function updateOrderAdmin(
   id: string,
@@ -182,12 +203,92 @@ export async function updateOrderAdmin(
   if (!db) return null;
 
   try {
-    const order = await Order.findByIdAndUpdate(
-      id,
-      { $set: input },
-      { new: true, runValidators: true },
-    ).lean();
+    const existing = await Order.findById(id);
+    if (!existing) return null;
+
+    const {
+      notifyCustomer = false,
+      customerMessage,
+      ...fields
+    } = input;
+
+    const $set: Record<string, unknown> = {};
+    const $unset: Record<string, 1> = {};
+
+    if (fields.status !== undefined) $set.status = fields.status;
+    if (fields.paymentStatus !== undefined) {
+      $set.paymentStatus = fields.paymentStatus;
+    }
+    if (fields.trackingNumber !== undefined) {
+      $set.trackingNumber = fields.trackingNumber;
+    }
+    if (fields.internalNotes !== undefined) {
+      $set.internalNotes = fields.internalNotes;
+    }
+    if (fields.timelineNotes !== undefined) {
+      if (fields.timelineNotes === null || fields.timelineNotes === "") {
+        $unset.timelineNotes = 1;
+      } else {
+        $set.timelineNotes = fields.timelineNotes;
+      }
+    }
+    if (fields.promisedDeliveryDate !== undefined) {
+      if (fields.promisedDeliveryDate === null) {
+        $unset.promisedDeliveryDate = 1;
+      } else {
+        $set.promisedDeliveryDate = fields.promisedDeliveryDate;
+      }
+    }
+    if (fields.productionEta !== undefined) {
+      if (fields.productionEta === null) {
+        $unset.productionEta = 1;
+      } else {
+        $set.productionEta = fields.productionEta;
+      }
+    }
+
+    const update: { $set?: Record<string, unknown>; $unset?: Record<string, 1> } =
+      {};
+    if (Object.keys($set).length > 0) update.$set = $set;
+    if (Object.keys($unset).length > 0) update.$unset = $unset;
+
+    const order = await Order.findByIdAndUpdate(id, update, {
+      new: true,
+      runValidators: true,
+    }).lean();
     if (!order || Array.isArray(order)) return null;
+
+    const statusChanged =
+      fields.status !== undefined && fields.status !== existing.status;
+    const trackingChanged =
+      fields.trackingNumber !== undefined &&
+      (fields.trackingNumber || "") !== (existing.trackingNumber || "");
+    const deliveryChanged =
+      fields.promisedDeliveryDate !== undefined &&
+      !sameDay(fields.promisedDeliveryDate, existing.promisedDeliveryDate);
+    const productionChanged =
+      fields.productionEta !== undefined &&
+      !sameDay(fields.productionEta, existing.productionEta);
+    const timelineChanged =
+      fields.timelineNotes !== undefined &&
+      (fields.timelineNotes || "") !== (existing.timelineNotes || "");
+
+    if (
+      notifyCustomer &&
+      (statusChanged ||
+        trackingChanged ||
+        deliveryChanged ||
+        productionChanged ||
+        timelineChanged)
+    ) {
+      void sendOrderUpdateEmail(
+        order as unknown as Parameters<typeof sendOrderUpdateEmail>[0],
+        { reason: customerMessage },
+      ).catch((error) => {
+        console.error("updateOrderAdmin customer email error:", error);
+      });
+    }
+
     return order as unknown as AdminOrderDetail;
   } catch (error) {
     console.error("updateOrderAdmin error:", error);

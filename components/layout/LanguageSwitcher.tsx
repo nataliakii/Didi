@@ -1,7 +1,6 @@
 "use client";
 
 import {
-  LOCALE_FLAGS,
   LOCALE_LABELS,
   SUPPORTED_LOCALES,
   type Locale,
@@ -51,9 +50,7 @@ export function LanguageSwitcher({ className }: { className?: string }) {
         aria-haspopup="listbox"
         aria-label={t("selectLanguage")}
       >
-        <span aria-hidden="true">{LOCALE_FLAGS[locale]}</span>
-        <span className="hidden sm:inline">{LOCALE_LABELS[locale]}</span>
-        <span className="sm:hidden">{locale.toUpperCase()}</span>
+        <span>{LOCALE_LABELS[locale]}</span>
         <svg
           className={cn("h-3 w-3 transition-transform", open && "rotate-180")}
           viewBox="0 0 20 20"
@@ -84,14 +81,13 @@ export function LanguageSwitcher({ className }: { className?: string }) {
                 type="button"
                 onClick={() => switchLocale(supportedLocale)}
                 className={cn(
-                  "flex w-full items-center gap-2 px-3 py-2 text-left text-sm transition-colors hover:bg-brand-surface-hover",
+                  "flex w-full items-center px-3 py-2 text-left text-sm transition-colors hover:bg-brand-surface-hover",
                   supportedLocale === locale
                     ? "font-medium text-brand-text"
                     : "text-brand-muted",
                 )}
               >
-                <span aria-hidden="true">{LOCALE_FLAGS[supportedLocale]}</span>
-                <span>{LOCALE_LABELS[supportedLocale]}</span>
+                {LOCALE_LABELS[supportedLocale]}
               </button>
             </li>
           ))}

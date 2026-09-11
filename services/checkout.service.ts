@@ -1,6 +1,7 @@
 import { getVivaCurrency, isVivaConfigured } from "@/constants/viva";
 import { revalidateDiamondCatalog } from "@/lib/cache";
 import { connectDB } from "@/lib/db";
+import { sendOrderPaidEmails } from "@/lib/order-emails";
 import { generateOrderNumber } from "@/lib/utils";
 import {
   createVivaPaymentOrder,
@@ -421,6 +422,15 @@ export async function markOrderPaidFromViva(input: {
 
   // Create DHL label/AWB after payment (best-effort; admin can retry).
   await tryCreateShipmentAfterPayment(order.orderNumber);
+
+  const fresh = await Order.findById(order._id).lean();
+  if (fresh && !Array.isArray(fresh)) {
+    void sendOrderPaidEmails(
+      fresh as unknown as Parameters<typeof sendOrderPaidEmails>[0],
+    ).catch((error) => {
+      console.error("markOrderPaidFromViva email error:", error);
+    });
+  }
 
   return { success: true, orderNumber: order.orderNumber };
 }

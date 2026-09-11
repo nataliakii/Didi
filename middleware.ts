@@ -6,7 +6,7 @@ export default createMiddleware(routing);
 export const config = {
   matcher: [
     "/",
-    "/(en|fr|de|es|it|nl|pt|pl|el|uk)/:path*",
-    "/((?!api|admin|_next|_vercel|icon|apple-icon|favicon|.*\\..*).*)",
+    "/(en|el|de|fr|it|es|ru)/:path*",
+    "/((?!api|admin|feeds|_next|_vercel|icon|apple-icon|favicon|.*\\..*).*)",
   ],
 };

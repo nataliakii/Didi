@@ -137,6 +137,10 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
             paymentStatus={order.paymentStatus}
             trackingNumber={order.trackingNumber}
             internalNotes={order.internalNotes}
+            promisedDeliveryDate={order.promisedDeliveryDate}
+            productionEta={order.productionEta}
+            timelineNotes={order.timelineNotes}
+            carrierEta={shippingMethod?.estimatedDelivery}
           />
         </div>
       </section>
@@ -164,6 +168,27 @@ export default async function AdminOrderDetailPage({ params }: PageProps) {
         </div>
 
         <dl className="mt-4 grid gap-3 text-sm sm:grid-cols-2">
+          <div>
+            <dt className="text-xs text-stone-400">Carrier ETA (checkout)</dt>
+            <dd className="text-stone-700">
+              {shippingMethod?.estimatedDelivery || "—"}
+            </dd>
+          </div>
+          <div>
+            <dt className="text-xs text-stone-400">Promised delivery</dt>
+            <dd className="text-stone-700">
+              {order.promisedDeliveryDate
+                ? new Date(order.promisedDeliveryDate).toLocaleDateString(
+                    "en-GB",
+                    {
+                      year: "numeric",
+                      month: "short",
+                      day: "numeric",
+                    },
+                  )
+                : "—"}
+            </dd>
+          </div>
           <div>
             <dt className="text-xs text-stone-400">Method</dt>
             <dd className="text-stone-700">

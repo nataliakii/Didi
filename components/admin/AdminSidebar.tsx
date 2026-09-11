@@ -33,6 +33,12 @@ const adminNavItems: NavItem[] = [
   },
   { label: "Orders", href: "/admin/orders", icon: "▤", roles: OPS_ROLES },
   {
+    label: "Email previews",
+    href: "/admin/emails",
+    icon: "✉",
+    roles: OPS_ROLES,
+  },
+  {
     label: "Appointments",
     href: "/admin/appointments",
     icon: "▦",
