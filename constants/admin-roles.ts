@@ -1,10 +1,13 @@
 import type { UserRole } from "@/constants/order-status";
+import { STAFF_ROLES } from "@/constants/order-status";
 
 export const OPS_ROLES: UserRole[] = ["manager", "admin", "super_admin"];
 export const CATALOG_ROLES: UserRole[] = ["admin", "super_admin"];
 export const USER_MGMT_ROLES: UserRole[] = ["admin", "super_admin"];
 /** Site analytics and other super-admin-only tools. */
 export const SUPER_ADMIN_ROLES: UserRole[] = ["super_admin"];
+/** Customer CRM in admin. */
+export const CUSTOMER_MGMT_ROLES: UserRole[] = ["manager", "admin", "super_admin"];
 
 export function hasRole(
   role: string | undefined,
@@ -14,9 +17,13 @@ export function hasRole(
 }
 
 export function canAccessAdmin(role: string | undefined): boolean {
-  return hasRole(role, OPS_ROLES);
+  return hasRole(role, STAFF_ROLES);
 }
 
 export function isSuperAdmin(role: string | undefined): boolean {
   return hasRole(role, SUPER_ADMIN_ROLES);
+}
+
+export function isCustomer(role: string | undefined): boolean {
+  return role === "customer";
 }

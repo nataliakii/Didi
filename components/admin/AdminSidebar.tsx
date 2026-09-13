@@ -3,6 +3,7 @@
 import { DEFAULT_LOCALE } from "@/constants/i18n";
 import {
   CATALOG_ROLES,
+  CUSTOMER_MGMT_ROLES,
   hasRole,
   OPS_ROLES,
   SUPER_ADMIN_ROLES,
@@ -29,6 +30,12 @@ const adminNavItems: NavItem[] = [
     href: "/admin/analytics",
     icon: "◈",
     roles: SUPER_ADMIN_ROLES,
+  },
+  {
+    label: "Customers",
+    href: "/admin/customers",
+    icon: "◎",
+    roles: CUSTOMER_MGMT_ROLES,
   },
   { label: "Products", href: "/admin/products", icon: "◇", roles: CATALOG_ROLES },
   { label: "Diamonds", href: "/admin/diamonds", icon: "◆", roles: CATALOG_ROLES },

@@ -1,3 +1,5 @@
+import { auth } from "@/auth";
+import { isCustomer } from "@/constants/admin-roles";
 import { startCheckout } from "@/services/checkout.service";
 import { parseCheckoutRequest } from "@/validation/checkout.schema";
 import { NextResponse } from "next/server";
@@ -14,7 +16,16 @@ export async function POST(request: Request) {
       );
     }
 
-    const result = await startCheckout(parsed.data);
+    const session = await auth();
+    const userId =
+      session?.user?.id && isCustomer(session.user.role)
+        ? session.user.id
+        : undefined;
+
+    const result = await startCheckout({
+      ...parsed.data,
+      userId: userId ?? parsed.data.userId,
+    });
 
     if (!result.success) {
       return NextResponse.json({ error: result.error }, { status: result.status });

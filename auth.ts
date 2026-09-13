@@ -38,7 +38,6 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
         } | null>();
 
         if (!user || !user.isActive) return null;
-        if (!canAccessAdmin(user.role)) return null;
 
         const valid = await verifyPassword(password, user.passwordHash);
         if (!valid) return null;
@@ -54,10 +53,10 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
   ],
   session: {
     strategy: "jwt",
-    maxAge: 60 * 60 * 12,
+    maxAge: 60 * 60 * 24 * 14,
   },
   pages: {
-    signIn: "/admin/login",
+    signIn: "/en/account/login",
   },
   callbacks: {
     async jwt({ token, user }) {
@@ -75,10 +74,20 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
             : typeof token.sub === "string"
               ? token.sub
               : "";
-        session.user.role = (token.role as UserRole | undefined) ?? "manager";
+        session.user.role =
+          (token.role as UserRole | undefined) ?? "customer";
       }
       return session;
     },
   },
   trustHost: true,
 });
+
+/** Convenience: current session user if they may use the admin panel. */
+export async function requireStaffSession() {
+  const session = await auth();
+  if (!session?.user?.id || !canAccessAdmin(session.user.role)) {
+    return null;
+  }
+  return session;
+}

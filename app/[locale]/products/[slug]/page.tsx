@@ -123,18 +123,23 @@ export default async function ProductDetailPage({
           { label: product.name },
         ]}
       />
-      <Container className="py-8 lg:py-12">
-        <div className="grid items-start gap-8 lg:grid-cols-2 lg:gap-12 xl:gap-16">
-          <ProductGallery
-            images={product.images}
-            productName={product.name}
-            videoUrl={product.videoUrl}
-            variants={product.variants}
-            metals={attrs?.metal}
-            priority
-          />
+      <Container className="py-0 lg:py-12">
+        <div className="lg:grid lg:grid-cols-2 lg:items-start lg:gap-12 xl:gap-16">
+          {/* Mobile: sticky gallery stays under the header like a background */}
+          <div className="sticky top-14 z-0 -mx-4 sm:-mx-6 lg:static lg:top-auto lg:z-auto lg:mx-0">
+            <ProductGallery
+              images={product.images}
+              productName={product.name}
+              videoUrl={product.videoUrl}
+              variants={product.variants}
+              metals={attrs?.metal}
+              priority
+            />
+          </div>
 
-          <div className="space-y-6 lg:sticky lg:top-28 lg:self-start">
+          {/* Product panel scrolls over the sticky gallery on mobile */}
+          <div className="relative z-10 -mx-4 space-y-6 bg-brand-bg px-4 pt-8 pb-10 shadow-[0_-12px_28px_rgba(6,24,43,0.08)] sm:-mx-6 sm:px-6 lg:mx-0 lg:bg-transparent lg:px-0 lg:pt-0 lg:pb-0 lg:shadow-none lg:sticky lg:top-28 lg:self-start">
+            <div className="mx-auto mb-6 h-px w-12 bg-brand-border lg:hidden" aria-hidden />
             <div>
               <p className="text-xs tracking-widest text-brand-charcoal/45 uppercase">
                 {formatLabel(product.productType)}
@@ -354,7 +359,7 @@ export default async function ProductDetailPage({
         </div>
 
         {product.description && (
-          <section className="mt-16 max-w-3xl">
+          <section className="relative z-10 -mx-4 max-w-none bg-brand-bg px-4 pt-8 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-16 lg:max-w-3xl lg:bg-transparent lg:px-0 lg:pt-0">
             <h2 className="font-serif text-2xl text-brand-text">
               {t("descriptionHeading")}
             </h2>
@@ -365,7 +370,7 @@ export default async function ProductDetailPage({
         )}
 
         {relatedProducts.length > 0 && (
-          <section className="mt-16 border-t border-brand-gold/20 pt-16">
+          <section className="relative z-10 -mx-4 bg-brand-bg px-4 pt-12 pb-8 sm:-mx-6 sm:px-6 lg:mx-0 lg:mt-16 lg:border-t lg:border-brand-gold/20 lg:bg-transparent lg:px-0 lg:pt-16 lg:pb-0">
             <h2 className="font-serif text-2xl text-brand-text">
               {t("relatedHeading")}
             </h2>

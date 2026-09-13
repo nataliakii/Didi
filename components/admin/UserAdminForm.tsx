@@ -1,7 +1,7 @@
 "use client";
 
 import type { UserRole } from "@/constants/order-status";
-import { USER_ROLES } from "@/constants/order-status";
+import { STAFF_ROLES } from "@/constants/order-status";
 import { formatLabel } from "@/lib/utils";
 import { useAdminRefetch } from "@/components/admin/useAdminRefetch";
 import { useState, type FormEvent } from "react";
@@ -18,7 +18,7 @@ export type UserFormValues = {
 };
 
 function assignableRoles(actorRole: UserRole): UserRole[] {
-  if (actorRole === "super_admin") return [...USER_ROLES];
+  if (actorRole === "super_admin") return [...STAFF_ROLES];
   return ["admin", "manager"];
 }
 

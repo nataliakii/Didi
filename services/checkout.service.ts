@@ -303,6 +303,7 @@ export async function startCheckout(input: CheckoutRequestInput): Promise<
 
   const order = await Order.create({
     orderNumber,
+    userId: input.userId || undefined,
     customer: input.customer,
     items: orderItems,
     subtotal,

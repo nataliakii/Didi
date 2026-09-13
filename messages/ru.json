@@ -61,7 +61,9 @@
     "guides": "Гайды",
     "contact": "Контакты",
     "switchToLight": "Включить светлую тему",
-    "switchToDark": "Включить тёмную тему"
+    "switchToDark": "Включить тёмную тему",
+    "account": "Account",
+    "signIn": "Sign in"
   },
   "breadcrumb": {
     "navLabel": "Навигация по пути",
@@ -915,5 +917,33 @@
       "linkRings": "Кольца",
       "linkCert": "Сертификация"
     }
+  },
+  "account": {
+    "title": "My account",
+    "description": "View your Asteria account, orders, and profile details.",
+    "welcome": "Welcome, {name}",
+    "loginTitle": "Sign in",
+    "loginDescription": "Access your orders and saved details.",
+    "registerTitle": "Create account",
+    "registerDescription": "Register to track orders and checkout faster.",
+    "email": "Email",
+    "password": "Password",
+    "passwordHint": "At least 8 characters.",
+    "name": "Full name",
+    "phone": "Phone",
+    "signIn": "Sign in",
+    "signingIn": "Signing in…",
+    "signOut": "Sign out",
+    "createAccount": "Create account",
+    "creatingAccount": "Creating account…",
+    "noAccount": "Don't have an account?",
+    "hasAccount": "Already have an account?",
+    "invalidCredentials": "Invalid email or password.",
+    "signInError": "Could not sign in. Please try again.",
+    "registerError": "Could not create account. Please try again.",
+    "profile": "Profile",
+    "orders": "Orders",
+    "noOrders": "You have no orders yet.",
+    "shopNow": "Browse the collection"
   }
 }

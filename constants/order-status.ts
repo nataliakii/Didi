@@ -34,7 +34,16 @@ export const APPOINTMENT_TYPES = [
   "in-store-appointment",
 ] as const;
 
-export const USER_ROLES = ["super_admin", "admin", "manager"] as const;
+export const USER_ROLES = [
+  "super_admin",
+  "admin",
+  "manager",
+  "customer",
+] as const;
+
+/** Staff roles that can access /admin (excludes storefront customers). */
+export const STAFF_ROLES = ["super_admin", "admin", "manager"] as const;
+
 
 export type OrderStatus = (typeof ORDER_STATUSES)[number];
 export type PaymentStatus = (typeof PAYMENT_STATUSES)[number];

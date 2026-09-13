@@ -2,6 +2,7 @@
 
 import { BrandLogo } from "@/components/layout/BrandLogo";
 import { SearchOverlay } from "@/components/layout/SearchOverlay";
+import { AccountMenuButton } from "@/components/account/AccountMenuButton";
 import { CartIconButton } from "@/components/cart/CartIconButton";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
 import { ThemeToggle } from "@/components/theme/ThemeToggle";
@@ -158,6 +159,7 @@ export function Header() {
               <IconLink label={t("search")} onClick={() => setSearchOpen(true)}>
                 <SearchIcon />
               </IconLink>
+              <AccountMenuButton onNavigate={closeMobile} />
               <button
                 type="button"
                 className="hidden rounded-sm p-2 text-brand-text transition-colors hover:text-brand-crimson-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-crimson sm:inline-flex"

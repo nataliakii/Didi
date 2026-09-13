@@ -77,7 +77,7 @@ export async function getAdminUsers(): Promise<AdminUserSummary[]> {
   if (!db) return [];
 
   try {
-    const users = await User.find()
+    const users = await User.find({ role: { $ne: "customer" } })
       .select("-passwordHash")
       .sort({ name: 1 })
       .limit(500)

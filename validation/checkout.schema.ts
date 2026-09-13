@@ -61,6 +61,7 @@ export const checkoutRequestSchema = z.object({
     productCode: z.string().trim().min(1, "Please select a shipping method."),
   }),
   locale: z.enum(SUPPORTED_LOCALES).optional(),
+  userId: z.string().trim().min(1).optional(),
 });
 
 export type CheckoutRequestInput = z.infer<typeof checkoutRequestSchema>;

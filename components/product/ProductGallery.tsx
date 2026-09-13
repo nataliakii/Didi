@@ -143,7 +143,7 @@ export function ProductGallery({
     <div className="w-full">
       {/* Mobile / tablet: full-bleed horizontal snap carousel */}
       <div className="lg:hidden">
-        <div className="relative -mx-4 sm:-mx-6">
+        <div className="relative">
           <div
             ref={mobileTrackRef}
             className="flex snap-x snap-mandatory overflow-x-auto overscroll-x-contain scroll-smooth [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
@@ -177,7 +177,7 @@ export function ProductGallery({
           </div>
 
           {slides.length > 1 && (
-            <div className="pointer-events-none absolute inset-x-0 bottom-3 flex items-center justify-center gap-1.5">
+            <div className="pointer-events-none absolute inset-x-0 bottom-4 flex items-center justify-center gap-1.5">
               {slides.map((slide, index) => (
                 <button
                   key={`dot-${slide.key}`}
@@ -189,19 +189,19 @@ export function ProductGallery({
                     "pointer-events-auto h-1.5 rounded-full transition-all",
                     index === activeIndex
                       ? "w-5 bg-brand-text"
-                      : "w-1.5 bg-brand-text/30",
+                      : "w-1.5 bg-brand-text/35",
                   )}
                 />
               ))}
             </div>
           )}
-        </div>
 
-        {slides.length > 1 && (
-          <p className="mt-3 text-center text-xs tracking-widest text-brand-muted tabular-nums uppercase">
-            {activeIndex + 1} / {slides.length}
-          </p>
-        )}
+          {slides.length > 1 && (
+            <p className="pointer-events-none absolute top-3 right-3 rounded-sm bg-brand-bg/75 px-2 py-1 text-[10px] tracking-widest text-brand-muted tabular-nums uppercase backdrop-blur-sm">
+              {activeIndex + 1} / {slides.length}
+            </p>
+          )}
+        </div>
       </div>
 
       {/* Desktop: stacked full images that scroll with the page */}

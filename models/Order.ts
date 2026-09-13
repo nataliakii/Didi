@@ -76,6 +76,7 @@ const addressSchema = new Schema(
 const orderSchema = new Schema(
   {
     orderNumber: { type: String, required: true, unique: true },
+    userId: { type: Schema.Types.ObjectId, ref: "User", index: true },
     customer: { type: customerSchema, required: true },
     items: [orderItemSchema],
     subtotal: { type: Number, required: true, min: 0 },
