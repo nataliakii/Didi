@@ -5,6 +5,7 @@ import { MediaVideo } from "@/components/ui/MediaVideo";
 import {
   DEMO_PLACEHOLDER_IMAGES,
   DEMO_PRODUCT_VARIANT_IMAGES,
+  type DemoPlaceholderKind,
 } from "@/constants/demo-images";
 import { cn, formatLabel } from "@/lib/utils";
 import type { ProductImage, ProductVariant } from "@/types";
@@ -17,6 +18,7 @@ interface ProductGalleryProps {
   variants?: ProductVariant[];
   metals?: string[];
   priority?: boolean;
+  placeholderKind?: DemoPlaceholderKind;
 }
 
 type GallerySlide =
@@ -28,9 +30,11 @@ function buildGalleryImages(input: {
   productName: string;
   variants?: ProductVariant[];
   metals?: string[];
+  placeholderKind: DemoPlaceholderKind;
 }): ProductImage[] {
   const seen = new Set<string>();
   const result: ProductImage[] = [];
+  const fallback = DEMO_PLACEHOLDER_IMAGES[input.placeholderKind] ?? DEMO_PLACEHOLDER_IMAGES.ring;
 
   function push(url: string | undefined, alt: string, isPrimary = false) {
     if (!url?.trim()) return;
@@ -49,11 +53,7 @@ function buildGalleryImages(input: {
       );
     });
   } else {
-    push(
-      DEMO_PLACEHOLDER_IMAGES.ring,
-      `${input.productName} — primary view`,
-      true,
-    );
+    push(fallback, `${input.productName} — primary view`, true);
   }
 
   for (const variant of input.variants ?? []) {
@@ -88,11 +88,21 @@ export function ProductGallery({
   variants,
   metals,
   priority = false,
+  placeholderKind = "ring",
 }: ProductGalleryProps) {
   const galleryImages = useMemo(
-    () => buildGalleryImages({ images, productName, variants, metals }),
-    [images, productName, variants, metals],
+    () =>
+      buildGalleryImages({
+        images,
+        productName,
+        variants,
+        metals,
+        placeholderKind,
+      }),
+    [images, productName, variants, metals, placeholderKind],
   );
+  const fallbackImage =
+    DEMO_PLACEHOLDER_IMAGES[placeholderKind] ?? DEMO_PLACEHOLDER_IMAGES.ring;
 
   const slides: GallerySlide[] = useMemo(
     () => [
@@ -163,9 +173,9 @@ export function ProductGallery({
                 ) : (
                   <DemoImage
                     src={slide.url}
-                    fallback={DEMO_PLACEHOLDER_IMAGES.ring}
+                    fallback={fallbackImage}
                     alt={slide.alt}
-                    placeholderKind="ring"
+                    placeholderKind={placeholderKind}
                     fill
                     priority={priority && index === 0}
                     className="object-cover"
@@ -220,9 +230,9 @@ export function ProductGallery({
             ) : (
               <DemoImage
                 src={slide.url}
-                fallback={DEMO_PLACEHOLDER_IMAGES.ring}
+                fallback={fallbackImage}
                 alt={slide.alt}
-                placeholderKind="ring"
+                placeholderKind={placeholderKind}
                 fill
                 priority={priority && index === 0}
                 className="object-cover"
