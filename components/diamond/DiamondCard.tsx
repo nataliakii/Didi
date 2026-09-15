@@ -1,14 +1,10 @@
 "use client";
 
 import { AddDiamondToCartButton } from "@/components/cart/AddDiamondToCartButton";
-import { Button } from "@/components/ui/Button";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
-import { StatusBadge } from "@/components/ui/StatusBadge";
 import { getDiamondShapeImage } from "@/constants/demo-images";
-import { getReportHrefForCertification } from "@/lib/certification";
 import { getPrimaryImageUrl } from "@/lib/cart";
-import { buildRingSettingHref } from "@/lib/ring-builder";
 import { formatLabel } from "@/lib/utils";
 import type { DiamondSummary } from "@/types";
 import { Link } from "@/i18n/routing";
@@ -24,150 +20,81 @@ function isDiamondPurchasable(diamond: DiamondSummary): boolean {
 
 export function DiamondCard({ diamond }: DiamondCardProps) {
   const t = useTranslations("diamonds");
-  const reportHref = getReportHrefForCertification(diamond.certification);
   const primaryImage =
     diamond.images.find((img) => img.isPrimary) ?? diamond.images[0];
   const imageAlt =
     primaryImage?.alt ??
     `${diamond.carat.toFixed(2)} ct ${formatLabel(diamond.shape)} diamond`;
-  const ringBuilderHref = buildRingSettingHref({ diamondId: diamond._id });
   const name = `${diamond.carat.toFixed(2)} ct ${formatLabel(diamond.shape)}`;
   const purchasable = isDiamondPurchasable(diamond);
 
   return (
-    <article className="card-luxury flex flex-col overflow-hidden transition-shadow hover:shadow-sm">
-      <div className="relative aspect-square bg-brand-cream">
-        <DemoImage
-          src={primaryImage?.url}
-          fallback={getDiamondShapeImage(diamond.shape)}
-          alt={imageAlt}
-          placeholderKind="diamond"
-          fill
-          className="object-cover"
-          sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
-        />
+    <article className="group flex h-full flex-col">
+      <div className="relative aspect-square overflow-hidden rounded-sm bg-brand-ivory">
+        <Link href={`/diamonds/${diamond._id}`} className="absolute inset-0">
+          <DemoImage
+            src={primaryImage?.url}
+            fallback={getDiamondShapeImage(diamond.shape)}
+            alt={imageAlt}
+            placeholderKind="diamond"
+            fill
+            className="object-contain p-4 transition-transform duration-700 group-hover:scale-[1.03] sm:p-6"
+            sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
+          />
+        </Link>
         {diamond.certification?.lab && (
-          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/25 bg-brand-surface/95 px-2 py-0.5 text-[9px] font-medium tracking-[0.12em] text-brand-text/80 uppercase">
+          <span className="pointer-events-none absolute top-2 left-2 rounded-sm bg-white/90 px-1.5 py-0.5 text-[9px] font-medium tracking-[0.12em] text-brand-text/80 uppercase shadow-sm">
             {diamond.certification.lab}
           </span>
         )}
+        <AddDiamondToCartButton
+          variant="icon"
+          className="absolute top-2 right-2 z-10"
+          disabled={!purchasable}
+          disabledMessage={purchasable ? undefined : t("unavailable")}
+          input={{
+            diamondId: diamond._id,
+            name,
+            image: getPrimaryImageUrl(diamond.images),
+            price: diamond.price,
+            salePrice: diamond.salePrice,
+            diamondSnapshot: {
+              id: diamond._id,
+              diamondType: diamond.diamondType,
+              shape: diamond.shape,
+              carat: diamond.carat,
+              cut: diamond.cut,
+              color: diamond.color,
+              clarity: diamond.clarity,
+              price: diamond.price,
+              salePrice: diamond.salePrice,
+              certification: diamond.certification,
+            },
+          }}
+        />
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
-              {formatLabel(diamond.diamondType)} &middot;{" "}
-              {formatLabel(diamond.shape)}
-            </p>
-            <h3 className="mt-1 font-serif text-xl text-brand-text">
-              {diamond.carat.toFixed(2)} ct
-            </h3>
-          </div>
+      <Link
+        href={`/diamonds/${diamond._id}`}
+        className="mt-2 flex flex-1 flex-col px-0.5 sm:mt-3"
+      >
+        <p className="text-[9px] tracking-[0.16em] text-brand-gold uppercase sm:text-[10px]">
+          {formatLabel(diamond.diamondType)} · {formatLabel(diamond.shape)}
+        </p>
+        <div className="mt-0.5 flex items-baseline justify-between gap-2">
+          <h3 className="font-serif text-sm text-brand-text sm:text-base">
+            {diamond.carat.toFixed(2)} ct
+          </h3>
           <PriceDisplay
             price={diamond.price}
             salePrice={diamond.salePrice}
-            size="sm"
+            size="xs"
           />
         </div>
-
-        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2.5 text-sm">
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
-              Cut
-            </dt>
-            <dd className="mt-0.5 font-medium text-brand-text">{diamond.cut}</dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
-              Color
-            </dt>
-            <dd className="mt-0.5 font-medium text-brand-text">{diamond.color}</dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
-              Clarity
-            </dt>
-            <dd className="mt-0.5 font-medium text-brand-text">
-              {diamond.clarity}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
-              Lab
-            </dt>
-            <dd className="mt-0.5 font-medium text-brand-text">
-              {diamond.certification?.lab ?? "—"}
-            </dd>
-          </div>
-          {diamond.certification?.reportNumber && (
-            <div className="col-span-2">
-              <dt className="text-[10px] tracking-wide text-brand-charcoal/45 uppercase">
-                Report No.
-              </dt>
-              <dd className="mt-0.5 font-medium text-brand-text">
-                {diamond.certification.reportNumber}
-              </dd>
-            </div>
-          )}
-        </dl>
-
-        {reportHref && (
-          <a
-            href={reportHref}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="mt-3 text-xs font-medium text-brand-gold underline underline-offset-4 hover:text-brand-text"
-          >
-            {t("checkOfficialReport")}
-          </a>
-        )}
-
-        <div className="mt-3">
-          <StatusBadge status={diamond.availabilityStatus} />
-        </div>
-
-        <div className="mt-auto flex flex-col gap-2 pt-5">
-          <AddDiamondToCartButton
-            disabled={!purchasable}
-            disabledMessage={purchasable ? undefined : t("unavailable")}
-            input={{
-              diamondId: diamond._id,
-              name,
-              image: getPrimaryImageUrl(diamond.images),
-              price: diamond.price,
-              salePrice: diamond.salePrice,
-              diamondSnapshot: {
-                id: diamond._id,
-                diamondType: diamond.diamondType,
-                shape: diamond.shape,
-                carat: diamond.carat,
-                cut: diamond.cut,
-                color: diamond.color,
-                clarity: diamond.clarity,
-                price: diamond.price,
-                salePrice: diamond.salePrice,
-                certification: diamond.certification,
-              },
-            }}
-          />
-          <div className="flex flex-col gap-2 sm:flex-row">
-            <Button
-              href={ringBuilderHref}
-              variant="secondary"
-              className="flex-1"
-            >
-              {t("chooseForRingBuilder")}
-            </Button>
-            <Link
-              href={`/diamonds/${diamond._id}`}
-              className="inline-flex flex-1 items-center justify-center rounded-sm border border-brand-gold/40 px-4 py-2.5 text-sm text-brand-text transition-colors hover:bg-brand-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
-            >
-              {t("viewDetails")}
-            </Link>
-          </div>
-        </div>
-      </div>
+        <p className="mt-0.5 text-[10px] tracking-wide text-brand-charcoal/50 sm:text-[11px]">
+          {diamond.cut} · {diamond.color} · {diamond.clarity}
+        </p>
+      </Link>
     </article>
   );
 }

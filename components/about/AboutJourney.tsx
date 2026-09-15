@@ -8,6 +8,7 @@ import {
   DEMO_DIAMOND_IMAGES,
   DEMO_RING_IMAGES,
 } from "@/constants/demo-images";
+import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
 import { useEffect, useRef, useState } from "react";
 
@@ -84,10 +85,16 @@ function JourneyChapter({
   return (
     <article
       ref={ref}
-      className={`journey-chapter grid items-center gap-8 lg:grid-cols-2 lg:gap-14 ${visible ? "is-visible" : ""}`}
+      className={cn(
+        "journey-chapter grid items-stretch lg:grid-cols-2",
+        visible && "is-visible",
+      )}
     >
       <div
-        className={`relative aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-[4/5] ${reverse ? "lg:order-2" : ""}`}
+        className={cn(
+          "relative aspect-[4/5] overflow-hidden sm:aspect-[5/4] lg:aspect-auto lg:min-h-[28rem] xl:min-h-[32rem]",
+          reverse && "lg:order-2",
+        )}
       >
         <DemoImage
           src={image}
@@ -100,17 +107,26 @@ function JourneyChapter({
         <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/35 via-transparent to-transparent" />
       </div>
 
-      <div className={reverse ? "lg:order-1" : undefined}>
-        <span className="journey-hairline" aria-hidden="true" />
-        <p className="mt-5 font-serif text-sm tracking-[0.28em] text-brand-gold uppercase">
-          {String(index + 1).padStart(2, "0")}
-        </p>
-        <h3 className="mt-3 font-serif text-3xl text-brand-text sm:text-4xl">
-          {title}
-        </h3>
-        <p className="mt-5 max-w-md text-base leading-relaxed text-brand-charcoal/75">
-          {body}
-        </p>
+      <div
+        className={cn(
+          "flex flex-col justify-center px-4 py-10 sm:px-6 sm:py-12 lg:px-12 lg:py-16 xl:px-16",
+          reverse
+            ? "lg:order-1 lg:pl-[max(2rem,calc((100vw-80rem)/2+2rem))] lg:pr-12 xl:pr-16"
+            : "lg:pr-[max(2rem,calc((100vw-80rem)/2+2rem))]",
+        )}
+      >
+        <div className="mx-auto w-full max-w-md lg:mx-0">
+          <span className="journey-hairline" aria-hidden="true" />
+          <p className="mt-5 font-serif text-sm tracking-[0.28em] text-brand-gold uppercase">
+            {String(index + 1).padStart(2, "0")}
+          </p>
+          <h3 className="mt-3 font-serif text-3xl text-brand-text sm:text-4xl">
+            {title}
+          </h3>
+          <p className="mt-5 text-base leading-relaxed text-brand-charcoal/75">
+            {body}
+          </p>
+        </div>
       </div>
     </article>
   );
@@ -127,24 +143,29 @@ export function AboutJourney() {
         <div className="mx-auto max-w-2xl text-center">
           <p className="section-eyebrow">{t("journeyEyebrow")}</p>
         </div>
+      </Container>
 
-        <div className="mt-14 space-y-20 lg:mt-20 lg:space-y-28">
-          {CHAPTERS.map((chapter, index) => (
-            <JourneyChapter
-              key={chapter.key}
-              index={index}
-              title={t(`chapter${chapter.key}Title`)}
-              body={t(`chapter${chapter.key}Body`)}
-              image={chapter.image}
-              imageAlt={tHome(chapter.imageAltKey)}
-              placeholderKind={chapter.placeholderKind}
-            />
-          ))}
-        </div>
+      <div className="mt-14 space-y-16 lg:mt-20 lg:space-y-0">
+        {CHAPTERS.map((chapter, index) => (
+          <JourneyChapter
+            key={chapter.key}
+            index={index}
+            title={t(`chapter${chapter.key}Title`)}
+            body={t(`chapter${chapter.key}Body`)}
+            image={chapter.image}
+            imageAlt={tHome(chapter.imageAltKey)}
+            placeholderKind={chapter.placeholderKind}
+          />
+        ))}
+      </div>
 
+      <Container className="mt-16 sm:mt-20">
         <div
           ref={ctaRef}
-          className={`mt-16 flex flex-col items-center gap-3 sm:mt-20 sm:flex-row sm:justify-center journey-cta ${ctaVisible ? "is-visible" : ""}`}
+          className={cn(
+            "flex flex-col items-center gap-3 sm:flex-row sm:justify-center journey-cta",
+            ctaVisible && "is-visible",
+          )}
         >
           <Button href="/create-ring" variant="gold" size="lg">
             {t("createRingCta")}

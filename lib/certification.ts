@@ -4,8 +4,11 @@ import {
 } from "@/constants/certification";
 import type { DiamondCertification } from "@/types";
 
-export function getCertificationLabLabel(lab: CertificationLab): string {
-  return CERTIFICATION_LAB_LABELS[lab];
+export function getCertificationLabLabel(lab: CertificationLab | string): string {
+  if (lab in CERTIFICATION_LAB_LABELS) {
+    return CERTIFICATION_LAB_LABELS[lab as CertificationLab];
+  }
+  return `Certified by ${lab}`;
 }
 
 export function hasGradingReport(
@@ -20,20 +23,17 @@ export function hasGradingReport(
 const OFFICIAL_REPORT_CHECK_URLS: Partial<
   Record<CertificationLab, (reportNumber: string) => string>
 > = {
-  GIA: (reportNumber) =>
-    `https://www.gia.edu/report-check?reportno=${encodeURIComponent(reportNumber)}`,
   IGI: () => "https://www.igi.org/verify-your-report",
-  HRD: () => "https://www.hrdantwerp.com/en/verify-a-diamond",
-  GCAL: () => "https://www.gcalusa.com/certificate.html",
 };
 
 export function getOfficialReportHref(
-  lab?: CertificationLab,
+  lab?: CertificationLab | string,
   reportNumber?: string,
 ): string | undefined {
   if (!lab || !reportNumber?.trim()) return undefined;
+  if (!(lab in OFFICIAL_REPORT_CHECK_URLS)) return undefined;
 
-  const builder = OFFICIAL_REPORT_CHECK_URLS[lab];
+  const builder = OFFICIAL_REPORT_CHECK_URLS[lab as CertificationLab];
   if (!builder) return undefined;
 
   return builder(reportNumber.trim());

@@ -35,6 +35,8 @@ const statusVariantMap: Record<string, StatusVariant> = {
   requested: "warning",
   confirmed: "success",
   rescheduled: "info",
+  approved: "success",
+  rejected: "danger",
   draft: "default",
   published: "success",
   archived: "default",

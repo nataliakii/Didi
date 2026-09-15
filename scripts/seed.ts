@@ -1260,7 +1260,7 @@ async function seed() {
       depthPercent: 61.2,
       lengthWidthRatio: 0.995,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "2141234567",
         reportUrl: "https://www.gia.edu/report-check?reportno=2141234567",
       },
@@ -1320,7 +1320,7 @@ async function seed() {
       depthPercent: 67,
       lengthWidthRatio: 1.36,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "5234567890",
       },
       collections: { flawless: false, blockchain: false, trulyBrilliant: false },
@@ -1348,7 +1348,7 @@ async function seed() {
       depthPercent: 72,
       lengthWidthRatio: 1.01,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "6482100999",
       },
       collections: { flawless: true, blockchain: true, trulyBrilliant: true },
@@ -1376,7 +1376,7 @@ async function seed() {
       depthPercent: 71.5,
       lengthWidthRatio: 1.01,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "6482100888",
       },
       collections: { flawless: false, blockchain: true, trulyBrilliant: true },
@@ -1430,7 +1430,7 @@ async function seed() {
       depthPercent: 61.5,
       lengthWidthRatio: 1.53,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "6482100777",
       },
       collections: { flawless: false, blockchain: true, trulyBrilliant: true },
@@ -1485,7 +1485,7 @@ async function seed() {
       depthPercent: 60.8,
       lengthWidthRatio: 0.995,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "1234567891",
       },
       collections: { flawless: false, blockchain: false, trulyBrilliant: false },
@@ -1542,7 +1542,7 @@ async function seed() {
       depthPercent: 67,
       lengthWidthRatio: 1.005,
       certification: {
-        lab: "GIA",
+        lab: "IGI",
         reportNumber: "6482100666",
       },
       collections: { flawless: false, blockchain: false, trulyBrilliant: true },
@@ -1845,7 +1845,7 @@ async function seed() {
     preferredTime: "14:00",
     budget: "$5,000 - $10,000",
     message:
-      "Looking for a round brilliant around 1 carat with GIA report, and guidance on a solitaire setting.",
+      "Looking for a round brilliant around 1 carat with IGI report, and guidance on a solitaire setting.",
     status: "requested",
   });
 

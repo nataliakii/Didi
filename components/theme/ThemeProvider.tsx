@@ -1,11 +1,6 @@
 "use client";
 
-import {
-  DEFAULT_THEME,
-  THEME_STORAGE_KEY,
-  isThemeMode,
-  type ThemeMode,
-} from "@/constants/brand";
+import { DEFAULT_THEME, type ThemeMode } from "@/constants/brand";
 import {
   createContext,
   useCallback,
@@ -26,41 +21,24 @@ const ThemeContext = createContext<ThemeContextValue | null>(null);
 
 function applyTheme(theme: ThemeMode) {
   document.documentElement.setAttribute("data-theme", theme);
-  try {
-    localStorage.setItem(THEME_STORAGE_KEY, theme);
-  } catch {
-    /* ignore */
-  }
 }
 
 export function ThemeProvider({ children }: { children: ReactNode }) {
   const [theme, setThemeState] = useState<ThemeMode>(DEFAULT_THEME);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem(THEME_STORAGE_KEY);
-      if (isThemeMode(stored)) {
-        setThemeState(stored);
-        applyTheme(stored);
-        return;
-      }
-    } catch {
-      /* ignore */
-    }
     applyTheme(DEFAULT_THEME);
+    setThemeState(DEFAULT_THEME);
   }, []);
 
-  const setTheme = useCallback((next: ThemeMode) => {
-    setThemeState(next);
-    applyTheme(next);
+  const setTheme = useCallback((_next: ThemeMode) => {
+    applyTheme(DEFAULT_THEME);
+    setThemeState(DEFAULT_THEME);
   }, []);
 
   const toggleTheme = useCallback(() => {
-    setThemeState((current) => {
-      const next: ThemeMode = current === "light" ? "dark" : "light";
-      applyTheme(next);
-      return next;
-    });
+    applyTheme(DEFAULT_THEME);
+    setThemeState(DEFAULT_THEME);
   }, []);
 
   const value = useMemo(

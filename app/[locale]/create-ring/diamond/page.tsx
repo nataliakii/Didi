@@ -99,18 +99,16 @@ export default async function CreateRingDiamondPage({
           </div>
         )}
 
-        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-          <aside className="w-full shrink-0 lg:w-72">
-            <Suspense
-              fallback={
-                <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
-              }
-            >
-              <DiamondFilters preserveKeys={["settingId", "diamondId"]} />
-            </Suspense>
-          </aside>
+        <div className="mt-8 lg:mt-10 lg:flex lg:gap-12">
+          <Suspense
+            fallback={
+              <div className="hidden h-96 animate-pulse rounded-sm bg-brand-cream lg:block lg:w-72" />
+            }
+          >
+            <DiamondFilters preserveKeys={["settingId", "diamondId"]} />
+          </Suspense>
 
-          <div className="min-w-0 flex-1 space-y-6">
+          <div className="mt-5 min-w-0 flex-1 space-y-5 pb-24 lg:mt-0 lg:space-y-6 lg:pb-0">
             <Suspense
               fallback={
                 <div className="h-10 w-48 animate-pulse rounded-sm bg-brand-cream" />

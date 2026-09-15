@@ -75,18 +75,16 @@ async function ProductsCatalog({
         </Suspense>
       </div>
 
-      <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-        <aside className="w-full shrink-0 lg:w-72">
-          <Suspense
-            fallback={
-              <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
-            }
-          >
-            <ProductFilters categories={categories} />
-          </Suspense>
-        </aside>
+      <div className="mt-6 lg:mt-10 lg:flex lg:gap-12">
+        <Suspense
+          fallback={
+            <div className="hidden h-96 animate-pulse rounded-sm bg-brand-cream lg:block lg:w-72" />
+          }
+        >
+          <ProductFilters categories={categories} />
+        </Suspense>
 
-        <div className="min-w-0 flex-1 space-y-6">
+        <div className="mt-5 min-w-0 flex-1 space-y-5 pb-24 lg:mt-0 lg:space-y-6 lg:pb-0">
           <Suspense fallback={<CatalogControlsFallback />}>
             <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
               <ProductSearchBar />
@@ -135,7 +133,7 @@ export default async function ProductsPage({
           { label: tb("products") },
         ]}
       />
-      <Container className="py-10 lg:py-14">
+      <Container className="py-6 lg:py-14">
         <div className="max-w-2xl">
           <p className="section-eyebrow">{t("collectionEyebrow")}</p>
           <h1 className="mt-2 font-serif text-3xl text-brand-text sm:text-4xl">

@@ -20,7 +20,7 @@ export function CartIconButton({ className, onNavigate }: CartIconButtonProps) {
       href="/cart"
       onClick={onNavigate}
       className={cn(
-        "relative inline-flex items-center text-sm text-brand-text/70 transition-colors hover:text-brand-text",
+        "relative inline-flex items-center text-brand-text transition-colors hover:text-brand-teal",
         className,
       )}
       aria-label={count > 0 ? t("cartWithCount", { count }) : t("cart")}

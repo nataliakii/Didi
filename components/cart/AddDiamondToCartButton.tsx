@@ -2,6 +2,8 @@
 
 import { useCart } from "@/components/cart/CartProvider";
 import { Button } from "@/components/ui/Button";
+import { BagIcon } from "@/components/ui/icons";
+import { cn } from "@/lib/utils";
 import type { AddDiamondCartInput } from "@/types/cart";
 import { Link } from "@/i18n/routing";
 import { useTranslations } from "next-intl";
@@ -12,6 +14,7 @@ interface AddDiamondToCartButtonProps {
   disabled?: boolean;
   disabledMessage?: string;
   className?: string;
+  variant?: "full" | "icon";
 }
 
 export function AddDiamondToCartButton({
@@ -19,6 +22,7 @@ export function AddDiamondToCartButton({
   disabled = false,
   disabledMessage,
   className,
+  variant = "full",
 }: AddDiamondToCartButtonProps) {
   const { addDiamondItem } = useCart();
   const t = useTranslations("diamonds");
@@ -34,6 +38,31 @@ export function AddDiamondToCartButton({
     }
     setAdded(true);
     window.setTimeout(() => setAdded(false), 4000);
+  }
+
+  if (variant === "icon") {
+    const label = alreadyInBag
+      ? t("alreadyInBag")
+      : added
+        ? t("addedToBag")
+        : t("addToBag");
+
+    return (
+      <button
+        type="button"
+        onClick={handleAdd}
+        disabled={disabled}
+        aria-label={label}
+        title={disabled ? disabledMessage : label}
+        className={cn(
+          "rounded-full bg-white/90 p-1.5 text-brand-text shadow-sm transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold disabled:opacity-40",
+          (added || alreadyInBag) && "text-brand-gold",
+          className,
+        )}
+      >
+        <BagIcon className="h-3.5 w-3.5" />
+      </button>
+    );
   }
 
   return (

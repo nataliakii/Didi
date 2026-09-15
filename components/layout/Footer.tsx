@@ -36,7 +36,7 @@ export async function Footer() {
   };
 
   return (
-    <footer className="border-t border-brand-border bg-brand-bg-deep text-brand-on-deep">
+    <footer className="border-t border-brand-gold/20 bg-brand-navy-wash text-brand-on-deep">
       <Container className="py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>

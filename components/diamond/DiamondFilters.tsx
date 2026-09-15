@@ -3,7 +3,12 @@
 import {
   DIAMOND_ACTIVE_FILTER_CONFIGS,
 } from "@/components/filters/ActiveFilterChips";
+import { CatalogQuickTags } from "@/components/filters/CatalogQuickTags";
 import { DiamondFilterPresets } from "@/components/filters/DiamondFilterPresets";
+import {
+  FloatingFilterButton,
+  countActiveFilterParams,
+} from "@/components/filters/FloatingFilterButton";
 import {
   GradeInfoModal,
   type GradeInfoTopic,
@@ -31,10 +36,6 @@ import { usePathname, useRouter } from "@/i18n/routing";
 import { useSearchParams } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { useCallback, useMemo, useState } from "react";
-
-const CERT_FILTER_OPTIONS = CERTIFICATION_LABS.filter((lab) =>
-  ["GIA", "IGI", "HRD", "OTHER"].includes(lab),
-).map((lab) => ({ value: lab, label: lab }));
 
 function DiamondOriginToggle({
   value,
@@ -163,6 +164,8 @@ function CollapsibleSection({
   );
 }
 
+const QUICK_SHAPE_TAGS = ["round", "princess", "oval", "pear", "emerald"] as const;
+
 export function DiamondFilters({
   className,
   preserveKeys = [],
@@ -171,6 +174,7 @@ export function DiamondFilters({
   preserveKeys?: string[];
 }) {
   const tf = useTranslations("filters");
+  const tOrigin = useTranslations("ringBuilder");
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
@@ -276,6 +280,41 @@ export function DiamondFilters({
     navigate(query ? `?${query}` : "");
     setDrawerOpen(false);
   };
+
+  const handleQuickToggle = useCallback(
+    (key: string, value: string) => {
+      handleUpdate(key, params.get(key) === value ? null : value);
+    },
+    [handleUpdate, params],
+  );
+
+  const quickTags = useMemo(
+    () => [
+      {
+        param: "diamondType",
+        value: "natural",
+        label: tOrigin("naturalDiamonds"),
+      },
+      {
+        param: "diamondType",
+        value: "lab",
+        label: tOrigin("labDiamonds"),
+      },
+      ...QUICK_SHAPE_TAGS.map((shape) => ({
+        param: "shape",
+        value: shape,
+        label: formatLabel(shape),
+      })),
+    ],
+    [tOrigin],
+  );
+
+  const activeFilterCount = countActiveFilterParams(params, [
+    "sort",
+    "page",
+    "search",
+    ...preserveKeys,
+  ]);
 
   const filterContent = (
     <div className="space-y-6">
@@ -467,16 +506,21 @@ export function DiamondFilters({
       </CollapsibleSection>
 
       <CollapsibleSection title={tf("report")}>
-        <Select
-          id="certificationLab"
-          label={tf("certificate")}
-          value={
-            params.get("certificationLab") ?? params.get("certificateLab") ?? ""
-          }
-          placeholder={tf("allLabs")}
-          options={CERT_FILTER_OPTIONS}
-          onChange={(value) => handleUpdate("certificationLab", value || null)}
-        />
+        {CERTIFICATION_LABS.length > 1 ? (
+          <Select
+            id="certificationLab"
+            label={tf("certificate")}
+            value={
+              params.get("certificationLab") ?? params.get("certificateLab") ?? ""
+            }
+            placeholder={tf("allLabs")}
+            options={CERTIFICATION_LABS.map((lab) => ({
+              value: lab,
+              label: lab,
+            }))}
+            onChange={(value) => handleUpdate("certificationLab", value || null)}
+          />
+        ) : null}
         <Select
           id="availabilityStatus"
           label={tf("availability")}
@@ -495,8 +539,8 @@ export function DiamondFilters({
   );
 
   return (
-    <>
-      <div className={cn("hidden lg:block", className)}>
+    <div className={cn("lg:w-72 lg:shrink-0", className)}>
+      <div className="hidden lg:block">
         <div className="sticky top-36 max-h-[calc(100vh-8rem)] space-y-6 overflow-y-auto pr-1">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-medium tracking-[0.2em] text-brand-text uppercase">
@@ -515,30 +559,47 @@ export function DiamondFilters({
       </div>
 
       <div className="lg:hidden">
-        <button
-          type="button"
-          onClick={() => setDrawerOpen(true)}
-          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-text hover:bg-brand-cream/50"
-        >
-          {tf("filters")}
-        </button>
-        <FilterDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          title={tf("filterDiamonds")}
-        >
-          <div className="mb-4 flex justify-end">
-            <button
-              type="button"
-              onClick={handleClear}
-              className="text-xs text-brand-text/50 hover:text-brand-text"
-            >
-              {tf("resetAll")}
-            </button>
-          </div>
-          {filterContent}
-        </FilterDrawer>
+        <CatalogQuickTags
+          label={tf("quickFilters")}
+          tags={quickTags}
+          params={params}
+          onToggle={handleQuickToggle}
+        />
       </div>
+
+      {!drawerOpen && (
+        <FloatingFilterButton
+          label={tf("filters")}
+          activeCount={activeFilterCount}
+          onClick={() => setDrawerOpen(true)}
+        />
+      )}
+
+      <FilterDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title={tf("filterDiamonds")}
+        footer={
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full rounded-sm bg-brand-navy px-4 py-3 text-sm text-brand-ivory"
+          >
+            {tf("applyFilters")}
+          </button>
+        }
+      >
+        <div className="mb-4 flex justify-end">
+          <button
+            type="button"
+            onClick={handleClear}
+            className="text-xs text-brand-text/50 hover:text-brand-text"
+          >
+            {tf("resetAll")}
+          </button>
+        </div>
+        {filterContent}
+      </FilterDrawer>
 
       <GradeInfoModal
         topic={infoTopic}
@@ -553,7 +614,7 @@ export function DiamondFilters({
         }
         onClose={() => setInfoTopic(null)}
       />
-    </>
+    </div>
   );
 }
 

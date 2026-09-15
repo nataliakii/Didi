@@ -5,7 +5,6 @@ import { SearchOverlay } from "@/components/layout/SearchOverlay";
 import { AccountMenuButton } from "@/components/account/AccountMenuButton";
 import { CartIconButton } from "@/components/cart/CartIconButton";
 import { LanguageSwitcher } from "@/components/layout/LanguageSwitcher";
-import { ThemeToggle } from "@/components/theme/ThemeToggle";
 import { Container } from "@/components/ui/Container";
 import {
   CalendarIcon,
@@ -16,12 +15,24 @@ import {
   PhoneIcon,
   SearchIcon,
 } from "@/components/ui/icons";
+import { SUPPORTED_LOCALES } from "@/constants/i18n";
 import { BRAND_CONTACT } from "@/constants/contact";
 import type { AppPathname } from "@/i18n/routing";
-import { Link } from "@/i18n/routing";
+import { Link, usePathname } from "@/i18n/routing";
 import { cn } from "@/lib/utils";
 import { useTranslations } from "next-intl";
+import { usePathname as useNextPathname } from "next/navigation";
 import { Suspense, useCallback, useEffect, useState } from "react";
+
+function isStorefrontHome(pathname: string) {
+  const clean = (pathname || "/").split("?")[0].replace(/\/+$/, "") || "/";
+  const parts = clean.split("/").filter(Boolean);
+  if (parts.length === 0) return true;
+  return (
+    parts.length === 1 &&
+    (SUPPORTED_LOCALES as readonly string[]).includes(parts[0])
+  );
+}
 
 function IconLink({
   href,
@@ -29,19 +40,23 @@ function IconLink({
   label,
   children,
   onClick,
+  className,
 }: {
   href?: AppPathname | `${AppPathname}?${string}` | string;
   external?: boolean;
   label: string;
   children: React.ReactNode;
   onClick?: () => void;
+  className?: string;
 }) {
-  const className =
-    "inline-flex items-center justify-center rounded-sm p-2 text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal";
+  const classes = cn(
+    "inline-flex items-center justify-center rounded-sm p-1.5 text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal sm:p-2",
+    className,
+  );
 
   if (external && href) {
     return (
-      <a href={href} className={className} aria-label={label}>
+      <a href={href} className={classes} aria-label={label}>
         {children}
       </a>
     );
@@ -51,7 +66,7 @@ function IconLink({
     return (
       <Link
         href={href as AppPathname}
-        className={className}
+        className={classes}
         aria-label={label}
         onClick={onClick}
       >
@@ -63,7 +78,7 @@ function IconLink({
   return (
     <button
       type="button"
-      className={className}
+      className={classes}
       aria-label={label}
       onClick={onClick}
     >
@@ -74,8 +89,17 @@ function IconLink({
 
 export function Header() {
   const t = useTranslations("navigation");
+  const pathname = usePathname();
+  const nextPathname = useNextPathname();
   const [mobileOpen, setMobileOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
+  const isHome =
+    isStorefrontHome(pathname) || isStorefrontHome(nextPathname);
+  const [overHero, setOverHero] = useState(isHome);
+  const overlay = isHome && overHero && !mobileOpen;
+  const overlayIconClass = overlay
+    ? "text-brand-ivory hover:text-brand-gold"
+    : undefined;
 
   const categoryLinks = [
     { label: t("rings"), href: "/rings" as const },
@@ -111,24 +135,49 @@ export function Header() {
     };
   }, [mobileOpen, closeMobile]);
 
+  useEffect(() => {
+    if (!isHome) {
+      setOverHero(false);
+      return;
+    }
+
+    const onScroll = () => {
+      setOverHero(window.scrollY < 240);
+    };
+
+    setOverHero(window.scrollY < 240);
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, [isHome]);
+
   return (
     <>
-      <header className="sticky top-0 z-50 border-b border-brand-border bg-brand-bg/95 backdrop-blur-sm">
+      <header
+        className={cn(
+          "sticky top-0 z-50 border-b",
+          overlay
+            ? "header-on-hero"
+            : "is-scrolled border-brand-border/80 bg-brand-bg/80 backdrop-blur-md",
+        )}
+      >
         <Container>
-          <div className="grid h-14 grid-cols-[1fr_auto_1fr] items-center lg:h-16">
+          <div className="grid h-14 grid-cols-[auto_1fr_auto] items-center gap-1 sm:gap-2 lg:h-[4.5rem] lg:grid-cols-[1fr_auto_1fr]">
             {/* Left */}
-            <div className="flex items-center justify-start gap-1.5 sm:gap-2">
+            <div className="flex items-center justify-start gap-1 sm:gap-2">
               <button
                 type="button"
-                className="inline-flex items-center justify-center rounded-sm p-2 text-brand-text lg:hidden"
+                className={cn(
+                  "inline-flex items-center justify-center rounded-sm p-1.5 lg:hidden sm:p-2",
+                  overlay ? "text-brand-ivory" : "text-brand-text",
+                )}
                 aria-label={t("toggleMenu")}
                 aria-expanded={mobileOpen}
                 onClick={() => setMobileOpen((open) => !open)}
               >
                 {mobileOpen ? (
-                  <CloseIcon className="h-6 w-6" />
+                  <CloseIcon className="h-5 w-5" />
                 ) : (
-                  <MenuIcon className="h-6 w-6" />
+                  <MenuIcon className="h-5 w-5" />
                 )}
               </button>
               <div className="hidden items-center gap-1.5 sm:gap-2 lg:flex">
@@ -136,42 +185,71 @@ export function Header() {
                   href={BRAND_CONTACT.phoneHref}
                   external
                   label={t("callUs")}
+                  className={overlayIconClass}
                 >
                   <PhoneIcon />
                 </IconLink>
-                <IconLink href="/appointment" label={t("bookAppointment")}>
+                <IconLink
+                  href="/appointment"
+                  label={t("bookAppointment")}
+                  className={overlayIconClass}
+                >
                   <CalendarIcon />
                 </IconLink>
               </div>
             </div>
 
-            {/* Center logo */}
+            {/* Center logo — a single BrandLogo instance, never duplicated */}
             <Link
               href="/"
-              className="justify-self-center transition-opacity hover:opacity-90"
+              className="min-w-0 justify-self-center transition-opacity hover:opacity-90"
+              aria-label="Asteria Diamond House"
               onClick={closeMobile}
             >
-              <BrandLogo size="md" />
+              <BrandLogo
+                size="md"
+                variant={overlay ? "light" : "default"}
+                priority
+              />
             </Link>
 
             {/* Right */}
-            <div className="flex items-center justify-end gap-1.5 sm:gap-2">
-              <IconLink label={t("search")} onClick={() => setSearchOpen(true)}>
-                <SearchIcon />
+            <div className="flex items-center justify-end gap-0 sm:gap-1">
+              <IconLink
+                label={t("search")}
+                onClick={() => setSearchOpen(true)}
+                className={overlayIconClass}
+              >
+                <SearchIcon className="h-5 w-5" />
               </IconLink>
-              <AccountMenuButton onNavigate={closeMobile} />
+              <AccountMenuButton
+                onNavigate={closeMobile}
+                className={overlayIconClass}
+              />
               <button
                 type="button"
-                className="hidden rounded-sm p-2 text-brand-text transition-colors hover:text-brand-crimson-soft focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-crimson sm:inline-flex"
+                className={cn(
+                  "hidden rounded-sm p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-crimson lg:inline-flex",
+                  overlay
+                    ? "text-brand-ivory hover:text-brand-gold"
+                    : "text-brand-text hover:text-brand-crimson-soft",
+                )}
                 aria-label={t("wishlist")}
                 disabled
                 title={t("wishlistComingSoon")}
               >
                 <HeartIcon />
               </button>
-              <CartIconButton onNavigate={closeMobile} />
+              <CartIconButton
+                onNavigate={closeMobile}
+                className={cn(
+                  "p-1.5 sm:p-2",
+                  overlay
+                    ? "text-brand-ivory hover:text-brand-gold"
+                    : "text-brand-text hover:text-brand-teal",
+                )}
+              />
               <div className="ml-1 hidden items-center gap-2 border-l border-brand-border pl-3 lg:flex">
-                <ThemeToggle />
                 <Suspense fallback={null}>
                   <LanguageSwitcher />
                 </Suspense>
@@ -181,7 +259,12 @@ export function Header() {
         </Container>
 
         {/* Row 2 — category navigation (desktop) */}
-        <div className="hidden border-t border-brand-border lg:block">
+        <div
+          className={cn(
+            "hidden border-t border-brand-border lg:block",
+            overlay && "lg:hidden",
+          )}
+        >
           <Container>
             <nav
               className="flex flex-wrap items-center justify-center gap-x-8 gap-y-2 py-2.5"
@@ -228,8 +311,8 @@ export function Header() {
               >
                 <CalendarIcon />
               </IconLink>
+              <AccountMenuButton onNavigate={closeMobile} />
               <div className="ml-auto flex items-center gap-2">
-                <ThemeToggle />
                 <Suspense fallback={null}>
                   <LanguageSwitcher />
                 </Suspense>

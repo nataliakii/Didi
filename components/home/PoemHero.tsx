@@ -1,10 +1,10 @@
 "use client";
 
 import { HeroConstellationSky } from "@/components/home/HeroConstellationSky";
-import { Button } from "@/components/ui/Button";
+import { HomeHeroCopy } from "@/components/home/HomeHeroCopy";
 import { Container } from "@/components/ui/Container";
 import { useTranslations } from "next-intl";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 
 export function PoemHero() {
   const t = useTranslations("home");
@@ -20,76 +20,36 @@ export function PoemHero() {
     return () => cancelAnimationFrame(id);
   }, []);
 
-  const lines = [t("poemLine1"), t("poemLine2"), t("poemLine3")];
+  const scrollToIntro = useCallback(() => {
+    document.getElementById("asteria-intro")?.scrollIntoView({
+      behavior: "smooth",
+      block: "start",
+    });
+  }, []);
 
   return (
-    <section className="hero-section relative flex min-h-[78vh] items-center overflow-hidden sm:min-h-[85vh]">
+    <section
+      className="hero-section hero-under-header relative flex flex-col overflow-hidden"
+      style={{ minHeight: "85svh" }}
+    >
       <div className="hero-atmosphere absolute inset-0" aria-hidden="true" />
       <HeroConstellationSky />
 
-      <Container className="relative z-10 py-24 text-center sm:py-28">
-        <p
-          className={`hero-eyebrow poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "0ms" }}
-        >
-          {t("heroEyebrow")}
-        </p>
-
-        <h1 className="hero-title mx-auto mt-8 max-w-3xl font-serif">
-          {lines.map((line, index) => (
-            <span
-              key={line}
-              className={`poem-line poem-reveal block text-4xl leading-[1.15] sm:text-5xl lg:text-[3.5rem] lg:leading-[1.12] ${ready ? "is-visible" : ""}`}
-              style={{ transitionDelay: `${160 + index * 220}ms` }}
-            >
-              {line}
-            </span>
-          ))}
-        </h1>
-
-        <p
-          className={`mt-5 font-serif text-lg tracking-[0.12em] text-brand-gold uppercase poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "820ms" }}
-        >
-          {t("heroSlogan")}
-        </p>
-
-        <p
-          className={`hero-positioning mx-auto mt-6 max-w-2xl font-serif text-xl leading-snug sm:text-2xl poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "920ms" }}
-        >
-          {t("heroPositioning")}
-        </p>
-
-        <p
-          className={`hero-description mx-auto mt-5 max-w-xl text-base leading-relaxed sm:text-lg poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "1050ms" }}
-        >
-          {t("heroDescription")}
-        </p>
-
-        <div
-          className={`hero-cta-group mt-10 flex flex-col items-stretch justify-center gap-3 px-4 sm:flex-row sm:items-center sm:px-0 poem-reveal ${ready ? "is-visible" : ""}`}
-          style={{ transitionDelay: "1200ms" }}
-        >
-          <Button
-            href="/colored-lab-grown-diamonds"
-            variant="gold"
-            size="lg"
-            className="hero-cta-primary w-full sm:w-auto sm:min-w-[200px]"
-          >
-            {t("exploreColored")}
-          </Button>
-          <Button
-            href="/rings"
-            variant="outline"
-            size="lg"
-            className="hero-cta-secondary w-full sm:w-auto sm:min-w-[200px]"
-          >
-            {t("exploreRings")}
-          </Button>
-        </div>
+      <Container className="relative z-10 flex flex-1 flex-col justify-center py-10 sm:py-24">
+        <HomeHeroCopy ready={ready} />
       </Container>
+
+      <button
+        type="button"
+        onClick={scrollToIntro}
+        className="hero-scroll-cue absolute bottom-3 left-1/2 z-10 flex -translate-x-1/2 flex-col items-center gap-1.5 md:bottom-5"
+        aria-label={t("scrollCue")}
+      >
+        <span className="text-[9px] tracking-[0.32em] text-brand-gold/80 uppercase">
+          {t("scrollCue")}
+        </span>
+        <span className="hero-scroll-line" aria-hidden />
+      </button>
     </section>
   );
 }

@@ -1,6 +1,5 @@
 import { HomePageContent } from "@/components/home/HomePageContent";
-import { PageBreadcrumb } from "@/components/ui/PageBreadcrumb";
-import { getTranslations, setRequestLocale } from "next-intl/server";
+import { setRequestLocale } from "next-intl/server";
 
 export default async function Home({
   params,
@@ -9,12 +8,6 @@ export default async function Home({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
-  const tb = await getTranslations("breadcrumb");
 
-  return (
-    <>
-      <PageBreadcrumb items={[{ label: tb("home") }]} />
-      <HomePageContent />
-    </>
-  );
+  return <HomePageContent />;
 }

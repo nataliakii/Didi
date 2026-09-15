@@ -108,6 +108,14 @@ export function CloseIcon(props: IconProps) {
   );
 }
 
+export function FilterIcon(props: IconProps) {
+  return (
+    <BaseIcon {...props}>
+      <path d="M4 6h16M7 12h10M10 18h4" />
+    </BaseIcon>
+  );
+}
+
 export function UserIcon(props: IconProps) {
   return (
     <BaseIcon {...props}>

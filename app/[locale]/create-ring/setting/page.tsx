@@ -87,18 +87,16 @@ export default async function CreateRingSettingPage({
           </div>
         )}
 
-        <div className="mt-10 flex flex-col gap-8 lg:flex-row lg:gap-12">
-          <aside className="w-full shrink-0 lg:w-72">
-            <Suspense
-              fallback={
-                <div className="h-96 animate-pulse rounded-sm bg-brand-cream" />
-              }
-            >
-              <RingSettingFilters />
-            </Suspense>
-          </aside>
+        <div className="mt-8 lg:mt-10 lg:flex lg:gap-12">
+          <Suspense
+            fallback={
+              <div className="hidden h-96 animate-pulse rounded-sm bg-brand-cream lg:block lg:w-72" />
+            }
+          >
+            <RingSettingFilters />
+          </Suspense>
 
-          <div className="min-w-0 flex-1 space-y-6">
+          <div className="mt-5 min-w-0 flex-1 space-y-5 pb-24 lg:mt-0 lg:space-y-6 lg:pb-0">
             <p className="text-sm text-brand-charcoal/60">
               {result.total}{" "}
               {result.total === 1 ? "setting" : "settings"} found

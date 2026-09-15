@@ -1,7 +1,7 @@
 import {
   BRAND_BG,
-  BRAND_BG_DEEP,
   BRAND_GOLD,
+  BRAND_IVORY_HEX,
   BRAND_NAME,
   BRAND_TAGLINE,
   BRAND_TEXT,
@@ -52,9 +52,9 @@ export function renderBrandedEmailHtml(content: EmailLayoutContent): string {
       <td align="center">
         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="max-width:560px;background:#ffffff;border:1px solid #D9CFBE;">
           <tr>
-            <td style="background:${BRAND_BG_DEEP};padding:28px 32px;text-align:center;">
+            <td style="background-color:#081D3E;background-image:linear-gradient(180deg,#082446,#061736);padding:28px 32px;text-align:center;">
               <p style="margin:0;font-size:11px;letter-spacing:0.28em;text-transform:uppercase;color:${BRAND_GOLD};font-family:Helvetica,Arial,sans-serif;">${escapeHtml(BRAND_NAME)}</p>
-              <p style="margin:10px 0 0;font-size:13px;letter-spacing:0.08em;color:#F7F4ED;font-family:Helvetica,Arial,sans-serif;">${escapeHtml(BRAND_TAGLINE)}</p>
+              <p style="margin:10px 0 0;font-size:13px;letter-spacing:0.08em;color:${BRAND_IVORY_HEX};font-family:Helvetica,Arial,sans-serif;">${escapeHtml(BRAND_TAGLINE)}</p>
             </td>
           </tr>
           <tr>
@@ -66,7 +66,7 @@ export function renderBrandedEmailHtml(content: EmailLayoutContent): string {
             </td>
           </tr>
           <tr>
-            <td style="border-top:1px solid #D9CFBE;padding:24px 32px;background:#FAF7F0;">
+            <td style="border-top:1px solid #D9CFBE;padding:24px 32px;background:${BRAND_BG};">
               <p style="margin:0;font-size:13px;line-height:1.6;color:${BRAND_TEXT_MUTED};font-family:Helvetica,Arial,sans-serif;">
                 With care,<br />
                 <strong style="color:${BRAND_TEXT};">${escapeHtml(BRAND_NAME)}</strong><br />

@@ -1,5 +1,9 @@
 "use client";
 
+import {
+  FloatingFilterButton,
+  countActiveFilterParams,
+} from "@/components/filters/FloatingFilterButton";
 import { ShapeFilterRow } from "@/components/filters/ShapeFilterRow";
 import { MetalFilterChips } from "@/components/ring-builder/MetalFilterChips";
 import { RingStylePicker } from "@/components/ring-builder/RingStylePicker";
@@ -130,8 +134,8 @@ export function RingSettingFilters({ className }: { className?: string }) {
   };
 
   return (
-    <>
-      <div className={cn("hidden lg:block", className)}>
+    <div className={cn("lg:w-72 lg:shrink-0", className)}>
+      <div className="hidden lg:block">
         <div className="sticky top-24 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-sm font-medium text-brand-text">{tf("filters")}</h2>
@@ -147,39 +151,55 @@ export function RingSettingFilters({ className }: { className?: string }) {
         </div>
       </div>
 
-      <div className="space-y-4 lg:hidden">
+      <div className="lg:hidden">
         <RingStylePicker
           value={params.get("style")}
           onChange={(style) => handleUpdate("style", style)}
         />
-        <button
-          type="button"
-          onClick={() => setDrawerOpen(true)}
-          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-charcoal/75 hover:bg-brand-cream/50"
-        >
-          {t("moreFilters")}
-        </button>
-        <FilterDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          title={t("filterSettings")}
-        >
-          <div className="mb-4 flex justify-end">
-            <button
-              type="button"
-              onClick={handleClearFilters}
-              className="text-xs text-brand-charcoal/55 hover:text-brand-text"
-            >
-              {tf("resetAll")}
-            </button>
-          </div>
-          <FilterFields
-            params={params}
-            onUpdate={handleUpdate}
-            showStylePicker={false}
-          />
-        </FilterDrawer>
       </div>
-    </>
+
+      {!drawerOpen && (
+        <FloatingFilterButton
+          label={t("moreFilters")}
+          activeCount={countActiveFilterParams(params, [
+            "sort",
+            "page",
+            "settingId",
+            "diamondId",
+          ])}
+          onClick={() => setDrawerOpen(true)}
+        />
+      )}
+
+      <FilterDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title={t("filterSettings")}
+        footer={
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full rounded-sm bg-brand-navy px-4 py-3 text-sm text-brand-ivory"
+          >
+            {tf("applyFilters")}
+          </button>
+        }
+      >
+        <div className="mb-4 flex justify-end">
+          <button
+            type="button"
+            onClick={handleClearFilters}
+            className="text-xs text-brand-charcoal/55 hover:text-brand-text"
+          >
+            {tf("resetAll")}
+          </button>
+        </div>
+        <FilterFields
+          params={params}
+          onUpdate={handleUpdate}
+          showStylePicker={false}
+        />
+      </FilterDrawer>
+    </div>
   );
 }

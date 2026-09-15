@@ -579,7 +579,7 @@ export function ProductAdminForm({
 
       <fieldset className="space-y-4">
         <legend className="text-sm font-medium text-stone-900">
-          Certification (IGI / other)
+          Certification (IGI)
         </legend>
         <div className="grid gap-4 sm:grid-cols-3">
           <label className="block text-sm">

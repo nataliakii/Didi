@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 import type { ComponentPropsWithoutRef } from "react";
 
 type BrandLogoSize = "sm" | "md" | "lg";
@@ -7,68 +8,44 @@ type BrandLogoVariant = "default" | "light";
 interface BrandLogoProps extends ComponentPropsWithoutRef<"span"> {
   size?: BrandLogoSize;
   variant?: BrandLogoVariant;
-  /** Show only the primary wordmark (Asteria) */
+  /** Show only the A mark */
   compact?: boolean;
+  priority?: boolean;
 }
 
-const sizeStyles: Record<
-  BrandLogoSize,
-  { primary: string; secondary: string; gap: string }
-> = {
-  sm: {
-    primary: "text-base tracking-[0.22em] lg:text-lg",
-    secondary: "text-[0.5em] tracking-[0.32em]",
-    gap: "mt-0.5",
-  },
-  md: {
-    primary: "text-lg tracking-[0.24em] lg:text-xl",
-    secondary: "text-[0.52em] tracking-[0.34em]",
-    gap: "mt-0.5",
-  },
-  lg: {
-    primary: "text-xl tracking-[0.26em] sm:text-2xl",
-    secondary: "text-[0.5em] tracking-[0.36em]",
-    gap: "mt-1",
-  },
+const sizeStyles: Record<BrandLogoSize, string> = {
+  sm: "h-8 w-auto",
+  md: "h-11 w-auto sm:h-12 lg:h-14",
+  lg: "h-28 w-auto sm:h-36",
 };
 
 export function BrandLogo({
   size = "md",
-  variant = "default",
+  variant: _variant = "default",
   compact = false,
+  priority = false,
   className,
   ...props
 }: BrandLogoProps) {
-  const styles = sizeStyles[size];
-  const isLight = variant === "light";
+  const src = compact
+    ? "/images/brand/asteria-mark-a.png"
+    : "/images/brand/asteria-lockup.png";
+  const width = compact ? 379 : 852;
+  const height = compact ? 468 : 807;
 
   return (
     <span
-      className={cn("inline-flex flex-col leading-none select-none", className)}
+      className={cn("inline-flex items-center justify-center", className)}
       {...props}
     >
-      <span
-        className={cn(
-          "font-serif font-semibold uppercase",
-          isLight ? "text-brand-on-deep" : "text-brand-text",
-          styles.primary,
-        )}
-      >
-        Asteria
-      </span>
-      {!compact && (
-        <span
-          className={cn(
-            "font-serif font-medium uppercase",
-            // Light surfaces need navy; gold only reads on deep/navy backgrounds.
-            isLight ? "text-brand-gold" : "text-brand-text",
-            styles.secondary,
-            styles.gap,
-          )}
-        >
-          Diamond House
-        </span>
-      )}
+      <Image
+        src={src}
+        alt="Asteria Diamond House"
+        width={width}
+        height={height}
+        priority={priority}
+        className={cn("object-contain object-center", sizeStyles[size])}
+      />
     </span>
   );
 }

@@ -5,7 +5,7 @@ import { Container } from "@/components/ui/Container";
 import { PriceDisplay } from "@/components/ui/PriceDisplay";
 import { StatusBadge } from "@/components/ui/StatusBadge";
 import { ProductGallery } from "@/components/product/ProductGallery";
-import { ProductGrid } from "@/components/product/ProductGrid";
+import { ProductCarousel } from "@/components/product/ProductCarousel";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { getLocaleFromParamsAsync } from "@/lib/i18n";
 import { createLocalizedMetadata, getBaseUrl, getLocalizedCanonical } from "@/lib/seo";
@@ -79,7 +79,7 @@ export default async function ProductDetailPage({
     notFound();
   }
 
-  const relatedProducts = await getRelatedProducts(product);
+  const relatedProducts = await getRelatedProducts(product, 8);
   const attrs = product.attributes;
   const productUrl = getLocalizedCanonical(locale, `/products/${slug}`);
   const baseUrl = getBaseUrl();
@@ -375,7 +375,7 @@ export default async function ProductDetailPage({
               {t("relatedHeading")}
             </h2>
             <div className="mt-8">
-              <ProductGrid products={relatedProducts} />
+              <ProductCarousel products={relatedProducts} />
             </div>
           </section>
         )}

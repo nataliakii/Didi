@@ -6,10 +6,11 @@ interface PriceDisplayProps {
   salePrice?: number;
   currency?: string;
   className?: string;
-  size?: "sm" | "md" | "lg";
+  size?: "xs" | "sm" | "md" | "lg";
 }
 
 const sizeStyles = {
+  xs: "text-[11px] sm:text-sm",
   sm: "text-sm",
   md: "text-base",
   lg: "text-xl font-serif",

@@ -13,12 +13,12 @@ export async function ShopDiamondsByShape() {
 
   return (
     <section className="border-b border-brand-gold/15 bg-brand-surface py-14 sm:py-16">
-      <div className="mx-auto grid max-w-6xl items-center gap-10 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 lg:px-8">
+      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 lg:px-8">
         <div className="mx-auto w-full max-w-sm text-center lg:mx-0 lg:text-left">
           <h2 className="font-serif text-3xl text-brand-text sm:text-4xl">
             {t("shopByShapeTitle")}
           </h2>
-          <div className="relative mx-auto mt-8 aspect-[4/5] max-w-[280px] overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream lg:mx-0">
+          <div className="relative mx-auto mt-8 hidden aspect-[4/5] max-w-[280px] overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream lg:mx-0 lg:block">
             <DemoImage
               src={DEMO_CATEGORY_IMAGES.ovalCut}
               fallback={DEMO_CATEGORY_IMAGES.roundBrilliant}

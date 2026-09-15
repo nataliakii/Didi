@@ -17,7 +17,7 @@ export function DiamondGrid({ diamonds }: DiamondGridProps) {
   }
 
   return (
-    <div className="grid gap-6 md:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-6 lg:grid-cols-3">
       {diamonds.map((diamond) => (
         <DiamondCard key={diamond._id} diamond={diamond} />
       ))}

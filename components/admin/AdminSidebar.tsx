@@ -59,6 +59,12 @@ const adminNavItems: NavItem[] = [
     roles: OPS_ROLES,
   },
   {
+    label: "Reviews",
+    href: "/admin/reviews",
+    icon: "★",
+    roles: OPS_ROLES,
+  },
+  {
     label: "Categories",
     href: "/admin/categories",
     icon: "▣",

@@ -6,6 +6,7 @@ import {
   shouldUseDemoPlaceholder,
   type DemoPlaceholderKind,
 } from "@/constants/demo-images";
+import { CONTENT_PROTECTION_ENABLED } from "@/constants/site";
 import { cn } from "@/lib/utils";
 import Image from "next/image";
 import { useMemo, useState } from "react";
@@ -88,11 +89,18 @@ function DemoImageInner({
       fill={fill}
       width={fill ? undefined : width}
       height={fill ? undefined : height}
-      className={cn(className, "pointer-events-none select-none")}
+      className={cn(
+        className,
+        CONTENT_PROTECTION_ENABLED && "pointer-events-none select-none",
+      )}
       sizes={sizes}
       priority={priority}
-      draggable={false}
-      onContextMenu={(event) => event.preventDefault()}
+      draggable={CONTENT_PROTECTION_ENABLED ? false : undefined}
+      onContextMenu={
+        CONTENT_PROTECTION_ENABLED
+          ? (event) => event.preventDefault()
+          : undefined
+      }
       onError={handleError}
     />
   );
@@ -101,8 +109,12 @@ function DemoImageInner({
     return (
       <div
         className={cn("relative h-full w-full", containerClassName)}
-        data-protect-media
-        onContextMenu={(event) => event.preventDefault()}
+        data-protect-media={CONTENT_PROTECTION_ENABLED ? true : undefined}
+        onContextMenu={
+          CONTENT_PROTECTION_ENABLED
+            ? (event) => event.preventDefault()
+            : undefined
+        }
       >
         {image}
       </div>

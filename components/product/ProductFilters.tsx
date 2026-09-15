@@ -1,6 +1,10 @@
 "use client";
 
 import { FilterChipGroup } from "@/components/filters/FilterChipGroup";
+import {
+  FloatingFilterButton,
+  countActiveFilterParams,
+} from "@/components/filters/FloatingFilterButton";
 import { ShapeFilterRow } from "@/components/filters/ShapeFilterRow";
 import { Checkbox } from "@/components/ui/Checkbox";
 import { FilterDrawer } from "@/components/ui/FilterDrawer";
@@ -273,6 +277,8 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
     setDrawerOpen(false);
   };
 
+  const activeFilterCount = countActiveFilterParams(params);
+
   const filterFields = (
     <>
       <VisualProductFilters params={params} onUpdate={handleUpdate} />
@@ -285,8 +291,8 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
   );
 
   return (
-    <>
-      <div className={cn("hidden lg:block", className)}>
+    <div className={cn("lg:w-72 lg:shrink-0", className)}>
+      <div className="hidden lg:block">
         <div className="sticky top-36 space-y-6">
           <div className="flex items-center justify-between">
             <h2 className="text-xs font-medium tracking-[0.2em] text-brand-text uppercase">
@@ -304,32 +310,40 @@ export function ProductFilters({ categories, className }: ProductFiltersProps) {
         </div>
       </div>
 
-      <div className="lg:hidden">
-        <button
-          type="button"
+      {!drawerOpen && (
+        <FloatingFilterButton
+          label={tf("filters")}
+          activeCount={activeFilterCount}
           onClick={() => setDrawerOpen(true)}
-          className="rounded-sm border border-brand-gold/30 px-4 py-2 text-sm text-brand-text hover:bg-brand-cream/50"
-        >
-          {tf("filters")}
-        </button>
-        <FilterDrawer
-          open={drawerOpen}
-          onClose={() => setDrawerOpen(false)}
-          title={tf("filterProducts")}
-        >
-          <div className="mb-4 flex justify-end">
-            <button
-              type="button"
-              onClick={handleClear}
-              className="text-xs text-brand-text/50 hover:text-brand-text"
-            >
-              {tf("resetAll")}
-            </button>
-          </div>
-          {filterFields}
-        </FilterDrawer>
-      </div>
-    </>
+        />
+      )}
+
+      <FilterDrawer
+        open={drawerOpen}
+        onClose={() => setDrawerOpen(false)}
+        title={tf("filterProducts")}
+        footer={
+          <button
+            type="button"
+            onClick={() => setDrawerOpen(false)}
+            className="w-full rounded-sm bg-brand-navy px-4 py-3 text-sm text-brand-ivory"
+          >
+            {tf("applyFilters")}
+          </button>
+        }
+      >
+        <div className="mb-4 flex justify-end">
+          <button
+            type="button"
+            onClick={handleClear}
+            className="text-xs text-brand-text/50 hover:text-brand-text"
+          >
+            {tf("resetAll")}
+          </button>
+        </div>
+        {filterFields}
+      </FilterDrawer>
+    </div>
   );
 }
 

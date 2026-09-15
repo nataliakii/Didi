@@ -7,16 +7,16 @@ export async function ComingSoonPage() {
   const tFooter = await getTranslations("footer");
 
   return (
-    <div className="coming-soon relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-brand-navy px-6 py-16 text-center">
+    <div className="coming-soon relative flex min-h-svh flex-col items-center justify-center overflow-hidden bg-brand-navy-wash px-6 py-16 text-center">
       <div
-        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(201,162,74,0.18),transparent_60%)]"
+        className="pointer-events-none absolute inset-0 bg-[radial-gradient(ellipse_80%_50%_at_50%_-10%,rgba(210,179,108,0.18),transparent_60%)]"
         aria-hidden
       />
       <div
         className="pointer-events-none absolute inset-0 opacity-[0.035]"
         style={{
           backgroundImage:
-            "linear-gradient(rgba(201,162,74,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(201,162,74,0.6) 1px, transparent 1px)",
+            "linear-gradient(rgba(210,179,108,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(210,179,108,0.6) 1px, transparent 1px)",
           backgroundSize: "64px 64px",
         }}
         aria-hidden
@@ -25,7 +25,7 @@ export async function ComingSoonPage() {
       <div className="coming-soon-shimmer pointer-events-none absolute top-0 left-1/2 h-px w-[min(90vw,36rem)] -translate-x-1/2 bg-gradient-to-r from-transparent via-brand-gold/70 to-transparent" />
 
       <div className="relative z-10 flex max-w-lg flex-col items-center">
-        <BrandLogo size="lg" variant="light" />
+        <BrandLogo size="lg" variant="light" priority />
 
         <p className="section-eyebrow mt-10">{t("eyebrow")}</p>
 

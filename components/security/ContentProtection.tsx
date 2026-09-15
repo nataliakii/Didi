@@ -1,5 +1,6 @@
 "use client";
 
+import { CONTENT_PROTECTION_ENABLED } from "@/constants/site";
 import { useEffect } from "react";
 
 function isEditableTarget(target: EventTarget | null): boolean {
@@ -22,6 +23,8 @@ function isProtectedMedia(target: EventTarget | null): boolean {
  */
 export function ContentProtection() {
   useEffect(() => {
+    if (!CONTENT_PROTECTION_ENABLED) return;
+
     function onContextMenu(event: MouseEvent) {
       if (isEditableTarget(event.target)) return;
       // Block save-image / copy menus across the storefront.

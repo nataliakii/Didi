@@ -2,27 +2,30 @@
 
 :root,
 html[data-theme="light"] {
-  /* Light theme (default) — airy ivory + deep navy accents */
-  --brand-bg: #faf7f0;
-  --brand-bg-deep: #06182b;
+  /* Client palette: Navy #081D3E, Gold #D2B36C, Ivory #F7F1EA.
+     Large navy surfaces use a wash #082446 → #061736, never a flat blue. */
+  --brand-bg: #f7f1ea;
+  --brand-bg-deep: #081d3e;
   --brand-surface: #ffffff;
-  --brand-surface-hover: #f3eee4;
-  --brand-gold: #d4aa45;
-  --brand-gold-soft: #e5c875;
+  --brand-surface-hover: #f3ebe2;
+  --brand-gold: #d2b36c;
+  --brand-gold-soft: #e0c88a;
   --brand-teal: #2cb9be;
   --brand-teal-soft: #1a9a9f;
   --brand-crimson: #7a2435;
   --brand-crimson-soft: #a63d50;
-  --brand-text: #06182b;
+  --brand-text: #081d3e;
   --brand-muted: #5c6b7a;
   --brand-border: #d9cfbe;
-  --brand-on-deep: #f7f4ed;
+  --brand-on-deep: #f7f1ea;
   --brand-muted-on-deep: #a9b5c2;
 
-  --brand-navy: var(--brand-bg-deep);
-  --brand-navy-light: #10273d;
-  --brand-ivory: #faf7f0;
-  --brand-cream: #f6f0e6;
+  --brand-navy: #081d3e;
+  --brand-navy-mid: #082446;
+  --brand-navy-deep: #061736;
+  --brand-navy-light: #082446;
+  --brand-ivory: #f7f1ea;
+  --brand-cream: #f3ebe2;
   --brand-charcoal: var(--brand-text);
 
   --background: var(--brand-bg);
@@ -46,24 +49,26 @@ html[data-theme="light"] {
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --brand-bg: #06182b;
-  --brand-bg-deep: #020d1a;
-  --brand-surface: #10273d;
-  --brand-surface-hover: #17344b;
-  --brand-gold: #d4aa45;
-  --brand-gold-soft: #e5c875;
+  --brand-bg: #081d3e;
+  --brand-bg-deep: #061736;
+  --brand-surface: #0c2748;
+  --brand-surface-hover: #123056;
+  --brand-gold: #d2b36c;
+  --brand-gold-soft: #e0c88a;
   --brand-teal: #2cb9be;
   --brand-teal-soft: #72d5d2;
   --brand-crimson: #7a2435;
   --brand-crimson-soft: #a63d50;
-  --brand-text: #f7f4ed;
+  --brand-text: #f7f1ea;
   --brand-muted: #a9b5c2;
   --brand-border: #294258;
-  --brand-on-deep: #f7f4ed;
+  --brand-on-deep: #f7f1ea;
   --brand-muted-on-deep: #a9b5c2;
 
-  --brand-navy: var(--brand-bg-deep);
-  --brand-navy-light: var(--brand-surface-hover);
+  --brand-navy: #081d3e;
+  --brand-navy-mid: #082446;
+  --brand-navy-deep: #061736;
+  --brand-navy-light: #082446;
   --brand-ivory: var(--brand-text);
   --brand-cream: var(--brand-surface);
   --brand-charcoal: var(--brand-text);
@@ -113,24 +118,32 @@ html:not([data-theme]) {
   /* Legacy Tailwind colour names */
   --color-brand-navy: var(--brand-navy);
   --color-brand-navy-light: var(--brand-navy-light);
+  --color-brand-navy-mid: var(--brand-navy-mid);
+  --color-brand-navy-deep: var(--brand-navy-deep);
   --color-brand-ivory: var(--brand-ivory);
   --color-brand-cream: var(--brand-cream);
   --color-brand-charcoal: var(--brand-charcoal);
 
-  --font-sans: var(--font-geist-sans);
+  --font-sans: var(--font-garamond), var(--font-playfair);
   --font-mono: var(--font-geist-mono);
-  --font-serif: var(--font-cormorant);
+  --font-serif: var(--font-playfair), var(--font-garamond);
+  --font-brand: var(--font-cinzel), var(--font-playfair);
 }
 
 body {
   background: var(--brand-bg);
   color: var(--brand-text);
-  font-family: var(--font-sans), system-ui, sans-serif;
+  font-family: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman",
+    Times, serif;
 }
 
 .font-serif {
   font-family: var(--font-serif), ui-serif, Georgia, Cambria, "Times New Roman",
     Times, serif;
+}
+
+.font-brand {
+  font-family: var(--font-cinzel), var(--font-playfair), ui-serif, Georgia, serif;
 }
 
 ::selection {
@@ -140,6 +153,7 @@ body {
 
 /* Brand utility classes */
 .section-eyebrow {
+  font-family: var(--font-cinzel), var(--font-playfair), serif;
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
@@ -157,9 +171,20 @@ html[data-theme="light"] [class*="text-brand-gold"] {
 }
 
 html[data-theme="light"]
-  :is(.bg-brand-bg-deep, .bg-brand-navy, .hero-section)
+  :is(
+    .bg-brand-bg-deep,
+    .bg-brand-navy,
+    .bg-brand-navy-wash,
+    .hero-section,
+    .header-on-hero
+  )
   [class*="text-brand-gold"] {
   color: var(--brand-gold);
+}
+
+.bg-brand-navy-wash {
+  background-color: var(--brand-navy);
+  background-image: linear-gradient(180deg, #082446 0%, #061736 100%);
 }
 
 .card-luxury {
@@ -222,7 +247,7 @@ details summary::-webkit-details-marker {
     circle,
     rgba(255, 255, 255, 0.45) 0%,
     rgba(229, 200, 117, 0.4) 35%,
-    rgba(212, 170, 69, 0.2) 55%,
+    rgba(210, 179, 108, 0.2) 55%,
     transparent 72%
   );
   animation: button-ripple 650ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
@@ -237,7 +262,7 @@ details summary::-webkit-details-marker {
     transparent 38%,
     rgba(255, 255, 255, 0.12) 46%,
     rgba(229, 200, 117, 0.45) 50%,
-    rgba(212, 170, 69, 0.3) 54%,
+    rgba(210, 179, 108, 0.3) 54%,
     rgba(255, 255, 255, 0.12) 58%,
     transparent 66%
   );
@@ -264,11 +289,11 @@ details summary::-webkit-details-marker {
 .footer-tagline {
   background-image: linear-gradient(
     105deg,
-    rgba(212, 170, 69, 0.45) 0%,
-    rgba(212, 170, 69, 0.55) 38%,
+    rgba(210, 179, 108, 0.45) 0%,
+    rgba(210, 179, 108, 0.55) 38%,
     rgba(247, 241, 228, 0.95) 50%,
     rgba(226, 192, 107, 0.85) 58%,
-    rgba(212, 170, 69, 0.5) 100%
+    rgba(210, 179, 108, 0.5) 100%
   );
   background-size: 220% 100%;
   background-position: 100% 50%;
@@ -298,8 +323,8 @@ details summary::-webkit-details-marker {
   .footer-tagline {
     animation: none;
     background: none;
-    color: rgba(212, 170, 69, 0.9);
-    -webkit-text-fill-color: rgba(212, 170, 69, 0.9);
+    color: rgba(210, 179, 108, 0.9);
+    -webkit-text-fill-color: rgba(210, 179, 108, 0.9);
   }
 }
 
@@ -330,16 +355,56 @@ details summary::-webkit-details-marker {
   transition-duration: 1.15s;
 }
 
+.hero-under-header {
+  margin-top: -3.5rem;
+}
+
+@media (min-width: 1024px) {
+  .hero-under-header {
+    margin-top: -4.5rem;
+  }
+}
+
+.header-on-hero {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 23, 54, 0.42) 0%,
+    rgba(6, 23, 54, 0.08) 70%,
+    transparent 100%
+  );
+  border-color: transparent;
+  backdrop-filter: none;
+}
+
+body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
+  background: linear-gradient(
+    180deg,
+    rgba(6, 23, 54, 0.42) 0%,
+    rgba(6, 23, 54, 0.08) 70%,
+    transparent 100%
+  ) !important;
+  border-color: transparent !important;
+  backdrop-filter: none !important;
+}
+
+.header-on-hero :is(a, button) {
+  color: #f7f1ea;
+}
+
+.header-on-hero :is(a, button):hover {
+  color: #d2b36c;
+}
+
 .hero-section {
-  --navy: #06182b;
-  --navy-deep: #020d1a;
-  --navy-light: #102a3d;
-  --gold: #d4aa45;
-  --gold-light: #e2c06b;
+  --navy: #081d3e;
+  --navy-deep: #061736;
+  --navy-light: #082446;
+  --gold: #d2b36c;
+  --gold-light: #e0c88a;
   --turquoise: #2cb9be;
   --turquoise-light: #72d5d2;
   --wine: #7a2435;
-  --text-primary: #f7f4ed;
+  --text-primary: #f7f1ea;
   --text-secondary: #b8c3ce;
   background-color: var(--navy-deep);
   color: var(--text-primary);
@@ -349,37 +414,78 @@ details summary::-webkit-details-marker {
   background:
     radial-gradient(
       circle at 12% 38%,
-      rgba(44, 185, 190, 0.2),
+      rgba(44, 185, 190, 0.16),
       transparent 34%
     ),
     radial-gradient(
       circle at 72% 30%,
-      rgba(44, 185, 190, 0.12),
+      rgba(44, 185, 190, 0.1),
       transparent 30%
     ),
     radial-gradient(
       circle at 54% 12%,
-      rgba(212, 170, 69, 0.07),
+      rgba(210, 179, 108, 0.08),
       transparent 24%
     ),
     radial-gradient(
       circle at 83% 67%,
-      rgba(122, 36, 53, 0.07),
+      rgba(122, 36, 53, 0.06),
       transparent 20%
     ),
-    linear-gradient(135deg, #06182b 0%, #020d1a 100%);
+    linear-gradient(180deg, #082446 0%, #061736 100%);
+}
+
+.hero-mark-atmosphere {
+  background:
+    radial-gradient(
+      ellipse at 50% 36%,
+      rgba(210, 179, 108, 0.1),
+      transparent 46%
+    ),
+    linear-gradient(180deg, #082446 0%, #061736 100%);
 }
 
 .hero-eyebrow {
+  font-family: var(--font-cinzel), var(--font-playfair), serif;
   color: var(--gold);
-  font-size: 0.75rem;
+  font-size: 0.68rem;
   font-weight: 500;
-  letter-spacing: 0.22em;
+  letter-spacing: 0.28em;
   text-transform: uppercase;
+}
+
+.hero-eyebrow-rule {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  margin-top: 0.7rem;
+  color: var(--gold);
+}
+
+.hero-eyebrow-rule::before,
+.hero-eyebrow-rule::after {
+  content: "";
+  display: block;
+  height: 1px;
+  width: 1.75rem;
+  background: color-mix(in srgb, var(--gold) 70%, transparent);
 }
 
 .hero-title {
   color: var(--text-primary);
+  font-weight: 400;
+}
+
+.hero-photo-veil-mark {
+  background:
+    linear-gradient(
+      180deg,
+      rgba(6, 23, 54, 0.38) 0%,
+      rgba(6, 23, 54, 0.08) 18%,
+      transparent 42%,
+      rgba(6, 23, 54, 0.12) 78%,
+      rgba(6, 23, 54, 0.42) 100%
+    );
 }
 
 .hero-positioning {
@@ -391,6 +497,7 @@ details summary::-webkit-details-marker {
 }
 
 .hero-cta-primary {
+  font-family: var(--font-cinzel), var(--font-playfair), serif;
   background: var(--gold) !important;
   color: var(--navy) !important;
   border-color: transparent !important;
@@ -402,7 +509,7 @@ details summary::-webkit-details-marker {
 
 .hero-cta-primary:hover {
   background: var(--gold-light) !important;
-  box-shadow: 0 0 24px rgba(212, 170, 69, 0.28);
+  box-shadow: 0 0 24px rgba(210, 179, 108, 0.28);
 }
 
 .hero-cta-secondary {
@@ -421,6 +528,50 @@ details summary::-webkit-details-marker {
 
 .hero-sky {
   z-index: 1;
+}
+
+.hero-photo-veil {
+  background:
+    linear-gradient(
+      90deg,
+      rgba(6, 23, 54, 0.82) 0%,
+      rgba(6, 23, 54, 0.58) 28%,
+      rgba(6, 23, 54, 0.22) 58%,
+      rgba(6, 23, 54, 0.08) 100%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(6, 23, 54, 0.42) 0%,
+      rgba(6, 23, 54, 0.08) 24%,
+      rgba(6, 23, 54, 0.1) 68%,
+      rgba(6, 23, 54, 0.55) 100%
+    );
+}
+
+.hero-scroll-cue {
+  color: var(--gold);
+  background: transparent;
+  border: 0;
+  cursor: pointer;
+}
+
+.hero-scroll-line {
+  display: block;
+  height: 1.75rem;
+  width: 1px;
+  background: linear-gradient(
+    180deg,
+    rgba(210, 179, 108, 0.9) 0%,
+    rgba(210, 179, 108, 0) 100%
+  );
+}
+
+.header-over-hero [class*="text-brand-text"] {
+  color: var(--brand-on-deep);
+}
+
+html[data-theme="light"] .header-over-hero [class*="text-brand-gold"] {
+  color: var(--brand-gold);
 }
 
 .hero-constellation--desktop {
@@ -447,7 +598,7 @@ details summary::-webkit-details-marker {
 }
 
 .constellationPath--gold {
-  stroke: rgba(212, 170, 69, 0.32);
+  stroke: rgba(210, 179, 108, 0.32);
 }
 
 .constellationPath--teal {
@@ -468,8 +619,8 @@ details summary::-webkit-details-marker {
 }
 
 .constellationStar--gold {
-  fill: #d4aa45;
-  filter: drop-shadow(0 0 1.5px rgba(212, 170, 69, 0.55));
+  fill: #d2b36c;
+  filter: drop-shadow(0 0 1.5px rgba(210, 179, 108, 0.55));
 }
 
 .constellationStar--teal {
@@ -485,7 +636,7 @@ details summary::-webkit-details-marker {
 }
 
 .constellationStar--white {
-  fill: #f2ebe0;
+  fill: #f7f1ea;
   filter: drop-shadow(0 0 1.2px rgba(242, 235, 224, 0.45));
 }
 
@@ -545,15 +696,15 @@ details summary::-webkit-details-marker {
     background:
       radial-gradient(
         circle at 18% 36%,
-        rgba(44, 185, 190, 0.14),
+        rgba(44, 185, 190, 0.12),
         transparent 30%
       ),
       radial-gradient(
         circle at 70% 28%,
-        rgba(44, 185, 190, 0.08),
+        rgba(44, 185, 190, 0.07),
         transparent 26%
       ),
-      linear-gradient(135deg, #06182b 0%, #020d1a 100%);
+      linear-gradient(180deg, #082446 0%, #061736 100%);
   }
 }
 

@@ -31,7 +31,7 @@ export function RingSettingGrid({
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-6 xl:grid-cols-3">
       {settings.map((setting) => {
         const incompatible =
           selectedDiamond !== undefined &&

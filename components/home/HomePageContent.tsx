@@ -2,46 +2,31 @@ import { Button } from "@/components/ui/Button";
 import { Container } from "@/components/ui/Container";
 import { DemoImage } from "@/components/ui/DemoImage";
 import { EmptyState } from "@/components/ui/EmptyState";
-import { PoemHero } from "@/components/home/PoemHero";
+import { HomeHero } from "@/components/home/HomeHero";
+import { HomeUspStrip } from "@/components/home/HomeUspStrip";
 import { ShopDiamondsByShape } from "@/components/home/ShopDiamondsByShape";
 import { ShopJewelryByCategory } from "@/components/home/ShopJewelryByCategory";
-import { ShopRingsByCategory } from "@/components/home/ShopRingsByCategory";
 import { ProductCard } from "@/components/product/ProductCard";
-import {
-  DEMO_CATEGORY_IMAGES,
-  DEMO_CONSULTATION_IMAGES,
-} from "@/constants/demo-images";
+import { DEMO_ABOUT_IMAGES, DEMO_CONSULTATION_IMAGES } from "@/constants/demo-images";
+import { BRAND_TEAM, type BrandPerson } from "@/constants/contact";
 import { Link } from "@/i18n/routing";
 import { getFeaturedProducts } from "@/services/product.service";
 import type { ProductSummary } from "@/types";
 import { getTranslations } from "next-intl/server";
+import { Suspense } from "react";
 
-const HOME_CATEGORY_CARDS = [
-  {
-    key: "createRing",
-    image: DEMO_CATEGORY_IMAGES.createRing,
-    href: "/create-ring" as const,
-    placeholderKind: "ring" as const,
-  },
-  {
-    key: "looseDiamonds",
-    image: DEMO_CATEGORY_IMAGES.coloredLabGrownDiamonds,
-    href: "/colored-lab-grown-diamonds" as const,
-    placeholderKind: "diamond" as const,
-  },
-  {
-    key: "engagementRings",
-    image: DEMO_CATEGORY_IMAGES.diamondRings,
-    href: "/rings" as const,
-    placeholderKind: "ring" as const,
-  },
-  {
-    key: "ringSettings",
-    image: DEMO_CATEGORY_IMAGES.ringSettings,
-    href: "/create-ring/setting" as const,
-    placeholderKind: "setting" as const,
-  },
-] as const;
+const FOUNDER_PHOTOS: Partial<Record<BrandPerson["name"], string>> = {
+  "Diana Angelaki": DEMO_ABOUT_IMAGES.founder,
+};
+
+function initialsFor(name: string) {
+  return name
+    .split(" ")
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? "")
+    .join("");
+}
 
 function TrustStripItem({ label }: { label: string }) {
   return (
@@ -57,48 +42,9 @@ function TrustStripItem({ label }: { label: string }) {
   );
 }
 
-function VisualCategoryCard({
-  title,
-  description,
-  image,
-  href,
-  placeholderKind,
-  viewLabel,
-}: {
-  title: string;
-  description: string;
-  image: string;
-  href: (typeof HOME_CATEGORY_CARDS)[number]["href"];
-  placeholderKind: "diamond" | "ring" | "setting";
-  viewLabel: string;
-}) {
-  return (
-    <Link
-      href={href}
-      className="group relative block aspect-[4/3] overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
-    >
-      <DemoImage
-        src={image}
-        alt={title}
-        placeholderKind={placeholderKind}
-        fill
-        className="object-contain p-8 transition-transform duration-700 group-hover:scale-[1.03]"
-        sizes="(max-width: 768px) 50vw, 25vw"
-      />
-      <div className="absolute inset-0 bg-gradient-to-t from-brand-navy/85 via-brand-navy/20 to-transparent" />
-      <div className="absolute inset-x-0 bottom-0 p-5">
-        <h3 className="font-serif text-lg text-brand-ivory">{title}</h3>
-        <p className="mt-1 text-sm text-brand-ivory/75 line-clamp-2">
-          {description}
-        </p>
-        <span className="sr-only">{viewLabel}</span>
-      </div>
-    </Link>
-  );
-}
-
 export async function HomePageContent() {
   const t = await getTranslations("home");
+  const tAbout = await getTranslations("about");
   const tCommon = await getTranslations("common");
 
   const featuredProducts = await getFeaturedProducts(4);
@@ -110,21 +56,18 @@ export async function HomePageContent() {
     t("trustAppointment"),
   ];
 
-  const reviews = [
+  const guarantees = [
     {
-      name: "Sarah M.",
-      rating: 5,
-      text: t("testimonial1"),
+      title: t("guaranteeLabsTitle"),
+      body: t("guaranteeLabsBody"),
     },
     {
-      name: "James & Emily",
-      rating: 5,
-      text: t("testimonial2"),
+      title: t("guaranteeReportTitle"),
+      body: t("guaranteeReportBody"),
     },
     {
-      name: "David L.",
-      rating: 5,
-      text: t("testimonial3"),
+      title: t("guaranteeTraceTitle"),
+      body: t("guaranteeTraceBody"),
     },
   ];
 
@@ -136,21 +79,68 @@ export async function HomePageContent() {
 
   return (
     <>
-      <PoemHero />
+      <Suspense
+        fallback={
+          <div className="hero-section" style={{ minHeight: "85svh" }} />
+        }
+      >
+        <HomeHero />
+      </Suspense>
 
-      <section className="border-b border-brand-gold/15 bg-brand-bg py-12 sm:py-16">
+      <section
+        id="asteria-intro"
+        className="scroll-mt-14 border-b border-brand-gold/15 bg-brand-bg py-12 sm:py-16 lg:scroll-mt-28"
+      >
         <Container>
-          <div className="mx-auto max-w-3xl text-center">
+          <div className="mx-auto max-w-2xl text-center">
             <p className="section-eyebrow">{t("brandIntroEyebrow")}</p>
-            <h2 className="mt-3 font-serif text-2xl text-brand-text sm:text-3xl">
+            <h2 className="mt-3 font-serif text-[1.85rem] leading-tight font-normal text-brand-text sm:text-4xl">
               {t("brandIntroTitle")}
             </h2>
-            <p className="mt-5 text-base leading-relaxed text-brand-charcoal/70 sm:text-lg">
+            <p className="mt-5 font-serif text-base leading-relaxed text-brand-charcoal/70 sm:text-lg">
               {t("brandPositioning")}
             </p>
-            <p className="mt-4 text-base leading-relaxed text-brand-charcoal/65 sm:text-lg">
-              {t("brandPositioningExtra")}
+            <p className="mt-6 text-sm text-brand-gold" aria-hidden>
+              ✦
             </p>
+
+            <ul className="mt-8 flex items-center justify-center gap-8">
+              {BRAND_TEAM.map((person) => {
+                const photo = FOUNDER_PHOTOS[person.name];
+                return (
+                  <li
+                    key={person.name}
+                    className="flex flex-col items-center gap-2"
+                  >
+                    <div className="relative h-16 w-16 overflow-hidden rounded-full border border-brand-gold/30 bg-brand-cream sm:h-[4.5rem] sm:w-[4.5rem]">
+                      {photo ? (
+                        <DemoImage
+                          src={photo}
+                          alt={`${person.name}, ${tAbout(person.titleKey)}`}
+                          placeholderKind="diamond"
+                          fill
+                          className="object-cover object-[center_20%]"
+                          sizes="72px"
+                        />
+                      ) : (
+                        <span
+                          className="flex h-full w-full items-center justify-center font-serif text-lg tracking-[0.12em] text-brand-text"
+                          aria-hidden
+                        >
+                          {initialsFor(person.name)}
+                        </span>
+                      )}
+                    </div>
+                    <p className="font-serif text-sm text-brand-text">
+                      {person.name}
+                    </p>
+                    <p className="text-[10px] tracking-[0.14em] text-brand-gold uppercase">
+                      {tAbout(person.titleKey)}
+                    </p>
+                  </li>
+                );
+              })}
+            </ul>
           </div>
         </Container>
       </section>
@@ -165,35 +155,11 @@ export async function HomePageContent() {
         </Container>
       </section>
 
+      <HomeUspStrip />
+
       <ShopJewelryByCategory />
 
       <ShopDiamondsByShape />
-
-      <ShopRingsByCategory />
-
-      <section className="py-16 sm:py-20">
-        <Container>
-          <div className="text-center">
-            <p className="section-eyebrow">{t("collectionsEyebrow")}</p>
-            <h2 className="mt-2 font-serif text-3xl text-brand-text">
-              {t("featuredCategories")}
-            </h2>
-          </div>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
-            {HOME_CATEGORY_CARDS.map((card) => (
-              <VisualCategoryCard
-                key={card.key}
-                title={t(`categoryCards.${card.key}.title`)}
-                description={t(`categoryCards.${card.key}.description`)}
-                image={card.image}
-                href={card.href}
-                placeholderKind={card.placeholderKind}
-                viewLabel={tCommon("viewAll")}
-              />
-            ))}
-          </div>
-        </Container>
-      </section>
 
       <section className="border-y border-brand-gold/15 bg-brand-cream/30 py-16 sm:py-20">
         <Container>
@@ -212,7 +178,7 @@ export async function HomePageContent() {
             </Link>
           </div>
           {featuredProducts.length > 0 ? (
-            <div className="mt-10 grid gap-6 sm:grid-cols-2 lg:grid-cols-4 lg:gap-8">
+            <div className="mt-10 grid grid-cols-2 gap-4 sm:gap-6 lg:grid-cols-4 lg:gap-8">
               {featuredProducts.map((product: ProductSummary) => (
                 <ProductCard key={product._id} product={product} />
               ))}
@@ -264,29 +230,33 @@ export async function HomePageContent() {
       <section className="border-t border-brand-gold/10 bg-brand-cream/25 py-12 sm:py-14">
         <Container>
           <div className="text-center">
-            <p className="section-eyebrow">{t("testimonialsEyebrow")}</p>
+            <p className="section-eyebrow">{t("guaranteesEyebrow")}</p>
             <h2 className="mt-2 font-serif text-xl text-brand-text sm:text-2xl">
-              {t("testimonialsTitle")}
+              {t("guaranteesTitle")}
             </h2>
           </div>
           <div className="mt-6 grid gap-5 sm:grid-cols-3">
-            {reviews.map((review) => (
-              <blockquote key={review.name} className="rounded-sm border border-brand-gold/15 bg-brand-surface p-4">
-                <div className="flex gap-0.5 text-brand-gold/80">
-                  {Array.from({ length: review.rating }).map((_, i) => (
-                    <span key={i} className="text-sm">
-                      &#9733;
-                    </span>
-                  ))}
-                </div>
-                <p className="mt-3 text-sm leading-relaxed text-brand-charcoal/70 line-clamp-4">
-                  &ldquo;{review.text}&rdquo;
+            {guarantees.map((item) => (
+              <div
+                key={item.title}
+                className="rounded-sm border border-brand-gold/15 bg-brand-surface p-5 text-center sm:text-left"
+              >
+                <h3 className="font-serif text-lg text-brand-text">
+                  {item.title}
+                </h3>
+                <p className="mt-3 text-sm leading-relaxed text-brand-charcoal/70">
+                  {item.body}
                 </p>
-                <footer className="mt-3 text-sm text-brand-text/80">
-                  {review.name}
-                </footer>
-              </blockquote>
+              </div>
             ))}
+          </div>
+          <div className="mt-8 text-center">
+            <Link
+              href="/certification"
+              className="text-xs tracking-[0.2em] text-brand-gold uppercase transition-colors hover:text-brand-text"
+            >
+              {t("guaranteesCta")} →
+            </Link>
           </div>
         </Container>
       </section>

@@ -34,7 +34,7 @@ function ProductBadge({
   return (
     <span
       className={cn(
-        "rounded-sm px-2 py-1 text-xs font-medium tracking-wide",
+        "rounded-sm px-1.5 py-0.5 text-[9px] font-medium tracking-wide sm:px-2 sm:py-1 sm:text-xs",
         styles[variant],
       )}
     >
@@ -83,7 +83,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <article className="group relative flex h-full flex-col">
       <div className="relative">
         <Link href={`/products/${product.slug}`} className="block">
-          <div className="card-luxury relative aspect-square overflow-hidden bg-brand-cream">
+          <div className="card-luxury relative aspect-square overflow-hidden bg-brand-ivory">
             <DemoImage
               key={`${product._id}-${activeMetal ?? "default"}-${displaySrc ?? "none"}`}
               src={displaySrc}
@@ -94,7 +94,7 @@ export function ProductCard({ product }: ProductCardProps) {
               className="object-cover transition-transform duration-700 group-hover:scale-105"
               sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw, 25vw"
             />
-            <div className="absolute top-3 left-3 flex flex-wrap gap-1.5">
+            <div className="absolute top-2 left-2 flex flex-wrap gap-1 sm:top-3 sm:left-3 sm:gap-1.5">
               {hasSale && (
                 <ProductBadge variant="sale">{tCommon("sale")}</ProductBadge>
               )}
@@ -117,14 +117,14 @@ export function ProductCard({ product }: ProductCardProps) {
           }
           aria-pressed={wishlisted}
           onClick={() => setWishlisted((value) => !value)}
-          className="absolute top-3 right-3 z-10 rounded-full bg-brand-surface/90 p-2 text-brand-text/50 transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold"
+          className="absolute top-2 right-2 z-10 rounded-full bg-white/90 p-1.5 text-brand-text/50 shadow-sm transition-colors hover:text-brand-gold focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-gold sm:top-3 sm:right-3 sm:p-2"
         >
           <HeartIcon filled={wishlisted} className="h-4 w-4" />
         </button>
       </div>
 
-      <div className="mt-3 flex flex-1 flex-col space-y-2">
-        <div className={cn("min-h-5", metals.length === 0 && "min-h-0")}>
+      <div className="mt-2 flex flex-1 flex-col space-y-1.5 sm:mt-3 sm:space-y-2">
+        <div className={cn("min-h-4", metals.length === 0 && "min-h-0")}>
           {metals.length > 0 && (
             <MetalSwatches
               metals={metals}
@@ -134,25 +134,25 @@ export function ProductCard({ product }: ProductCardProps) {
           )}
         </div>
         <Link href={`/products/${product.slug}`} className="block space-y-1">
-          <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
+          <p className="text-[9px] tracking-[0.16em] text-brand-gold uppercase sm:text-[10px] sm:tracking-[0.2em]">
             {formatLabel(product.productType)}
           </p>
-          <h3 className="line-clamp-2 min-h-[2.5rem] font-serif text-base leading-snug text-brand-text group-hover:text-brand-gold">
+          <h3 className="line-clamp-2 font-serif text-sm leading-snug text-brand-text group-hover:text-brand-gold sm:text-base">
             {product.name}
           </h3>
           <p
             className={cn(
-              "min-h-[1rem] text-[11px] tracking-wide text-brand-charcoal/50",
+              "hidden min-h-[1rem] text-[11px] tracking-wide text-brand-charcoal/50 sm:block",
               !(activeMetal && metals.length > 1) && "invisible",
             )}
           >
             {activeMetal ? formatLabel(activeMetal) : "\u00A0"}
           </p>
-          <div className="min-h-[1.5rem] pt-0.5">
+          <div className="pt-0.5">
             <PriceDisplay
               price={displayPrice}
               salePrice={displaySalePrice}
-              size="sm"
+              size="xs"
             />
           </div>
         </Link>

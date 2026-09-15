@@ -162,9 +162,9 @@ function starFill(tone: StarTone): string {
     case "wine":
       return "#9b3048";
     case "white":
-      return "#f2ebe0";
+      return "#f7f1ea";
     default:
-      return "#d4aa45";
+      return "#d2b36c";
   }
 }
 

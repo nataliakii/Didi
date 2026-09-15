@@ -54,81 +54,52 @@ function BuilderDiamondCard({
         incompatible ? "opacity-60" : "hover:shadow-sm"
       }`}
     >
-      <div className="relative aspect-square bg-brand-cream">
+      <div className="relative aspect-square bg-brand-ivory">
         <DemoImage
           src={src}
           fallback={fallback}
           alt={`${diamond.carat.toFixed(2)} ct ${formatLabel(diamond.shape)} diamond`}
           placeholderKind="diamond"
           fill
-          className="object-cover"
+          className="object-contain p-4"
           sizes="(max-width: 768px) 50vw, 33vw"
         />
         {diamond.certification?.lab && (
-          <span className="absolute top-3 left-3 rounded-sm border border-brand-gold/30 bg-brand-surface/90 px-2 py-0.5 text-[9px] tracking-[0.15em] text-brand-text/70 uppercase backdrop-blur-sm">
+          <span className="absolute top-2 left-2 rounded-sm bg-white/90 px-1.5 py-0.5 text-[9px] tracking-[0.12em] text-brand-text/70 uppercase">
             {diamond.certification.lab}
           </span>
         )}
       </div>
 
-      <div className="flex flex-1 flex-col p-5">
-        <div className="flex items-start justify-between gap-4">
-          <div>
-            <p className="text-[10px] tracking-[0.2em] text-brand-gold uppercase">
-              {formatLabel(diamond.diamondType)} · {formatLabel(diamond.shape)}
-            </p>
-            <h3 className="mt-1 font-serif text-lg text-brand-text">
-              {diamond.carat.toFixed(2)} ct
-            </h3>
-          </div>
+      <div className="flex flex-1 flex-col p-3 sm:p-5">
+        <p className="text-[9px] tracking-[0.16em] text-brand-gold uppercase sm:text-[10px]">
+          {formatLabel(diamond.diamondType)} · {formatLabel(diamond.shape)}
+        </p>
+        <div className="mt-0.5 flex items-baseline justify-between gap-2">
+          <h3 className="font-serif text-sm text-brand-text sm:text-lg">
+            {diamond.carat.toFixed(2)} ct
+          </h3>
           <PriceDisplay
             price={diamond.price}
             salePrice={diamond.salePrice}
-            size="sm"
+            size="xs"
           />
         </div>
-
-        <dl className="mt-4 grid grid-cols-2 gap-x-4 gap-y-2 text-sm">
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
-              Cut
-            </dt>
-            <dd className="font-medium text-brand-text">{diamond.cut}</dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
-              Color
-            </dt>
-            <dd className="font-medium text-brand-text">{diamond.color}</dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
-              Clarity
-            </dt>
-            <dd className="font-medium text-brand-text">{diamond.clarity}</dd>
-          </div>
-          <div>
-            <dt className="text-[10px] tracking-wide text-brand-charcoal/50 uppercase">
-              Report
-            </dt>
-            <dd className="font-medium text-brand-text">
-              {diamond.certification?.reportNumber ?? "—"}
-            </dd>
-          </div>
-        </dl>
-
-        <div className="mt-4">
+        <p className="mt-0.5 text-[10px] text-brand-charcoal/50">
+          {diamond.cut} · {diamond.color} · {diamond.clarity}
+        </p>
+        <div className="mt-2 hidden sm:block">
           <StatusBadge status={diamond.availabilityStatus} />
         </div>
 
-        <div className="mt-auto pt-5">
+        <div className="mt-auto pt-3 sm:pt-5">
           {incompatible ? (
-            <p className="text-sm text-brand-charcoal/60">
+            <p className="text-xs text-brand-charcoal/60 sm:text-sm">
               {incompatibleMessage ??
                 "This diamond shape is not compatible with your selected setting."}
             </p>
           ) : selectHref ? (
-            <Button href={selectHref} className="w-full">
+            <Button href={selectHref} className="w-full" size="sm">
               Select Diamond
             </Button>
           ) : null}
@@ -154,7 +125,7 @@ export function RingBuilderDiamondGrid({
   }
 
   return (
-    <div className="grid gap-6 sm:grid-cols-2 xl:grid-cols-3">
+    <div className="grid grid-cols-2 gap-x-3 gap-y-5 sm:gap-6 xl:grid-cols-3">
       {diamonds.map((diamond) => {
         const incompatible =
           selectedSetting !== undefined &&

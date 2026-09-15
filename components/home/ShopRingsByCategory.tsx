@@ -82,7 +82,7 @@ export function ShopRingsByCategory() {
   }
 
   return (
-    <section className="bg-brand-bg py-14 sm:py-16">
+    <section className="hidden bg-brand-bg py-14 sm:py-16 lg:block">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl">
           <h2 className="font-serif text-3xl text-brand-text sm:text-4xl">
