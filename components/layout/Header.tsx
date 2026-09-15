@@ -34,6 +34,9 @@ function isStorefrontHome(pathname: string) {
   );
 }
 
+const headerIconButtonClass =
+  "inline-flex size-10 shrink-0 items-center justify-center rounded-sm leading-none text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal";
+
 function IconLink({
   href,
   external,
@@ -49,10 +52,7 @@ function IconLink({
   onClick?: () => void;
   className?: string;
 }) {
-  const classes = cn(
-    "inline-flex items-center justify-center rounded-sm p-1.5 text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal sm:p-2",
-    className,
-  );
+  const classes = cn(headerIconButtonClass, className);
 
   if (external && href) {
     return (
@@ -161,13 +161,14 @@ export function Header() {
         )}
       >
         <Container>
-          <div className="grid h-14 grid-cols-[auto_1fr_auto] items-center gap-1 sm:gap-2 lg:h-[4.5rem] lg:grid-cols-[1fr_auto_1fr]">
+          <div className="grid h-16 grid-cols-[1fr_auto_1fr] items-center gap-1 sm:gap-2 lg:h-[4.5rem]">
             {/* Left */}
-            <div className="flex items-center justify-start gap-1 sm:gap-2">
+            <div className="flex h-full items-center justify-start">
               <button
                 type="button"
                 className={cn(
-                  "inline-flex items-center justify-center rounded-sm p-1.5 lg:hidden sm:p-2",
+                  headerIconButtonClass,
+                  "appearance-none lg:hidden [&_svg]:block",
                   overlay ? "text-brand-ivory" : "text-brand-text",
                 )}
                 aria-label={t("toggleMenu")}
@@ -175,9 +176,9 @@ export function Header() {
                 onClick={() => setMobileOpen((open) => !open)}
               >
                 {mobileOpen ? (
-                  <CloseIcon className="h-5 w-5" />
+                  <CloseIcon className="block h-5 w-5" />
                 ) : (
-                  <MenuIcon className="h-5 w-5" />
+                  <MenuIcon className="block h-5 w-5" />
                 )}
               </button>
               <div className="hidden items-center gap-1.5 sm:gap-2 lg:flex">
@@ -202,19 +203,20 @@ export function Header() {
             {/* Center logo — a single BrandLogo instance, never duplicated */}
             <Link
               href="/"
-              className="min-w-0 justify-self-center transition-opacity hover:opacity-90"
+              className="flex h-full max-h-full min-w-0 items-center justify-center justify-self-center overflow-hidden transition-opacity hover:opacity-90"
               aria-label="Asteria Diamond House"
               onClick={closeMobile}
             >
               <BrandLogo
                 size="md"
                 variant={overlay ? "light" : "default"}
+                className="max-h-full"
                 priority
               />
             </Link>
 
             {/* Right */}
-            <div className="flex items-center justify-end gap-0 sm:gap-1">
+            <div className="flex h-full items-center justify-end gap-0 sm:gap-1">
               <IconLink
                 label={t("search")}
                 onClick={() => setSearchOpen(true)}
@@ -229,7 +231,8 @@ export function Header() {
               <button
                 type="button"
                 className={cn(
-                  "hidden rounded-sm p-2 transition-colors focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-crimson lg:inline-flex",
+                  headerIconButtonClass,
+                  "hidden lg:inline-flex",
                   overlay
                     ? "text-brand-ivory hover:text-brand-gold"
                     : "text-brand-text hover:text-brand-crimson-soft",
@@ -243,7 +246,7 @@ export function Header() {
               <CartIconButton
                 onNavigate={closeMobile}
                 className={cn(
-                  "p-1.5 sm:p-2",
+                  headerIconButtonClass,
                   overlay
                     ? "text-brand-ivory hover:text-brand-gold"
                     : "text-brand-text hover:text-brand-teal",

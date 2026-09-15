@@ -17,7 +17,7 @@ export function AccountMenuButton({
   const { data: session, status } = useSession();
 
   const buttonClass = cn(
-    "inline-flex items-center justify-center rounded-sm p-1.5 text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal sm:p-2",
+    "inline-flex size-10 shrink-0 items-center justify-center rounded-sm leading-none text-brand-text transition-colors hover:text-brand-teal focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand-teal",
     className,
   );
 

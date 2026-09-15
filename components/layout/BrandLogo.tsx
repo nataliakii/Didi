@@ -15,7 +15,7 @@ interface BrandLogoProps extends ComponentPropsWithoutRef<"span"> {
 
 const sizeStyles: Record<BrandLogoSize, string> = {
   sm: "h-8 w-auto",
-  md: "h-11 w-auto sm:h-12 lg:h-14",
+  md: "h-10 w-auto sm:h-11 lg:h-12",
   lg: "h-28 w-auto sm:h-36",
 };
 
@@ -44,7 +44,10 @@ export function BrandLogo({
         width={width}
         height={height}
         priority={priority}
-        className={cn("object-contain object-center", sizeStyles[size])}
+        className={cn(
+          "block max-h-full object-contain object-center",
+          sizeStyles[size],
+        )}
       />
     </span>
   );

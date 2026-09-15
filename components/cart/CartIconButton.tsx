@@ -20,13 +20,13 @@ export function CartIconButton({ className, onNavigate }: CartIconButtonProps) {
       href="/cart"
       onClick={onNavigate}
       className={cn(
-        "relative inline-flex items-center text-brand-text transition-colors hover:text-brand-teal",
+        "relative inline-flex size-10 shrink-0 items-center justify-center leading-none text-brand-text transition-colors hover:text-brand-teal",
         className,
       )}
       aria-label={count > 0 ? t("cartWithCount", { count }) : t("cart")}
     >
       <svg
-        className="h-5 w-5"
+        className="block h-5 w-5"
         fill="none"
         viewBox="0 0 24 24"
         stroke="currentColor"

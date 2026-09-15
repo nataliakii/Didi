@@ -13,7 +13,7 @@ function BaseIcon({ className, children, ...props }: IconProps) {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn("h-5 w-5", className)}
+      className={cn("block h-5 w-5", className)}
       aria-hidden="true"
       {...props}
     >
@@ -58,7 +58,7 @@ export function HeartIcon(props: IconProps & { filled?: boolean }) {
       strokeWidth={1.5}
       strokeLinecap="round"
       strokeLinejoin="round"
-      className={cn("h-5 w-5", className)}
+      className={cn("block h-5 w-5", className)}
       aria-hidden="true"
       {...rest}
     >
@@ -169,7 +169,7 @@ export function DiamondShapeIcon({
     <svg
       viewBox="0 0 24 24"
       fill="currentColor"
-      className={cn("h-5 w-5", className)}
+      className={cn("block h-5 w-5", className)}
       aria-hidden="true"
     >
       <path d={paths[shape]} opacity={0.85} />
