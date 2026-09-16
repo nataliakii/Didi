@@ -8,6 +8,7 @@ import {
 import type { FancyDiamondColor, ProductType } from "@/constants/jewellery";
 import { getLocaleFromParamsAsync } from "@/lib/i18n";
 import { generateLocalizedMetadata } from "@/lib/i18n-metadata";
+import { getDiamonds } from "@/services/diamond.service";
 import { getProducts } from "@/services/product.service";
 import type { AppPathname } from "@/i18n/routing";
 import { getTranslations, setRequestLocale } from "next-intl/server";
@@ -114,7 +115,19 @@ export function createColoredLandingPage(key: ColoredLandingKey) {
             sort: "featured" as const,
           };
 
-    const result = await getProducts(filters);
+    const [result, diamondResult] = await Promise.all([
+      getProducts(filters),
+      getDiamonds(
+        key === "colored"
+          ? { diamondType: "lab", limit: 24, sort: "newest" }
+          : {
+              diamondType: "lab",
+              fancyColor: config.diamondColor as FancyDiamondColor,
+              limit: 24,
+              sort: "newest",
+            },
+      ),
+    ]);
 
     // For the hub page, prefer pieces that actually have a fancy color set
     const products =
@@ -125,6 +138,12 @@ export function createColoredLandingPage(key: ColoredLandingKey) {
               p.attributes.diamondColor !== "colorless",
           )
         : result.items;
+    const diamonds =
+      key === "colored"
+        ? diamondResult.items.filter(
+            (d) => d.fancyColor && d.fancyColor !== "colorless",
+          )
+        : diamondResult.items;
 
     const relatedLinks =
       key === "colored"
@@ -142,6 +161,11 @@ export function createColoredLandingPage(key: ColoredLandingKey) {
               href: "/pink-lab-grown-diamonds" as AppPathname,
             },
             { label: t("linkRings"), href: "/rings" as AppPathname },
+            { label: t("linkLoose"), href: "/diamonds" as AppPathname },
+            {
+              label: t("linkCreateRing"),
+              href: "/create-ring" as AppPathname,
+            },
           ]
         : [
             {
@@ -149,6 +173,11 @@ export function createColoredLandingPage(key: ColoredLandingKey) {
               href: "/colored-lab-grown-diamonds" as AppPathname,
             },
             { label: t("linkRings"), href: "/rings" as AppPathname },
+            { label: t("linkLoose"), href: "/diamonds" as AppPathname },
+            {
+              label: t("linkCreateRing"),
+              href: "/create-ring" as AppPathname,
+            },
             {
               label: t("linkGuides"),
               href: "/guides/colored-lab-grown-diamonds" as AppPathname,
@@ -169,6 +198,9 @@ export function createColoredLandingPage(key: ColoredLandingKey) {
           { heading: t("section2Title"), body: t("section2Body") },
         ]}
         products={products}
+        diamonds={diamonds}
+        jewelryHeading={t("jewelryHeading")}
+        looseHeading={t("looseHeading")}
         emptyTitle={t("emptyTitle")}
         emptyDescription={t("emptyDescription")}
         relatedLinks={relatedLinks}

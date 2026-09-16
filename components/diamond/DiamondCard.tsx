@@ -30,7 +30,7 @@ export function DiamondCard({ diamond }: DiamondCardProps) {
 
   return (
     <article className="group flex h-full flex-col">
-      <div className="relative aspect-square overflow-hidden rounded-sm bg-brand-ivory">
+      <div className="relative aspect-square overflow-hidden rounded-sm border border-brand-border bg-[#FDFBF7]">
         <Link href={`/diamonds/${diamond._id}`} className="absolute inset-0">
           <DemoImage
             src={primaryImage?.url}

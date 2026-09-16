@@ -231,17 +231,17 @@
     "guaranteeTraceBody": "Lab-grown origin, with blockchain-enabled collections where available.",
     "guaranteesCta": "Read about certification",
     "uspCards": {
-      "colored": {
-        "title": "Colored Lab-Grown Diamonds",
-        "description": "Blue, yellow, and pink — real diamonds grown in a laboratory."
+      "igi": {
+        "title": "IGI",
+        "description": "Report IGI — presentati con chiarezza, senza enfasi."
       },
-      "createRing": {
-        "title": "Create Your Ring",
-        "description": "Pair a certified diamond with your setting and metal."
+      "design": {
+        "title": "Design",
+        "description": "Progetta l’anello passo dopo passo: montatura, diamante e metallo."
       },
-      "looseDiamonds": {
-        "title": "Loose Diamonds",
-        "description": "Certified stones to set, collect, or hold as an investment."
+      "payment": {
+        "title": "Pagamento",
+        "description": "Checkout ponderato e appuntamento privato — senza fretta."
       }
     }
   },
@@ -749,7 +749,11 @@
       "linkBlue": "Blue Lab-Grown Diamonds",
       "linkYellow": "Yellow Lab-Grown Diamonds",
       "linkPink": "Pink Lab-Grown Diamonds",
-      "linkRings": "Shop Rings"
+      "linkRings": "Shop Rings",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "blue": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -763,7 +767,11 @@
       "emptyDescription": "New blue lab-grown diamond jewelry will be listed here. Explore the full colored collection or contact Asteria.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "yellow": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -777,7 +785,11 @@
       "emptyDescription": "Yellow lab-grown diamond jewelry will appear here shortly. Visit the colored hub or book a consultation.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "pink": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -791,7 +803,11 @@
       "emptyDescription": "Pink lab-grown diamond designs will be published here. Discover other colors or speak with Asteria.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     }
   },
   "contactPage": {

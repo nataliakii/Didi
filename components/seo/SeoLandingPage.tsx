@@ -1,9 +1,10 @@
+import { DiamondGrid } from "@/components/diamond/DiamondGrid";
 import { EmptyState } from "@/components/ui/EmptyState";
 import { ProductGrid } from "@/components/product/ProductGrid";
 import { Container } from "@/components/ui/Container";
 import { PageBreadcrumb } from "@/components/ui/PageBreadcrumb";
 import { Link, type AppPathname } from "@/i18n/routing";
-import type { ProductSummary } from "@/types";
+import type { DiamondSummary, ProductSummary } from "@/types";
 import type { ReactNode } from "react";
 
 export function SeoLandingPage({
@@ -13,6 +14,9 @@ export function SeoLandingPage({
   intro,
   sections,
   products,
+  diamonds,
+  jewelryHeading,
+  looseHeading,
   emptyTitle,
   emptyDescription,
   relatedLinks,
@@ -23,6 +27,9 @@ export function SeoLandingPage({
   intro: string;
   sections?: Array<{ heading: string; body: string }>;
   products: ProductSummary[];
+  diamonds?: DiamondSummary[];
+  jewelryHeading?: string;
+  looseHeading?: string;
   emptyTitle: string;
   emptyDescription: string;
   relatedLinks?: Array<{ label: string; href: AppPathname }>;
@@ -59,13 +66,33 @@ export function SeoLandingPage({
           </nav>
         )}
 
-        <section className="mt-12">
-          {products.length > 0 ? (
+        {products.length > 0 && (
+          <section className="mt-12">
+            {jewelryHeading && (
+              <h2 className="mb-6 font-serif text-2xl text-brand-text">
+                {jewelryHeading}
+              </h2>
+            )}
             <ProductGrid products={products} />
-          ) : (
+          </section>
+        )}
+
+        {diamonds && diamonds.length > 0 && (
+          <section className="mt-12">
+            {looseHeading && (
+              <h2 className="mb-6 font-serif text-2xl text-brand-text">
+                {looseHeading}
+              </h2>
+            )}
+            <DiamondGrid diamonds={diamonds} />
+          </section>
+        )}
+
+        {products.length === 0 && (!diamonds || diamonds.length === 0) && (
+          <section className="mt-12">
             <EmptyState title={emptyTitle} description={emptyDescription} />
-          )}
-        </section>
+          </section>
+        )}
 
         {sections && sections.length > 0 && (
           <div className="mx-auto mt-16 max-w-3xl space-y-10">

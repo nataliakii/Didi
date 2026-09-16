@@ -41,7 +41,7 @@ export async function ShopJewelryByCategory() {
   const tHome = await getTranslations("home");
 
   return (
-    <section className="border-b border-brand-gold/15 bg-brand-surface py-14 sm:py-16">
+    <section className="bg-[#FDFBF7] py-16 sm:py-20">
       <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
         <div className="max-w-xl">
           <p className="section-eyebrow">{tHome("collectionsEyebrow")}</p>
@@ -60,7 +60,7 @@ export async function ShopJewelryByCategory() {
                 href={category.href}
                 className="group flex flex-col items-center text-center"
               >
-                <div className="relative aspect-square w-full overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream">
+                <div className="relative aspect-square w-full overflow-hidden bg-transparent">
                   <DemoImage
                     src={category.image}
                     alt={tNav(category.key)}

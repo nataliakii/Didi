@@ -53,8 +53,8 @@ export function HomeHero() {
     <>
       {hero === "mark" ? <BrandMarkHero /> : <PoemHero />}
 
-      <div className="pointer-events-none fixed right-3 bottom-[max(1rem,env(safe-area-inset-bottom))] z-40 hidden sm:block sm:right-5">
-        <div className="pointer-events-auto rounded-sm border border-brand-gold/25 bg-brand-bg/90 p-1.5 shadow-sm backdrop-blur-md">
+      <div className="pointer-events-none fixed right-3 bottom-[max(1.25rem,env(safe-area-inset-bottom))] z-40 sm:right-5">
+        <div className="pointer-events-auto rounded-sm border border-brand-gold/35 bg-[#FDFBF7]/95 p-1.5 shadow-md backdrop-blur-md">
           <p className="px-1.5 pb-1 text-[9px] tracking-[0.16em] text-brand-muted uppercase">
             {t("heroPreview")}
           </p>
@@ -63,7 +63,7 @@ export function HomeHero() {
               type="button"
               onClick={() => selectHero("constellation")}
               className={cn(
-                "rounded-sm px-2.5 py-1.5 text-[11px] tracking-wide transition-colors",
+                "min-h-10 rounded-sm px-3 py-2 text-[11px] tracking-wide transition-colors sm:min-h-0 sm:px-2.5 sm:py-1.5",
                 hero === "constellation"
                   ? "bg-brand-navy text-brand-ivory"
                   : "text-brand-text/80 hover:bg-brand-cream",
@@ -75,7 +75,7 @@ export function HomeHero() {
               type="button"
               onClick={() => selectHero("mark")}
               className={cn(
-                "rounded-sm px-2.5 py-1.5 text-[11px] tracking-wide transition-colors",
+                "min-h-10 rounded-sm px-3 py-2 text-[11px] tracking-wide transition-colors sm:min-h-0 sm:px-2.5 sm:py-1.5",
                 hero === "mark"
                   ? "bg-brand-navy text-brand-ivory"
                   : "text-brand-text/80 hover:bg-brand-cream",

@@ -83,7 +83,7 @@ export function ProductCard({ product }: ProductCardProps) {
     <article className="group relative flex h-full flex-col">
       <div className="relative">
         <Link href={`/products/${product.slug}`} className="block">
-          <div className="card-luxury relative aspect-square overflow-hidden bg-brand-ivory">
+          <div className="relative aspect-square overflow-hidden rounded-sm border border-brand-border bg-[#FDFBF7]">
             <DemoImage
               key={`${product._id}-${activeMetal ?? "default"}-${displaySrc ?? "none"}`}
               src={displaySrc}

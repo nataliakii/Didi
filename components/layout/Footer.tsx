@@ -36,46 +36,49 @@ export async function Footer() {
   };
 
   return (
-    <footer className="border-t border-brand-gold/20 bg-brand-navy-wash text-brand-on-deep">
+    <footer
+      className="site-footer"
+      style={{ backgroundColor: "#0A192F", color: "#F3EAD8" }}
+    >
       <Container className="py-16">
         <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr]">
           <div>
             <Link href="/" className="inline-block transition-opacity hover:opacity-90">
               <BrandLogo size="md" variant="light" />
             </Link>
-            <p className="mt-4 max-w-xs text-sm leading-relaxed text-brand-muted-on-deep">
+            <p className="site-footer-muted mt-4 max-w-xs text-sm leading-relaxed">
               {t("description")}
             </p>
-            <p className="mt-3 text-sm text-brand-gold">{t("locationLine")}</p>
-            <p className="mt-1 text-sm text-brand-muted-on-deep">
+            <p className="site-footer-gold mt-3 text-sm">{t("locationLine")}</p>
+            <p className="site-footer-muted mt-1 text-sm">
               <a
                 href={BRAND_CONTACT.phoneHref}
-                className="transition-colors hover:text-brand-teal-soft"
+                className="transition-colors hover:text-brand-gold"
               >
                 {BRAND_CONTACT.phone}
               </a>
               {" · "}
               <a
                 href={`mailto:${BRAND_CONTACT.email}`}
-                className="transition-colors hover:text-brand-teal-soft"
+                className="transition-colors hover:text-brand-gold"
               >
                 {BRAND_CONTACT.email}
               </a>
             </p>
             <div className="mt-6 space-y-4">
               <div>
-                <p className="font-serif text-base text-brand-on-deep">
+                <p className="font-serif text-base text-[#F3EAD8]">
                   {t("founderName")}
                 </p>
-                <p className="mt-1 text-[11px] tracking-[0.12em] text-brand-gold uppercase">
+                <p className="site-footer-gold mt-1 text-[11px] tracking-[0.12em] uppercase">
                   {t("founderTitle")}
                 </p>
               </div>
               <div>
-                <p className="font-serif text-base text-brand-on-deep">
+                <p className="font-serif text-base text-[#F3EAD8]">
                   {t("coFounderName")}
                 </p>
-                <p className="mt-1 text-[11px] tracking-[0.12em] text-brand-gold uppercase">
+                <p className="site-footer-gold mt-1 text-[11px] tracking-[0.12em] uppercase">
                   {t("coFounderTitle")}
                 </p>
               </div>
@@ -89,7 +92,7 @@ export async function Footer() {
 
           {Object.entries(footerLinks).map(([section, links]) => (
             <div key={section}>
-              <h3 className="text-xs font-medium tracking-[0.2em] text-brand-gold uppercase">
+              <h3 className="site-footer-gold text-xs font-medium tracking-[0.2em] uppercase">
                 {t(section as "shop" | "services" | "company")}
               </h3>
               <ul className="mt-4 space-y-2.5">
@@ -97,7 +100,7 @@ export async function Footer() {
                   <li key={link.href + link.label}>
                     <Link
                       href={link.href}
-                      className="text-sm text-brand-muted-on-deep transition-colors hover:text-brand-teal-soft"
+                      className="site-footer-muted text-sm transition-colors hover:text-[#C5A059]"
                     >
                       {link.label}
                     </Link>
@@ -108,10 +111,10 @@ export async function Footer() {
           ))}
         </div>
 
-        <p className="mt-12 border-t border-white/10 pt-8 text-xs leading-relaxed text-brand-muted-on-deep">
+        <p className="site-footer-muted mt-12 border-t border-white/10 pt-8 text-xs leading-relaxed">
           {t("trustNote")}
         </p>
-        <p className="mt-4 text-xs text-brand-muted-on-deep">
+        <p className="site-footer-muted mt-4 text-xs">
           {tCommon("copyright", { year: new Date().getFullYear() })}
         </p>
       </Container>

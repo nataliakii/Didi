@@ -21,7 +21,7 @@ const sizeStyles: Record<BrandLogoSize, string> = {
 
 export function BrandLogo({
   size = "md",
-  variant: _variant = "default",
+  variant = "default",
   compact = false,
   priority = false,
   className,
@@ -47,6 +47,7 @@ export function BrandLogo({
         className={cn(
           "block max-h-full object-contain object-center",
           sizeStyles[size],
+          variant === "light" && "brightness-0 invert",
         )}
       />
     </span>

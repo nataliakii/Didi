@@ -143,6 +143,66 @@ export function MoonIcon(props: IconProps) {
 }
 
 /** Simplified diamond shape silhouettes for filter UI */
+export function DiamondShapeOutline({
+  shape,
+  className,
+}: {
+  shape: DiamondShape | "other";
+  className?: string;
+}) {
+  return (
+    <svg
+      viewBox="0 0 48 48"
+      fill="none"
+      stroke="#C5A059"
+      strokeWidth={1.15}
+      strokeLinejoin="round"
+      className={cn("h-12 w-12 text-[#C5A059]", className)}
+      aria-hidden="true"
+    >
+      {shape === "round" && (
+        <>
+          <circle cx="24" cy="24" r="14.5" />
+          <path d="M24 9.5v29M9.5 24h29" opacity="0.35" />
+        </>
+      )}
+      {shape === "oval" && <ellipse cx="24" cy="24" rx="11" ry="16" />}
+      {shape === "emerald" && (
+        <path d="M16 8h16l8 8v16l-8 8H16l-8-8V16z" />
+      )}
+      {shape === "marquise" && (
+        <path d="M24 6c6 8 10 12 10 18s-4 10-10 18C18 34 14 30 14 24s4-10 10-18z" />
+      )}
+      {shape === "radiant" && (
+        <path d="M15 9h18l6 6v18l-6 6H15l-6-6V15z" />
+      )}
+      {shape === "pear" && (
+        <path d="M24 7c7 8 10 14 10 20a10 10 0 01-20 0c0-6 3-12 10-20z" />
+      )}
+      {shape === "elongated-cushion" && (
+        <rect x="14" y="7" width="20" height="34" rx="7" />
+      )}
+      {shape === "cushion" && (
+        <rect x="10" y="10" width="28" height="28" rx="8" />
+      )}
+      {shape === "princess" && (
+        <path d="M24 8l16 16-16 16L8 24z" />
+      )}
+      {shape === "asscher" && (
+        <>
+          <rect x="11" y="11" width="26" height="26" rx="1" />
+          <path d="M17 17h14v14H17z" opacity="0.45" />
+        </>
+      )}
+      {shape === "heart" && (
+        <path d="M24 40s-14-9-14-20a8 8 0 0114-5 8 8 0 0114 5c0 11-14 20-14 20z" />
+      )}
+      {shape === "other" && <rect x="12" y="12" width="24" height="24" />}
+    </svg>
+  );
+}
+
+/** Simplified diamond shape silhouettes for filter UI */
 export function DiamondShapeIcon({
   shape,
   className,

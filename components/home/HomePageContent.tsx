@@ -35,7 +35,7 @@ function TrustStripItem({ label }: { label: string }) {
         className="h-px w-4 shrink-0 bg-brand-gold/40 sm:w-5"
         aria-hidden
       />
-      <span className="text-[11px] tracking-[0.08em] text-brand-text/65 uppercase sm:text-xs">
+      <span className="text-[11px] tracking-[0.08em] text-brand-text/70 uppercase sm:text-xs">
         {label}
       </span>
     </div>
@@ -89,7 +89,7 @@ export async function HomePageContent() {
 
       <section
         id="asteria-intro"
-        className="scroll-mt-14 border-b border-brand-gold/15 bg-brand-bg py-12 sm:py-16 lg:scroll-mt-28"
+        className="scroll-mt-14 bg-[#FDFBF7] py-16 sm:py-20 lg:scroll-mt-28"
       >
         <Container>
           <div className="mx-auto max-w-2xl text-center">
@@ -97,7 +97,7 @@ export async function HomePageContent() {
             <h2 className="mt-3 font-serif text-[1.85rem] leading-tight font-normal text-brand-text sm:text-4xl">
               {t("brandIntroTitle")}
             </h2>
-            <p className="mt-5 font-serif text-base leading-relaxed text-brand-charcoal/70 sm:text-lg">
+            <p className="mt-5 font-serif text-base leading-relaxed text-brand-text/75 sm:text-lg">
               {t("brandPositioning")}
             </p>
             <p className="mt-6 text-sm text-brand-gold" aria-hidden>
@@ -145,7 +145,7 @@ export async function HomePageContent() {
         </Container>
       </section>
 
-      <section className="border-b border-brand-gold/15 bg-brand-bg py-6">
+      <section className="bg-brand-bg py-4 sm:py-6">
         <Container>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-4 lg:gap-6">
             {trustItems.map((item) => (
@@ -161,7 +161,7 @@ export async function HomePageContent() {
 
       <ShopDiamondsByShape />
 
-      <section className="border-y border-brand-gold/15 bg-brand-cream/30 py-16 sm:py-20">
+      <section className="bg-[#FDFBF7] py-16 sm:py-20">
         <Container>
           <div className="flex items-end justify-between">
             <div>
@@ -195,7 +195,7 @@ export async function HomePageContent() {
         </Container>
       </section>
 
-      <section className="py-16 sm:py-20">
+      <section className="bg-[#FDFBF7] py-16 sm:py-20">
         <Container>
           <div className="grid items-center gap-10 lg:grid-cols-2 lg:gap-12">
             <div className="relative aspect-[4/3] overflow-hidden rounded-sm border border-brand-gold/20 bg-brand-cream">
@@ -227,30 +227,31 @@ export async function HomePageContent() {
         </Container>
       </section>
 
-      <section className="border-t border-brand-gold/10 bg-brand-cream/25 py-12 sm:py-14">
+      <section className="bg-[#FDFBF7] py-16 sm:py-20">
         <Container>
           <div className="text-center">
             <p className="section-eyebrow">{t("guaranteesEyebrow")}</p>
-            <h2 className="mt-2 font-serif text-xl text-brand-text sm:text-2xl">
+            <h2 className="mt-3 font-serif text-2xl text-brand-text sm:text-3xl">
               {t("guaranteesTitle")}
             </h2>
           </div>
-          <div className="mt-6 grid gap-5 sm:grid-cols-3">
+          <div className="mt-12 grid gap-10 sm:grid-cols-3 sm:gap-14">
             {guarantees.map((item) => (
-              <div
-                key={item.title}
-                className="rounded-sm border border-brand-gold/15 bg-brand-surface p-5 text-center sm:text-left"
-              >
-                <h3 className="font-serif text-lg text-brand-text">
+              <div key={item.title} className="text-center sm:text-left">
+                <span
+                  className="mx-auto mb-5 block h-px w-10 bg-brand-gold/70 sm:mx-0"
+                  aria-hidden
+                />
+                <h3 className="font-serif text-xl text-brand-text">
                   {item.title}
                 </h3>
-                <p className="mt-3 text-sm leading-relaxed text-brand-charcoal/70">
+                <p className="mt-3 text-sm leading-relaxed text-brand-text/70">
                   {item.body}
                 </p>
               </div>
             ))}
           </div>
-          <div className="mt-8 text-center">
+          <div className="mt-12 text-center">
             <Link
               href="/certification"
               className="text-xs tracking-[0.2em] text-brand-gold uppercase transition-colors hover:text-brand-text"
@@ -261,7 +262,7 @@ export async function HomePageContent() {
         </Container>
       </section>
 
-      <section className="py-12 sm:py-14">
+      <section className="bg-[#FDFBF7] py-16 sm:py-20">
         <Container>
           <div className="text-center">
             <p className="section-eyebrow">{t("faqEyebrow")}</p>

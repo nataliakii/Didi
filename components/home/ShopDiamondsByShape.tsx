@@ -1,8 +1,4 @@
-import { DemoImage } from "@/components/ui/DemoImage";
-import {
-  DEMO_CATEGORY_IMAGES,
-  getDiamondShapeContour,
-} from "@/constants/demo-images";
+import { DiamondShapeOutline } from "@/components/ui/icons";
 import { HOME_DIAMOND_SHAPES } from "@/constants/jewellery";
 import { Link } from "@/i18n/routing";
 import { formatLabel } from "@/lib/utils";
@@ -12,58 +8,39 @@ export async function ShopDiamondsByShape() {
   const t = await getTranslations("home");
 
   return (
-    <section className="border-b border-brand-gold/15 bg-brand-surface py-14 sm:py-16">
-      <div className="mx-auto grid max-w-6xl items-center gap-8 px-4 sm:px-6 lg:grid-cols-[minmax(0,0.9fr)_minmax(0,1.1fr)] lg:gap-14 lg:px-8">
-        <div className="mx-auto w-full max-w-sm text-center lg:mx-0 lg:text-left">
+    <section className="bg-[#FDFBF7] py-16 sm:py-20">
+      <div className="mx-auto max-w-6xl px-4 sm:px-6 lg:px-8">
+        <div className="mx-auto max-w-xl text-center">
           <h2 className="font-serif text-3xl text-brand-text sm:text-4xl">
             {t("shopByShapeTitle")}
           </h2>
-          <div className="relative mx-auto mt-8 hidden aspect-[4/5] max-w-[280px] overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream lg:mx-0 lg:block">
-            <DemoImage
-              src={DEMO_CATEGORY_IMAGES.ovalCut}
-              fallback={DEMO_CATEGORY_IMAGES.roundBrilliant}
-              alt={t("shopByShapeImageAlt")}
-              placeholderKind="diamond"
-              fill
-              className="object-contain p-10"
-              sizes="(max-width: 1024px) 280px, 320px"
-            />
-          </div>
         </div>
 
-        <div>
-          <ul className="grid grid-cols-2 gap-x-4 gap-y-8 sm:grid-cols-3 md:grid-cols-5 md:gap-y-10">
-            {HOME_DIAMOND_SHAPES.map((shape) => (
-              <li key={shape}>
-                <Link
-                  href={`/diamonds?shape=${shape}`}
-                  className="group flex flex-col items-center gap-3 text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
-                >
-                  <span className="relative flex h-16 w-16 items-center justify-center overflow-hidden rounded-sm border border-brand-gold/15 bg-brand-cream sm:h-20 sm:w-20">
-                    <DemoImage
-                      src={getDiamondShapeContour(shape)}
-                      alt={formatLabel(shape)}
-                      placeholderKind="diamond"
-                      fill
-                      className="object-contain p-3 transition-transform duration-500 group-hover:scale-[1.06]"
-                      sizes="80px"
-                    />
-                  </span>
-                  <span className="text-sm text-brand-charcoal/75 transition-colors group-hover:text-brand-text">
-                    {formatLabel(shape)}
-                  </span>
-                </Link>
-              </li>
-            ))}
-          </ul>
-          <div className="mt-10 text-center lg:text-left">
-            <Link
-              href="/diamonds"
-              className="text-xs tracking-[0.2em] text-brand-gold uppercase transition-colors hover:text-brand-text"
-            >
-              {t("shopByShapeCta")} →
-            </Link>
-          </div>
+        <ul className="mt-12 grid grid-cols-2 gap-x-6 gap-y-10 sm:grid-cols-3 md:grid-cols-5 md:gap-y-12">
+          {HOME_DIAMOND_SHAPES.map((shape) => (
+            <li key={shape}>
+              <Link
+                href={`/diamonds?shape=${shape}`}
+                className="group flex flex-col items-center gap-4 text-center focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-brand-gold"
+              >
+                <DiamondShapeOutline
+                  shape={shape}
+                  className="h-14 w-14 transition-transform duration-500 group-hover:scale-[1.06] sm:h-16 sm:w-16"
+                />
+                <span className="text-sm tracking-wide text-brand-text/80 transition-colors group-hover:text-brand-text">
+                  {formatLabel(shape)}
+                </span>
+              </Link>
+            </li>
+          ))}
+        </ul>
+        <div className="mt-12 text-center">
+          <Link
+            href="/diamonds"
+            className="text-xs tracking-[0.2em] text-brand-gold uppercase transition-colors hover:text-brand-text"
+          >
+            {t("shopByShapeCta")} →
+          </Link>
         </div>
       </div>
     </section>

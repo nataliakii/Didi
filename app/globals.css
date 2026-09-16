@@ -2,30 +2,29 @@
 
 :root,
 html[data-theme="light"] {
-  /* Client palette: Navy #081D3E, Gold #D2B36C, Ivory #F7F1EA.
-     Large navy surfaces use a wash #082446 → #061736, never a flat blue. */
-  --brand-bg: #f7f1ea;
-  --brand-bg-deep: #081d3e;
+  /* Cream house + deep navy hero/footer. Gold is matte, never neon. */
+  --brand-bg: #fdfbf7;
+  --brand-bg-deep: #0a192f;
   --brand-surface: #ffffff;
-  --brand-surface-hover: #f3ebe2;
-  --brand-gold: #d2b36c;
-  --brand-gold-soft: #e0c88a;
+  --brand-surface-hover: #f7f1ea;
+  --brand-gold: #c5a059;
+  --brand-gold-soft: #d4b36e;
   --brand-teal: #2cb9be;
   --brand-teal-soft: #1a9a9f;
   --brand-crimson: #7a2435;
   --brand-crimson-soft: #a63d50;
-  --brand-text: #081d3e;
-  --brand-muted: #5c6b7a;
-  --brand-border: #d9cfbe;
-  --brand-on-deep: #f7f1ea;
-  --brand-muted-on-deep: #a9b5c2;
+  --brand-text: #0a192f;
+  --brand-muted: #5c6570;
+  --brand-border: #e4d9c8;
+  --brand-on-deep: #f3ead8;
+  --brand-muted-on-deep: #c5bba8;
 
-  --brand-navy: #081d3e;
-  --brand-navy-mid: #082446;
-  --brand-navy-deep: #061736;
-  --brand-navy-light: #082446;
-  --brand-ivory: #f7f1ea;
-  --brand-cream: #f3ebe2;
+  --brand-navy: #0a192f;
+  --brand-navy-mid: #0f2340;
+  --brand-navy-deep: #07111f;
+  --brand-navy-light: #0f2340;
+  --brand-ivory: #fdfbf7;
+  --brand-cream: #fdfbf7;
   --brand-charcoal: var(--brand-text);
 
   --background: var(--brand-bg);
@@ -49,26 +48,26 @@ html[data-theme="light"] {
 
 html[data-theme="dark"] {
   color-scheme: dark;
-  --brand-bg: #081d3e;
-  --brand-bg-deep: #061736;
-  --brand-surface: #0c2748;
-  --brand-surface-hover: #123056;
-  --brand-gold: #d2b36c;
-  --brand-gold-soft: #e0c88a;
+  --brand-bg: #0a192f;
+  --brand-bg-deep: #07111f;
+  --brand-surface: #10233f;
+  --brand-surface-hover: #163052;
+  --brand-gold: #c5a059;
+  --brand-gold-soft: #d4b36e;
   --brand-teal: #2cb9be;
   --brand-teal-soft: #72d5d2;
   --brand-crimson: #7a2435;
   --brand-crimson-soft: #a63d50;
-  --brand-text: #f7f1ea;
-  --brand-muted: #a9b5c2;
-  --brand-border: #294258;
-  --brand-on-deep: #f7f1ea;
-  --brand-muted-on-deep: #a9b5c2;
+  --brand-text: #fdfbf7;
+  --brand-muted: #c5bba8;
+  --brand-border: #2a3d55;
+  --brand-on-deep: #f3ead8;
+  --brand-muted-on-deep: #c5bba8;
 
-  --brand-navy: #081d3e;
-  --brand-navy-mid: #082446;
-  --brand-navy-deep: #061736;
-  --brand-navy-light: #082446;
+  --brand-navy: #0a192f;
+  --brand-navy-mid: #0f2340;
+  --brand-navy-deep: #07111f;
+  --brand-navy-light: #0f2340;
   --brand-ivory: var(--brand-text);
   --brand-cream: var(--brand-surface);
   --brand-charcoal: var(--brand-text);
@@ -157,34 +156,28 @@ body {
   font-size: 0.75rem;
   letter-spacing: 0.3em;
   text-transform: uppercase;
-  color: var(--brand-text);
-}
-
-html[data-theme="dark"] .section-eyebrow {
-  color: var(--brand-gold);
-}
-
-/* Light theme: gold type is too faint on ivory — use deep navy for copy.
-   Keep gold on deep/navy surfaces where contrast is already high. */
-html[data-theme="light"] [class*="text-brand-gold"] {
-  color: var(--brand-text);
-}
-
-html[data-theme="light"]
-  :is(
-    .bg-brand-bg-deep,
-    .bg-brand-navy,
-    .bg-brand-navy-wash,
-    .hero-section,
-    .header-on-hero
-  )
-  [class*="text-brand-gold"] {
   color: var(--brand-gold);
 }
 
 .bg-brand-navy-wash {
-  background-color: var(--brand-navy);
-  background-image: linear-gradient(180deg, #082446 0%, #061736 100%);
+  background-color: #0a192f;
+  background-image: linear-gradient(180deg, #0a192f 0%, #07111f 100%);
+}
+
+/* Closing band — always deep navy, independent of theme tokens / Tailwind. */
+.site-footer {
+  background-color: #0a192f !important;
+  background-image: linear-gradient(180deg, #0a192f 0%, #07111f 100%);
+  color: #f3ead8;
+  border-top: 1px solid rgba(197, 160, 89, 0.28);
+}
+
+.site-footer .site-footer-muted {
+  color: #c5bba8;
+}
+
+.site-footer .site-footer-gold {
+  color: #c5a059;
 }
 
 .card-luxury {
@@ -388,25 +381,25 @@ body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
 }
 
 .header-on-hero :is(a, button) {
-  color: #f7f1ea;
+  color: #e4d5b3;
 }
 
 .header-on-hero :is(a, button):hover {
-  color: #d2b36c;
+  color: #c5a059;
 }
 
 .hero-section {
-  --navy: #081d3e;
-  --navy-deep: #061736;
-  --navy-light: #082446;
-  --gold: #d2b36c;
-  --gold-light: #e0c88a;
+  --navy: #0a192f;
+  --navy-deep: #07111f;
+  --navy-light: #0f2340;
+  --gold: #c5a059;
+  --gold-light: #d4b36e;
   --turquoise: #2cb9be;
   --turquoise-light: #72d5d2;
   --wine: #7a2435;
-  --text-primary: #f7f1ea;
-  --text-secondary: #b8c3ce;
-  background-color: var(--navy-deep);
+  --text-primary: #c5a059;
+  --text-secondary: #e4d5b3;
+  background-color: #0a192f;
   color: var(--text-primary);
 }
 
@@ -432,7 +425,7 @@ body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
       rgba(122, 36, 53, 0.06),
       transparent 20%
     ),
-    linear-gradient(180deg, #082446 0%, #061736 100%);
+    linear-gradient(180deg, #0a192f 0%, #07111f 100%);
 }
 
 .hero-mark-atmosphere {
@@ -442,7 +435,7 @@ body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
       rgba(210, 179, 108, 0.1),
       transparent 46%
     ),
-    linear-gradient(180deg, #082446 0%, #061736 100%);
+    linear-gradient(180deg, #0a192f 0%, #07111f 100%);
 }
 
 .hero-eyebrow {
@@ -471,8 +464,10 @@ body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
   background: color-mix(in srgb, var(--gold) 70%, transparent);
 }
 
-.hero-title {
-  color: var(--text-primary);
+.hero-title,
+.hero-title .poem-line,
+.hero-positioning {
+  color: #c5a059 !important;
   font-weight: 400;
 }
 
@@ -498,18 +493,20 @@ body:has(.hero-under-header) header.sticky:not(.is-scrolled) {
 
 .hero-cta-primary {
   font-family: var(--font-cinzel), var(--font-playfair), serif;
-  background: var(--gold) !important;
-  color: var(--navy) !important;
-  border-color: transparent !important;
-  box-shadow: none;
+  background: transparent !important;
+  background-color: transparent !important;
+  color: #c5a059 !important;
+  border: 1px solid #c5a059 !important;
+  box-shadow: none !important;
   transition:
     background 0.25s ease,
-    box-shadow 0.25s ease;
+    color 0.25s ease;
 }
 
 .hero-cta-primary:hover {
-  background: var(--gold-light) !important;
-  box-shadow: 0 0 24px rgba(210, 179, 108, 0.28);
+  background: color-mix(in srgb, #c5a059 12%, transparent) !important;
+  color: #d4b36e !important;
+  box-shadow: none !important;
 }
 
 .hero-cta-secondary {
@@ -704,7 +701,7 @@ html[data-theme="light"] .header-over-hero [class*="text-brand-gold"] {
         rgba(44, 185, 190, 0.07),
         transparent 26%
       ),
-      linear-gradient(180deg, #082446 0%, #061736 100%);
+      linear-gradient(180deg, #0a192f 0%, #07111f 100%);
   }
 }
 

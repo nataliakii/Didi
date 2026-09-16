@@ -33,7 +33,7 @@ export function BrandMarkHero() {
       />
       <div className="hero-photo-veil-mark absolute inset-0" aria-hidden="true" />
 
-      <div className="relative z-10 flex flex-1 flex-col justify-center px-5 pb-16 pt-[4.75rem] sm:px-10 lg:px-16">
+      <div className="relative z-10 flex flex-1 flex-col justify-center px-5 pb-28 pt-[4.75rem] sm:px-10 lg:px-16">
         <div className="w-[min(100%,16.75rem)] sm:max-w-lg">
           <HomeHeroCopy align="left" />
         </div>

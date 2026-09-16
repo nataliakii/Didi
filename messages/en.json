@@ -84,7 +84,7 @@
     "delivery": "Delivery & Returns"
   },
   "footer": {
-    "description": "ASTERIA DIAMOND HOUSE — Colored Lab-Grown Diamond Jewelry in Greece. Based in Thessaloniki.",
+    "description": "ASTERIA DIAMOND HOUSE — Colored Lab-Grown Diamond Jewelry.",
     "shop": "Explore",
     "services": "Services",
     "company": "House",
@@ -237,17 +237,17 @@
     "guaranteeTraceBody": "Lab-grown origin, with blockchain-enabled collections where available.",
     "guaranteesCta": "Read about certification",
     "uspCards": {
-      "colored": {
-        "title": "Colored Lab-Grown Diamonds",
-        "description": "Blue, yellow, and pink — real diamonds grown in a laboratory."
+      "igi": {
+        "title": "IGI",
+        "description": "IGI grading reports — presented clearly, never overstated."
       },
-      "createRing": {
-        "title": "Create Your Ring",
-        "description": "Pair a certified diamond with your setting and metal."
+      "design": {
+        "title": "Bespoke design",
+        "description": "Design your ring step by step with compatible settings, diamonds, and metals."
       },
-      "looseDiamonds": {
-        "title": "Loose Diamonds",
-        "description": "Certified stones to set, collect, or hold as an investment."
+      "payment": {
+        "title": "Secure payment",
+        "description": "Considered checkout and private appointments — calm, never rushed."
       }
     },
     "faqEyebrow": "FAQ",
@@ -739,17 +739,21 @@
     "colored": {
       "eyebrow": "ASTERIA DIAMOND HOUSE",
       "title": "Colored Lab-Grown Diamond Jewelry in Greece",
-      "intro": "Colored Lab-Grown Diamonds are at the heart of Asteria — blue, yellow, and pink stones set as Lab-Grown Diamond Jewelry from our house in Thessaloniki, Greece.",
+      "intro": "Colored lab-grown diamonds sit at the heart of Asteria — blue, yellow, and pink stones you can buy unset, or have set as a ring, necklace, or earrings.",
       "section1Title": "Color with clarity",
       "section1Body": "Lab-grown diamonds can carry remarkable color while remaining true diamonds in composition. At Asteria we present each piece with its hue, cut, carat weight, and IGI details when available.",
       "section2Title": "From Thessaloniki to you",
-      "section2Body": "Whether you are searching for colored lab-grown diamonds in Greece or a finished ring, necklace, or pair of earrings, this collection is the starting point. Explore blue, yellow, and pink pages below, or contact us for a custom stone.",
+      "section2Body": "Shop a finished piece, choose a loose stone, or start Create Your Ring. Explore blue, yellow, and pink below, or contact us for a custom stone.",
       "emptyTitle": "Collection expanding",
       "emptyDescription": "Colored pieces will appear here as they are published. Read our guides or book a consultation to begin.",
       "linkBlue": "Blue Lab-Grown Diamonds",
       "linkYellow": "Yellow Lab-Grown Diamonds",
       "linkPink": "Pink Lab-Grown Diamonds",
-      "linkRings": "Shop Rings"
+      "linkRings": "Shop Rings",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "blue": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -763,7 +767,11 @@
       "emptyDescription": "New blue lab-grown diamond jewelry will be listed here. Explore the full colored collection or contact Asteria.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "yellow": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -777,7 +785,11 @@
       "emptyDescription": "Yellow lab-grown diamond jewelry will appear here shortly. Visit the colored hub or book a consultation.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     },
     "pink": {
       "eyebrow": "Colored Lab-Grown Diamonds",
@@ -791,7 +803,11 @@
       "emptyDescription": "Pink lab-grown diamond designs will be published here. Discover other colors or speak with Asteria.",
       "linkColored": "All Colored Lab-Grown Diamonds",
       "linkRings": "Rings",
-      "linkGuides": "Learn about colored diamonds"
+      "linkGuides": "Learn about colored diamonds",
+      "linkLoose": "All loose diamonds",
+      "linkCreateRing": "Create your ring",
+      "jewelryHeading": "Jewelry",
+      "looseHeading": "Loose diamonds"
     }
   },
   "contactPage": {

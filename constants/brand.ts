@@ -1,40 +1,40 @@
 export type ThemeMode = "light" | "dark";
 
 export const THEME_STORAGE_KEY = "asteria-theme";
-export const DEFAULT_THEME: ThemeMode = "dark";
+export const DEFAULT_THEME: ThemeMode = "light";
 
 /** Shared accents across both themes (≈8% gold / 5% teal / 2% crimson). */
-export const BRAND_GOLD = "#D2B36C";
-export const BRAND_GOLD_SOFT = "#E0C88A";
-export const BRAND_NAVY_HEX = "#081D3E";
-export const BRAND_NAVY_MID = "#082446";
-export const BRAND_NAVY_DEEP = "#061736";
-export const BRAND_IVORY_HEX = "#F7F1EA";
+export const BRAND_GOLD = "#C5A059";
+export const BRAND_GOLD_SOFT = "#D4B36E";
+export const BRAND_NAVY_HEX = "#0A192F";
+export const BRAND_NAVY_MID = "#0F2340";
+export const BRAND_NAVY_DEEP = "#07111F";
+export const BRAND_IVORY_HEX = "#FDFBF7";
 export const BRAND_TEAL = "#2CB9BE";
 export const BRAND_TEAL_SOFT = "#72D5D2";
 export const BRAND_CRIMSON = "#7A2435";
 export const BRAND_CRIMSON_SOFT = "#A63D50";
 
 export const LIGHT_THEME = {
-  bg: "#F7F1EA",
-  bgDeep: "#081D3E",
+  bg: "#FDFBF7",
+  bgDeep: "#0A192F",
   surface: "#FFFFFF",
-  surfaceHover: "#F3EBE2",
-  text: "#081D3E",
-  muted: "#5C6B7A",
-  border: "#D9CFBE",
-  cream: "#F3EBE2",
+  surfaceHover: "#F7F1EA",
+  text: "#0A192F",
+  muted: "#5C6570",
+  border: "#E4D9C8",
+  cream: "#FDFBF7",
 } as const;
 
 export const DARK_THEME = {
-  bg: "#081D3E",
-  bgDeep: "#061736",
-  surface: "#0C2748",
-  surfaceHover: "#123056",
-  text: "#F7F1EA",
-  muted: "#A9B5C2",
-  border: "#294258",
-  cream: "#0C2748",
+  bg: "#0A192F",
+  bgDeep: "#07111F",
+  surface: "#10233F",
+  surfaceHover: "#163052",
+  text: "#FDFBF7",
+  muted: "#C5BBA8",
+  border: "#2A3D55",
+  cream: "#10233F",
 } as const;
 
 export const BRAND_NAME = "Asteria Diamond House";
